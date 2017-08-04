@@ -462,7 +462,7 @@ function get()
 	root.ipv4defaultGateway = def4
 	root.ipv6defaultGateway = def6
 	local neighbors = fetch_olsrd_neighbors(root.interfaces)
-	local arptable = luci.ip.neighbors() or {}
+	local arptable = ip.neighbors() or {}
 	if #root.interfaces ~= 0 then
 		for idx,iface in ipairs(root.interfaces) do
 			local t = {}
