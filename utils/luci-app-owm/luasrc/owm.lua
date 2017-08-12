@@ -462,7 +462,6 @@ function get()
 	root.ipv4defaultGateway = def4
 	root.ipv6defaultGateway = def6
 	local neighbors = fetch_olsrd_neighbors(root.interfaces)
-	local arptable = ip.neighbors() or {}
 	if #root.interfaces ~= 0 then
 		for idx,iface in ipairs(root.interfaces) do
 			local t = {}
@@ -492,25 +491,6 @@ function get()
 					neigh_mac[mac]['ip6'][#neigh_mac[mac]['ip6']+1] = ip
 					for i, neigh in ipairs(neighbors) do
 						if neigh['destAddr6'] == ip then
-							neighbors[i]['mac'] = mac
-							neighbors[i]['ifname'] = iface['ifname']
-						end
-					end
-				end
-			end
-			for _, arpt in ipairs(arptable) do
-				local mac = showmac(arpt['HW address']:lower())
-				local ip = arpt['IP address']
-				if iface['ifname'] == arpt['Device'] then
-					if not neigh_mac[mac] then
-						neigh_mac[mac] = {}
-						neigh_mac[mac]['ip4'] = {}
-					elseif not neigh_mac[mac]['ip4'] then
-						neigh_mac[mac]['ip4'] = {}
-					end
-					neigh_mac[mac]['ip4'][#neigh_mac[mac]['ip4']+1] = ip
-					for i, neigh in ipairs(neighbors) do
-						if neigh['destAddr4'] == ip then
 							neighbors[i]['mac'] = mac
 							neighbors[i]['ifname'] = iface['ifname']
 						end
