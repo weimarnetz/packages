@@ -17,6 +17,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/weimarnetz-ffwizard
   SECTION:=utils
   CATEGORY:=Utilities
+  DEPENDS:=+resolveip
   TITLE:=Weimarnetz Scripts
   URL:=https://github.com/weimarnetz/weimarnetz
 endef
