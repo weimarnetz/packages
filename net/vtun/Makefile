@@ -8,8 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vtun
-PKG_VERSION:=3.0.2
-PKG_RELEASE:=2
+PKG_VERSION:=3.0.4
+PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/vtun
@@ -75,4 +75,4 @@ define Package/vtun/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/vtund $(1)/usr/sbin/
 endef
 
-$(eval $(call BuildPackage,vtun))
+$(eval $(callBuildPackage,vtun))
