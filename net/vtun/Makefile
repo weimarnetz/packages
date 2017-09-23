@@ -13,7 +13,7 @@ PKG_RELEASE:=3
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/vtun
-PKG_MD5SUM:=d3d8bc4d58886498a1c338670eab9315
+PKG_HASH:=abf8df6b15e3febeaaeae2ce24ead7105eb1537ad4ec0d830c83cbb684fd98b9
 
 include $(INCLUDE_DIR)/package.mk
 
