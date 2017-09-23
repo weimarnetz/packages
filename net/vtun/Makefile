@@ -74,4 +74,4 @@ define Package/vtun/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/vtund $(1)/usr/sbin/
 endef
 
-$(eval $(callBuildPackage,vtun))
+$(eval $(call BuildPackage,vtun))
