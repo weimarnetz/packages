@@ -23,10 +23,10 @@ PKG_LICENSE:=BSD-3-Clause
 
 include $(INCLUDE_DIR)/package.mk
 
-TARGET_CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
-TARGET_CFLAGS += -fsanitize=address -fno-omit-frame-pointer
-TARGET_LDFLAGS += -lasan -fsanitize=address
-TARGET_LDFLAGS_C += -lasan -fsanitize=address
+#TARGET_CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#TARGET_CFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#TARGET_LDFLAGS += -lasan -fsanitize=address
+#TARGET_LDFLAGS_C += -lasan -fsanitize=address
 
 define Package/olsrd/template
   SECTION:=net
