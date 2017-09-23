@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=olsrd
-PKG_VERSION:=0.9.6
+PKG_VERSION:=0.9.6.2
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
@@ -23,7 +23,10 @@ PKG_LICENSE:=BSD-3-Clause
 
 include $(INCLUDE_DIR)/package.mk
 
-TARGET_CFLAGS += $(FPIC) -O0 -g3 
+TARGET_CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
+TARGET_CFLAGS += -fsanitize=address -fno-omit-frame-pointer
+TARGET_LDFLAGS += -lasan -fsanitize=address
+TARGET_LDFLAGS_C += -lasan -fsanitize=address
 
 define Package/olsrd/template
   SECTION:=net
