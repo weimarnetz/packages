@@ -1,0 +1,42 @@
+From 09f5335decb99912eeb97b9bb2c5e1858c094d14 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B6rg=20Thalheim?= <joerg@higgsboson.tk>
+Date: Tue, 15 Dec 2015 22:17:21 +0000
+Subject: [PATCH] fix bison compile error
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Jörg Thalheim <joerg@higgsboson.tk>
+---
+ cfg_file.y | 2 +-
+ vtun.h     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cfg_file.y b/cfg_file.y
+index 427c393..f1b362d 100644
+--- a/cfg_file.y
++++ b/cfg_file.y
+@@ -625,7 +625,7 @@ int clear_nat_hack_client(void *d, void *u)
+ }
+ 
+ /* Clear the VTUN_NAT_HACK flag which are not relevant to the current operation mode */
+-inline void clear_nat_hack_flags(int svr)
++void clear_nat_hack_flags(int svr)
+ {
+ 	if (svr)
+ 		llist_trav(&host_list,clear_nat_hack_server,NULL);
+diff --git a/vtun.h b/vtun.h
+index d7a8453..3576e6f 100644
+--- a/vtun.h
++++ b/vtun.h
+@@ -238,6 +238,6 @@ void client(struct vtun_host *host);
+ int  tunnel(struct vtun_host *host);
+ int  read_config(char *file);
+ struct vtun_host * find_host(char *host);
+-inline void clear_nat_hack_flags(int svr);
++void clear_nat_hack_flags(int svr);
+ 
+ #endif
+-- 
+2.6.4
+
