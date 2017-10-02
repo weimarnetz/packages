@@ -21,7 +21,7 @@ endef
 
 define Build/Prepare
         mkdir -p $(PKG_BUILD_DIR)
-        $(CP) ./files $(PKG_BUILD_DIR)/
+        $(CP) -R ./files $(PKG_BUILD_DIR)/
 endef
 
 
