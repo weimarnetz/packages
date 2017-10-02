@@ -3,7 +3,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=data-weimar
 PKG_RELEASE:=1
 PKG_VERSION:=2017-10-02
-PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -18,6 +18,13 @@ endef
 define Package/data-weimar/description
 	Defaults for Weimarnetz	
 endef
+
+define Build/Prepare
+        mkdir -p $(PKG_BUILD_DIR)
+        $(CP) ./files $(PKG_BUILD_DIR)/
+endef
+
+
 
 define Build/Configure
 endef

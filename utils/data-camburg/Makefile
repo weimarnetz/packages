@@ -19,6 +19,13 @@ define Package/data-camburg/description
 	Defaults for Camburg 	
 endef
 
+define Build/Prepare
+        mkdir -p $(PKG_BUILD_DIR)
+        $(CP) ./files $(PKG_BUILD_DIR)/
+endef
+
+
+
 define Build/Configure
 endef
 
