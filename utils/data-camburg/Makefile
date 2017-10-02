@@ -20,8 +20,8 @@ define Package/data-camburg/description
 endef
 
 define Build/Prepare
-        mkdir -p $(PKG_BUILD_DIR)
-        $(CP) ./files $(PKG_BUILD_DIR)/
+	mkdir -p $(PKG_BUILD_DIR)
+	$(CP) ./files $(PKG_BUILD_DIR)/
 endef
 
 
