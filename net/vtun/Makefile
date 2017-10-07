@@ -65,6 +65,8 @@ CONFIGURE_VARS += \
 	$(if $(CONFIG_VTUN_SSL),BLOWFISH_HDR_DIR="$(STAGING_DIR)/usr/include/openssl") \
 	$(if $(CONFIG_VTUN_SSL),SSL_HDR_DIR="$(STAGING_DIR)/usr/include/openssl") \
 
+TARGET_CFLAGS += -DHAVE_WORKING_FORK
+
 define Build/Compile
 	$(call Build/Compile/Default,vtund)
 endef
