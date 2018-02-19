@@ -393,8 +393,8 @@ function get()
 		root.interfaces[#root.interfaces]['peer_tunnel_id'] = nil
 		root.interfaces[#root.interfaces]['session_id'] = nil
 		root.interfaces[#root.interfaces]['peer_session_id'] = nil
-		if vif.macaddr then
-			root.interfaces[#root.interfaces]['macaddr'] = showmac(vif.macaddr)
+		if device and device:mac() then
+			root.interfaces[#root.interfaces]['macaddr'] = device:mac()
 		end
 		
 		wireless_add = {}
