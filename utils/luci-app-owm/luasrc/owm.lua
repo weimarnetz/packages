@@ -36,6 +36,8 @@ local ipairs, os, pairs, next, type, tostring, tonumber, error, print =
 -- @cstyle	instance
 module "luci.owm"
 
+local ipairs, os, pairs, next, type, tostring, tonumber, error, print =
+	ipairs, os, pairs, next, type, tostring, tonumber, error, print
 
 function fetch_olsrd_config()
 	local jsonreq4 = ""
@@ -193,7 +195,6 @@ function fetch_olsrd()
 	local olsrconfig = fetch_olsrd_config()
 	data['ipv4Config'] = olsrconfig['ipv4Config']
 	data['ipv6Config'] = olsrconfig['ipv6Config']
-	
 	return data
 end
 
@@ -207,27 +208,21 @@ end
 function get()
 	local root = {}
 	local ntm = netm.init()
-	local devices  = ntm:get_wifidevs()
+	local wifidevs = ntm:get_wifidevs()
 	local assoclist = {}
-	local _ubus = bus.connect()
-	local _ubusclicache = { }
---	local _, object
---	for _, object in ipairs(_ubus:objects()) do
---		local _ubusclicache = object:match("^clicache%.(.+)")
---		print(_ubusclicache)
---	end
-	for _, dev in ipairs(devices) do
+	for _, dev in ipairs(wifidevs) do
 		for _, net in ipairs(dev:get_wifinets()) do
 			local radio = net:get_device()
 			assoclist[#assoclist+1] = {} 
 			assoclist[#assoclist]['ifname'] = net:ifname()
 			assoclist[#assoclist]['network'] = net:network()
-			assoclist[#assoclist]['device'] = radio and radio:name() or nil 
+			assoclist[#assoclist]['device'] = radio and radio:name() or nil
 			assoclist[#assoclist]['list'] = net:assoclist()
 		end
 	end
+	--print(json.encode(assoclist))
 	root.type = 'node' --owm
-	root.updateInterval = 3600 --owm one hour
+	root.updateInterval = 300 --owm one hour
 	local info = nixio.sysinfo()
 	local boardinfo = util.ubus("system", "board") or { }
 	root.system = {
@@ -240,7 +235,7 @@ function get()
 	}
 	root.hostname = sys.hostname() --owm
 	root.weimarnetz = {
-		nodenumber = tonumber(uci:get_first("meshnode", "settings", "nodenumber")),
+		nodenumber = tonumber(uci:get_first("ffwizard", "settings", "nodenumber")),
 	}
 		
 
@@ -249,21 +244,23 @@ function get()
 	local s,a,r = info --owm
 	root.hardware = boardinfo.system or "?"
 	
-	fff = nixio.fs.readfile('/etc/variables_fff\+')
+	fff = nixio.fs.readfile('/etc/variables_fff+')
 	
 	root.firmware = {
 		luciname=version.luciname,
 		luciversion=version.luciversion,
-		distname=version.distname,
-		name=string.match(fff, "FFF_VERSION=([0-9\.]*)%s*" ),
-		distversion=version.distversion,
-		revision=version.distversion --owm
+		distname=boardinfo.release.distribution,
+		branch=string.match(fff, "FFF_SOURCE_BRANCH=(%w*)" ),
+		version=string.match(fff, "FFF_VERSION=(%w*)" ),
+		distversion=boardinfo.release.version,
+		revision=boardinfo.release.revision
 	}
 
-  local email2owm = uci:get_first("system", "weblogin", "email2owm")
-  if not email2owm then
-    email2owm = '0'
-  end
+        local email2owm = uci:get_first("system", "weblogin", "email2owm")
+        if not email2owm then
+                email2owm = '0'
+        end
+
 	root.freifunk = {}
 	uci:foreach("freifunk", "public", function(s)
 		local pname = s[".name"]
@@ -273,8 +270,8 @@ function get()
 		s['.index'] = nil
 		if s['mail'] and email2owm == '1' then
 			s['mail'] = string.gsub(s['mail'], "@", "./-\\.T.")
-    else
-      s['mail'] = "Email hidden"
+                else
+                        s['mail'] = "Email hidden"
 		end
 		root.freifunk[pname] = s
 	end)
@@ -301,15 +298,6 @@ function get()
 			devices[#devices]['macaddr'] = showmac(s.macaddr)
 		end
 	end)
-	local antennas = {}
-	uci:foreach("antennas", "wifi-device",function(s)
-		antennas[#antennas+1] = s
-		antennas[#antennas]['name'] = s['.name']
-		antennas[#antennas]['.name'] = nil
-		antennas[#antennas]['.anonymous'] = nil
-		antennas[#antennas]['.type'] = nil
-		antennas[#antennas]['.index'] = nil
-	end)
 
 	local interfaces = {}
 	uci:foreach("wireless", "wifi-iface",function(s)
@@ -328,13 +316,16 @@ function get()
 		interfaces[#interfaces]['nasid'] = nil
 		interfaces[#interfaces]['identity'] = nil
 		interfaces[#interfaces]['password'] = nil
-		local iwinfo = sys.wifi.getiwinfo(s.ifname)
+		local iwinfo = sys.wifi.getiwinfo(s.device)
+		--print(json.encode(s))
+		--print(json.encode(iwinfo))
 		if iwinfo then
 			local _, f
 			for _, f in ipairs({
 			"channel", "txpower", "bitrate", "signal", "noise",
 			"quality", "quality_max", "mode", "ssid", "bssid", "encryption", "ifname"
 			}) do
+				--print(json.encode(iwinfo[f]))
 				interfaces[#interfaces][f] = iwinfo[f]
 			end
 			if iwinfo['encryption'] then
@@ -345,9 +336,10 @@ function get()
 				end
 			end
 		end
+
 		assoclist_if = {}
 		for _, v in ipairs(assoclist) do
-			if v.network == interfaces[#interfaces]['network'] and v.list then
+			if v.network[1] == interfaces[#interfaces]['network'] and v.list then
 				for assocmac, assot in pairs(v.list) do
 					assoclist_if[#assoclist_if+1] = assot
 					assoclist_if[#assoclist_if].mac = showmac(assocmac)
@@ -358,11 +350,6 @@ function get()
 		for ii,vv in ipairs(devices) do
 			if s['device'] == vv.name then
 				interfaces[#interfaces]['wirelessdevice'] = vv
-			end
-		end
-		for ii,vv in ipairs(antennas) do
-			if s['device'] == vv.name then
-				interfaces[#interfaces]['wirelessdevice']['antenna'] = vv --owm
 			end
 		end
 	end)
@@ -447,7 +434,7 @@ function get()
 		dev = dr4[1].dev,
 		metr = dr4[1].metric }
 	else
-		local dr = sys.exec("ip r s t olsr-default")
+		local dr = sys.exec("ip r s")
 		if dr then
 			local dest, gateway, dev, metr = dr:match("^(%w+) via (%d+.%d+.%d+.%d+) dev (%w+) +metric (%d+)")
 			def4 = {
@@ -462,7 +449,7 @@ function get()
 	root.ipv4defaultGateway = def4
 	root.ipv6defaultGateway = def6
 	local neighbors = fetch_olsrd_neighbors(root.interfaces)
-	if #root.interfaces ~= 0 then
+if #root.interfaces ~= 0 then
 		for idx,iface in ipairs(root.interfaces) do
 			local t = {}
 			if iface['ifname'] and neightbl then
@@ -537,7 +524,6 @@ function get()
 			root.interfaces[idx].neighbors = neigh_mac
 		end
 	end
-
 	root.links = neighbors
 
 	root.olsr = fetch_olsrd()
