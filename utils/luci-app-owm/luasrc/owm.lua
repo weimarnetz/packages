@@ -234,11 +234,11 @@ function get()
 			info},
 	}
 	root.hostname = sys.hostname() --owm
+	
+	local nn = uci:get("ffwizard","settings","nodenumber")
 	root.weimarnetz = {
-		nodenumber = tonumber(uci:get_first("ffwizard", "settings", "nodenumber")),
+		nodenumber=nn,
 	}
-		
-
 
 	-- s system,a arch,r ram owm
 	local s,a,r = info --owm
