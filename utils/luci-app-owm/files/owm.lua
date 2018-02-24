@@ -40,7 +40,7 @@ function lock()
 	myLock = nixio.fs.stat(lockfile)
 	if myLock then
 		local timediff = os.time() - myLock.mtime
-		if timediff < 3600 then
+		if timediff < 600 then
 			print(lockfile.." exists, time since lock: "..timediff)
 			os.exit()
 		end

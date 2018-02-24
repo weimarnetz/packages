@@ -222,7 +222,7 @@ function get()
 	end
 	--print(json.encode(assoclist))
 	root.type = 'node' --owm
-	root.updateInterval = 300 --owm one hour
+	root.updateInterval = 600
 	local info = nixio.sysinfo()
 	local boardinfo = util.ubus("system", "board") or { }
 	root.system = {
