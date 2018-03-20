@@ -6,7 +6,7 @@ uci -m import profile_Weimar <<EOF
 config community 'profile'
 	option 'name' 'Weimar'
 	option 'homepage' 'http://www.weimarnetz.de'
-	option 'ssid' 'Weimarnetz Freifunk'
+	option 'ssid' 'Weimarnetz.Freifunk'
 	option 'mesh_ssid' 'mesh.%d.ch%d.weimarnetz.de'
 	option 'ap_ssid' 'weimarnetz.de | %s' 
 	option 'mesh_network' '10.63.0.0/16'
