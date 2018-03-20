@@ -6,7 +6,7 @@ uci -m import profile_Camburg <<EOF
 config community 'profile'
 	option 'name' 'Camburg'
 	option 'homepage' 'http://camburg.freifunk.net'
-	option 'ssid' 'camburg.freifunk.net'
+	option 'ssid' 'Camburg.Freifunk'
 	option 'mesh_ssid' 'mesh.%d.ch%d.camburg.ff'
 	option 'ap_ssid 'Freifunk Camburg | %s' 
 	option 'mesh_network' '10.63.0.0/16'
