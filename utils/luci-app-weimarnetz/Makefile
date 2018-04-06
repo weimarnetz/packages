@@ -28,7 +28,6 @@ define Build/Configure
 endef
 
 define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR)/luasrc
 	./build/i18n-po2lua.pl ./po i18n
 endef
 
