@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vtun
-PKG_VERSION:=3.0.4
-PKG_RELEASE:=1
+PKG_VERSION:=3.0.3
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/vtun
-PKG_HASH:=abf8df6b15e3febeaaeae2ce24ead7105eb1537ad4ec0d830c83cbb684fd98b9
+PKG_HASH:=69dcbe4f8c5ce7d91b4150a6309e536d03b61841169746ca5788413ac7edb9cb
 
 include $(INCLUDE_DIR)/package.mk
 
