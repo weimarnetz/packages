@@ -244,7 +244,7 @@ function get()
 	local s,a,r = info --owm
 	root.hardware = boardinfo.system or "?"
 	
-	fff = nixio.fs.readfile('/etc/variables_fff+')
+	fff = nixio.fs.readfile('/etc/weimarnetz_release')
 	
 	root.firmware = {
 		luciname=version.luciname,
