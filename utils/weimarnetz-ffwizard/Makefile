@@ -3,10 +3,9 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=weimarnetz-ffwizard
 PKG_RELEASE:=1
 
-FFF_SOURCE_BRANCH:=ffwizard
 PKG_SOURCE_URL=https://github.com/weimarnetz/weimarnetz.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=$(shell git ls-remote $(PKG_SOURCE_URL) $(FFF_SOURCE_BRANCH) | cut -f1 | cut -c1-7)
+PKG_SOURCE_VERSION:=c974bccf8e549711a892b3d5e133151d19ca3228
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.xz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
@@ -24,7 +23,7 @@ endef
 
 
 define Package/weimarnetz-ffwizard/description
-	Kalua extensions used in weimarnetz.
+	weimarnetz.
 endef
 
 define Build/Configure
@@ -35,9 +34,8 @@ endef
 
 define Package/weimarnetz-ffwizard/install
 	$(CP) -R $(PKG_BUILD_DIR)/files/* $(1)/
-	@echo 'FFF_VERSION=$(PKG_SOURCE_VERSION)' >> $(1)/etc/variables_fff+
-	@echo 'FFF_SOURCE_URL=$(PKG_SOURCE_URL)'  >> $(1)/etc/variables_fff+
-	@echo 'FFF_SOURCE_BRANCH=$(FFF_SOURCE_BRANCH)' >> $(1)/etc/variables_fff+
+	@echo 'FFF_VERSION=$(PKG_SOURCE_VERSION)' >> $(1)/etc/weimarnetz_release
+	@echo 'FFF_SOURCE_URL=$(PKG_SOURCE_URL)'  >> $(1)/etc/weimarnetz_release
 endef
 
 $(eval $(call BuildPackage,weimarnetz-ffwizard))
