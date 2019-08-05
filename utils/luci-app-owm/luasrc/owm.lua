@@ -236,8 +236,10 @@ function get()
 	root.hostname = sys.hostname() --owm
 	
 	local nn = uci:get("ffwizard","settings","nodenumber")
+  local registrator = util.ubus("registrator", "status") or { }
 	root.weimarnetz = {
 		nodenumber=nn,
+    registratorstatus=registrator,
 	}
 
 	-- s system,a arch,r ram owm
