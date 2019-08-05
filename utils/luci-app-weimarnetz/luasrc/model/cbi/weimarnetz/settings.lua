@@ -6,28 +6,22 @@ local util = require "luci.util"
 local uci = require "luci.model.uci".cursor()
 local profiles = "/etc/config/profile_*"
 
-m = Map("system", translate("Einstellungen fürs Weimarnetz"))
-n = Map("wireless", translate("WLAN-Einstellungen"))
+m = Map("ffwizard", translate("Einstellungen fürs Weimarnetz"))
 o = Map("meshwizard", translate("Knoteneinstellungen"))
-w = m:section(NamedSection, "weblogin", "weblogin", nil, translate("Privatsphäre"))
-f = m:section(NamedSection, "fwupdate", "fwupdate", nil, translate("Firmware"))
-p = o:section(NamedSection, "community", "public", nil, translate("Knoten"))
-v = m:section(NamedSection, "vpn", "vpn", nil, translate("VPN"))
-s = n:section(TypedSection, "wifi-iface", translate("SSID-Namen"))
+w = m:section(NamedSection, "settings", "node", nil, translate("Allgemein"))
+s = m:section(TypedSection, "wifi", nil, translate("SSIDs"))
 s:depends("mode", "ap")
 s.anonymous=true
-
-splash = w:option(Flag, "enabled", translate("Informationsseite"), translate("Soll WLAN-Nutzern eine Informationsseite angezeigt werden?"))
-splash.rmempty=false
+v = m:section(NamedSection, "vpn", "vpn", nil, translate("VPN"))
 
 publishEmail = w:option(Flag, "email2owm", translate("Email veröffentlichen"), translate("Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."))
 publishEmail.rmempty=false
 publishEmail.default='0'
 
-restrict = w:option(Flag, "restrict_local", translate("LAN-Zugriff unterbinden"), translate("Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"))
+restrict = w:option(Flag, "restrict", translate("LAN-Zugriff unterbinden"), translate("Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"))
 restrict.rmempty=false 
 
-profile = p:option(Value, "nodenumber", translate("Knotennummer"), translate("Mit der Knotennummer werden zahlreiche Netzwerkeinstellungen vorgenommen. Sie ist pro Router eindeutig und liegt zwischen 2 und 980. Im  <a href=\"http://reg.weimarnetz.de\" target=\"blank\">Registrator</a> sind alle bereits vergebenen Nummer aufgelistet. Sei vorsichtig an dieser Stelle!"))
+profile = w:option(Value, "nodenumber", translate("Knotennummer"), translate("Mit der Knotennummer werden zahlreiche Netzwerkeinstellungen vorgenommen. Sie ist pro Router eindeutig und liegt zwischen 2 und 980. Im  <a href=\"http://reg.weimarnetz.de\" target=\"blank\">Registrator</a> sind alle bereits vergebenen Nummer aufgelistet. Sei vorsichtig an dieser Stelle!"))
 function profile:validate(value)
 	if value:match("^[0-9]*$") and value:len()<4 then
 		return value
@@ -35,7 +29,7 @@ function profile:validate(value)
 		return false
 	end
 end
-btnnode = p:option(Button, "_btnnode", translate("Knotennummer ändern"))
+btnnode = w:option(Button, "_btnnode", translate("Knotennummer ändern"))
 function btnnode.write()
     luci.sys.call("/etc/init.d/applyprofile.code boot")
 end
@@ -72,5 +66,5 @@ function ssid:validate(value)
 	end
 end
 
-return m,n,o
+return m,o
 
