@@ -1,0 +1,97 @@
+<%#
+ Copyright 2010 Jo-Philipp Wich <jow@openwrt.org>
+ Copyright 2019 Andreas Braeu <freifunk@andi95.de>
+ Licensed to the public under the Apache License 2.0.
+-%>
+
+<%+header%>
+
+<%
+local uci = require "luci.model.uci".cursor()                        
+local nodenumber = uci:get("ffwizard", "settings", "nodenumber")
+%>
+
+<script type="text/javascript">//<![CDATA[
+	var stxhr = new XHR();
+
+	function update_status()
+	{
+		stxhr.get('<%=url('admin/weimarnetz/registrator_status')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				render_results(json);
+			}
+		);
+	}
+
+	function send_heartbeat()
+	{
+		stxhr.post('<%=url('admin/weimarnetz/registrator_heartbeat')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				render_results(json);
+			}
+		);
+	}
+
+	function render_results(json) {
+		if (json)
+		{
+			document.getElementById('externalNodeNumber').innerHTML = json.nodenumber
+			document.getElementById('registratorClientMessage').innerHTML = json.message
+			if (json.success && json.nodenumber == <%=nodenumber%>) {
+				document.getElementById('externalNodeNumber').classList.remove("error");
+				document.getElementById('externalNodeNumber').classList.add("alert-message","success");
+			} else {
+				document.getElementById('externalNodeNumber').classList.remove("success");
+				document.getElementById('externalNodeNumber').classList.add("alert-message","error");
+			}
+		}
+		else
+		{
+			document.getElementById('externalNodeNumber').innerHTML = "error" 
+		}
+	}
+	document.addEventListener('DOMContentLoaded', update_status, false);
+//]]></script>
+
+<form method="post" action="<%=url('admin/weimarnetz/registrator')%>">
+	<div class="cbi-map">
+		<h2 name="content"><%:Registrator%></h2>
+
+		<div class="cbi-section">
+			<legend><%:Status%></legend>
+
+			<div class="table">
+				<div class="tr">
+					<div class="td left">
+						<%:Lokale Knotennummer%>
+					</div>
+					<div class="td right">
+						<%=nodenumber%>
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td left">
+						<%:Registrierte Knotennummer%>
+					</div>
+					<div class="td right">
+						<span id="externalNodeNumber"></span>
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td left">
+						<%:Nachricht vom Registratorclient%>
+					</div>
+					<div class="td right">
+						<span id="registratorClientMessage"></span>
+					</div>
+				</div>
+			</div>
+			<input type="button" value="<%:Update Status%>" class="cbi-button cbi-button-apply" onclick="update_status()" />
+			<input type="button" value="<%:Send Heartbeat%>" class="cbi-button cbi-button-apply" onclick="send_heartbeat()" />
+		</div>
+	</div>
+
+</form>
+<%+footer%>
