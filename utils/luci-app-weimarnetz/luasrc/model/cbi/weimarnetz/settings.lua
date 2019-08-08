@@ -7,7 +7,6 @@ local uci = require "luci.model.uci".cursor()
 local profiles = "/etc/config/profile_*"
 
 m = Map("ffwizard", translate("Einstellungen fürs Weimarnetz"))
-o = Map("meshwizard", translate("Knoteneinstellungen"))
 w = m:section(NamedSection, "settings", "node", nil, translate("Allgemein"))
 s = m:section(TypedSection, "wifi", nil, translate("SSIDs"))
 v = m:section(NamedSection, "vpn", "vpn", nil, translate("VPN"))
@@ -41,5 +40,5 @@ function ssid:validate(value)
 	end
 end
 
-return m,o
+return m
 
