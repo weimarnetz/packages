@@ -31,7 +31,7 @@ function btn.write()
     luci.sys.call(". /tmp/loader && _vpn restart")
 end
 
-ssid = s:option(Value, "apssid", translate("SSID"), translate("SSID für das öffentlich zugängliche Netzwerk")) 
+ssid = s:option(Value, "ap_ssid", translate("SSID"), translate("SSID für das öffentlich zugängliche Netzwerk")) 
 function ssid:validate(value)
 	if value:len()<=32 and value:match("[0-9A-Za-z\ -\(\)]") then
 		return value
