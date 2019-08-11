@@ -7,10 +7,7 @@ msgstr ""
 msgid "Aktuelle Meldungen"
 msgstr ""
 
-msgid "Dann hast Du auch Zugriff auf die Meldungen und Diskussionen."
-msgstr ""
-
-msgid "Dein Internetzugang via Weimarnetz"
+msgid "Allgemein"
 msgstr ""
 
 msgid ""
@@ -18,13 +15,10 @@ msgid ""
 "deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
 
-msgid "Fehler bei der Nutzerfreischaltung. Bitte versuche es noch einmal!"
+msgid "Einstellungen fürs Weimarnetz"
 msgstr ""
 
-msgid "Hello World"
-msgstr ""
-
-msgid "Ich akzeptiere die"
+msgid "Email veröffentlichen"
 msgstr ""
 
 msgid ""
@@ -35,10 +29,13 @@ msgstr ""
 msgid "Informationsseite"
 msgstr ""
 
-msgid "Internet starten"
+msgid "Kein Internet bei VPN-Ausfall"
 msgstr ""
 
-msgid "Leere oder fehlerhafte Macadresse. Bist Du am richtigen Router?"
+msgid "LAN-Zugriff unterbinden"
+msgstr ""
+
+msgid "Lokale Knotennummer"
 msgstr ""
 
 msgid ""
@@ -46,21 +43,79 @@ msgid ""
 "Browser deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
 
-msgid "Nutzungsbedingungen"
+msgid "Nachricht vom Registratorclient"
 msgstr ""
 
-msgid "Schon freigeschaltet? Hier gehts zur Ursprungsseite"
+msgid "Registrator"
+msgstr ""
+
+msgid "Registrierte Knotennummer"
+msgstr ""
+
+msgid "SSID"
+msgstr ""
+
+msgid "SSID für das öffentlich zugängliche Netzwerk"
+msgstr ""
+
+msgid "SSIDs"
+msgstr ""
+
+msgid "Send Heartbeat"
+msgstr ""
+
+msgid "Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"
+msgstr ""
+
+msgid ""
+"Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring"
+"\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort "
+"öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist "
+"die Adresse nur auf deinem Router sichtbar."
+msgstr ""
+
+msgid ""
+"Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt?"
 msgstr ""
 
 msgid "Spendenaufruf"
 msgstr ""
 
-msgid ""
-"Um den Internetzugang nutzen zu können musst Du unten auf den Knopf drücken."
+msgid "Status"
 msgstr ""
 
-msgid "ausf&uuml;hrliche Informationen zu den Vertragsbedingungen"
+msgid "Update Status"
 msgstr ""
 
-msgid "http://localhost/luci-static/resources/weblogin_rules_de.txt"
+msgid "VPN"
+msgstr ""
+
+msgid "VPN aktivieren und Internetverkehr darüber leiten"
+msgstr ""
+
+msgid "VPN aktivieren, nur zur Verbindung mit der Wolke"
+msgstr ""
+
+msgid "VPN deaktivieren"
+msgstr ""
+
+msgid "VPN-Modus"
+msgstr ""
+
+msgid "VPN-Änderungen anwenden"
+msgstr ""
+
+msgid "Weimarnetz"
+msgstr ""
+
+msgid "Weimarnetz News"
+msgstr ""
+
+msgid "Weimarnetz Registrator"
+msgstr ""
+
+msgid "Weimarnetz Settings"
+msgstr ""
+
+msgid "Wie soll VPN genutzt werden?"
 msgstr ""

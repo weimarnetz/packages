@@ -1,77 +1,71 @@
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr "Content-Type: text/plain; charset=UTF-8"
 
 msgid "Aktuelle Diskussionen"
-msgstr "Current Discussions"
+msgstr ""
 
 msgid "Aktuelle Meldungen"
-msgstr "News"
+msgstr ""
 
 msgid "Allgemein"
-msgstr "General"
+msgstr ""
 
 msgid ""
 "Diskussionen werden geladen. Falls nicht, hast Du entweder Javascript "
 "deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
-"Loading discussions. If they don't appear, you maybedisabled Javascript or "
-"there's no internet access"
 
 msgid "Einstellungen fürs Weimarnetz"
-msgstr "Settings for Weimarnetz"
+msgstr ""
 
 msgid "Email veröffentlichen"
-msgstr "Publish email address"
+msgstr ""
 
 msgid ""
 "Informationen zu Spenden werden geladen. Falls nicht, hast Du entweder "
 "Javascript deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
-"Loading funds information. If they don't appear, you maybedisabled "
-"Javascript or there's no internet access"
 
 msgid "Informationsseite"
-msgstr "Info pages"
+msgstr ""
 
 msgid "Kein Internet bei VPN-Ausfall"
-msgstr "No internet when VPN is not available"
+msgstr ""
 
 msgid "LAN-Zugriff unterbinden"
-msgstr "Restrict access to your local LAN"
+msgstr ""
 
 msgid "Lokale Knotennummer"
-msgstr "Local node number"
+msgstr ""
 
 msgid ""
 "Meldungen werden geladen. Falls nicht, hast Du entweder Javascript im "
 "Browser deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
-"Loading news. If they don't appear, you maybedisabled Javascript or there's "
-"no internet access"
 
 msgid "Nachricht vom Registratorclient"
-msgstr "Message from registrator client"
+msgstr ""
 
 msgid "Registrator"
 msgstr ""
 
 msgid "Registrierte Knotennummer"
-msgstr "Registered node number"
+msgstr ""
 
 msgid "SSID"
 msgstr ""
 
 msgid "SSID für das öffentlich zugängliche Netzwerk"
-msgstr "SSID for public wifi access point"
+msgstr ""
 
 msgid "SSIDs"
 msgstr ""
 
 msgid "Send Heartbeat"
-msgstr "Send heartbeat"
+msgstr ""
 
 msgid "Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"
-msgstr "Should access to your local network be disabled?"
+msgstr ""
 
 msgid ""
 "Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring"
@@ -79,18 +73,13 @@ msgid ""
 "öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist "
 "die Adresse nur auf deinem Router sichtbar."
 msgstr ""
-"Should our email address be published at <a href=\"http://weimarnetz.de/monitoring"
-"\" target=\"_blank\">Monitoring</a>? The address is public available. For problems"
-"people can contact you. If not published your email address is only visible on your"
-"local router."
 
 msgid ""
 "Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt?"
 msgstr ""
-"Should access to the internet be disabled when VPN is not available?"
 
 msgid "Spendenaufruf"
-msgstr "Call for funds"
+msgstr ""
 
 msgid "Status"
 msgstr ""
@@ -102,32 +91,31 @@ msgid "VPN"
 msgstr ""
 
 msgid "VPN aktivieren und Internetverkehr darüber leiten"
-msgstr "Activate VPN and forward internet traffic"
+msgstr ""
 
 msgid "VPN aktivieren, nur zur Verbindung mit der Wolke"
-msgstr "Activate VPN  only to connect mesh clouds"
+msgstr ""
 
 msgid "VPN deaktivieren"
-msgstr "Disable VPN"
+msgstr ""
 
 msgid "VPN-Modus"
-msgstr "VPN mode"
+msgstr ""
 
 msgid "VPN-Änderungen anwenden"
-msgstr "Apply VPN changes"
+msgstr ""
 
 msgid "Weimarnetz"
 msgstr ""
 
 msgid "Weimarnetz News"
-msgstr "Weimarnetz news"
+msgstr ""
 
 msgid "Weimarnetz Registrator"
-msgstr "Weimarnetz registrator"
+msgstr ""
 
 msgid "Weimarnetz Settings"
-msgstr "Weimarnetz settings"
+msgstr ""
 
 msgid "Wie soll VPN genutzt werden?"
 msgstr ""
-
