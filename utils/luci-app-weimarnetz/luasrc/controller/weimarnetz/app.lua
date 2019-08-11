@@ -43,6 +43,9 @@ function index()
 
    page = entry({"admin", "weimarnetz", "registrator_heartbeat"}, post("registrator_heartbeat"), nil)
    page.leaf = true
+
+   page = entry({"admin", "weimarnetz", "registrator_register"}, post("registrator_register"), nil)
+   page.leaf = true
 end
 
 function registrator_status()
@@ -53,6 +56,12 @@ end
 
 function registrator_heartbeat()
   local status = luci.util.ubus("registrator", "heartbeat")
+  luci.http.prepare_content("application/json")
+  luci.http.write_json(status)
+end
+
+function registrator_register()
+  local status = luci.util.ubus("registrator", "register")
   luci.http.prepare_content("application/json")
   luci.http.write_json(status)
 end
