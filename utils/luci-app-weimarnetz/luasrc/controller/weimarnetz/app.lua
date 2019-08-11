@@ -46,6 +46,9 @@ function index()
 
    page = entry({"admin", "weimarnetz", "registrator_register"}, post("registrator_register"), nil)
    page.leaf = true
+
+   page = entry({"admin", "weimarnetz", "local_nodenumber"}, call("registrator_nodenumber"), nil)
+   page.leaf = true
 end
 
 function registrator_status()
@@ -64,5 +67,11 @@ function registrator_register()
   local status = luci.util.ubus("registrator", "register")
   luci.http.prepare_content("application/json")
   luci.http.write_json(status)
+end
+
+function registrator_nodenumber()
+  local value = luci.util.ubus("uci", "get", {config = "ffwizard", section = "settings", option= "nodenumber"})
+  luci.http.prepare_content("application/json")
+  luci.http.write_json(value)
 end
 

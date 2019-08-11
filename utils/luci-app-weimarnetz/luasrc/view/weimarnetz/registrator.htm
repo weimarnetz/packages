@@ -6,13 +6,21 @@
 
 <%+header%>
 
-<%
-local uci = require "luci.model.uci".cursor()                        
-local nodenumber = uci:get("ffwizard", "settings", "nodenumber")
-%>
-
 <script type="text/javascript">//<![CDATA[
 	var stxhr = new XHR();
+	var localNodeNumber;
+
+	function get_local_nodenumber()
+	{
+		stxhr.get('<%=url('admin/weimarnetz/local_nodenumber')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				localNodeNumber = json.value
+				document.getElementById('localNodeNumber').innerHTML = json.value
+				document.getElementById('registerButton').remove()
+			}
+		);
+	}
 
 	function update_status()
 	{
@@ -34,12 +42,23 @@ local nodenumber = uci:get("ffwizard", "settings", "nodenumber")
 		);
 	}
 
+	function send_register()
+	{
+		stxhr.post('<%=url('admin/weimarnetz/registrator_register')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				get_local_nodenumber();
+				render_results(json);
+			}
+		);
+	}
+
 	function render_results(json) {
 		if (json)
 		{
 			document.getElementById('externalNodeNumber').innerHTML = json.nodenumber
 			document.getElementById('registratorClientMessage').innerHTML = json.message
-			if (json.success && json.nodenumber == <%=nodenumber%>) {
+			if (json.success && json.nodenumber == localNodeNumber) {
 				document.getElementById('externalNodeNumber').classList.remove("error");
 				document.getElementById('externalNodeNumber').classList.add("alert-message","success");
 			} else {
@@ -52,6 +71,7 @@ local nodenumber = uci:get("ffwizard", "settings", "nodenumber")
 			document.getElementById('externalNodeNumber').innerHTML = "error" 
 		}
 	}
+	document.addEventListener('DOMContentLoaded', get_local_nodenumber, false);
 	document.addEventListener('DOMContentLoaded', update_status, false);
 //]]></script>
 
@@ -68,7 +88,7 @@ local nodenumber = uci:get("ffwizard", "settings", "nodenumber")
 						<%:Lokale Knotennummer%>
 					</div>
 					<div class="td right">
-						<%=nodenumber%>
+						<span id="localNodeNumber"></span>
 					</div>
 				</div>
 				<div class="tr">
@@ -90,6 +110,7 @@ local nodenumber = uci:get("ffwizard", "settings", "nodenumber")
 			</div>
 			<input type="button" value="<%:Update Status%>" class="cbi-button cbi-button-apply" onclick="update_status()" />
 			<input type="button" value="<%:Send Heartbeat%>" class="cbi-button cbi-button-apply" onclick="send_heartbeat()" />
+			<input id="registerButton" type="button" value="<%:Knoten registrieren%>" class="cbi-button cbi-button-apply" onclick="send_register()" />
 		</div>
 	</div>
 
