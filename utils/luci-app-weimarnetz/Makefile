@@ -12,7 +12,7 @@ define Package/luci-app-weimarnetz
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
   TITLE:=Weimarnetz LuCI APP
-  DEPENDS:=+luci-base
+  DEPENDS:=+luci-base +weimarnetz-ffwizard
 endef
 
 define Package/luci-app-weimarnetz/description
