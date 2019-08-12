@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-weimarnetz
-PKG_RELEASE:=0.9.0
+PKG_RELEASE:=0.9.5
 
 PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)
 
@@ -11,12 +11,12 @@ define Package/luci-app-weimarnetz
   SECTION:=luci
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
-  TITLE:=Weimarnetz Splashpage
+  TITLE:=Weimarnetz LuCI APP
 endef
 
 define Package/luci-app-weimarnetz/description
-  provide a weimar/kalua specific page
-  that allows to load current information
+  provide weimarnetz specific pages
+  to configure routers
 endef
 
 define Build/Prepare
@@ -28,7 +28,7 @@ define Build/Configure
 endef
 
 define Build/Compile
-	./build/i18n-po2lua.pl ./po i18n
+	$(PACKAGES_DIR)/feeds/luci/build/i18n-po2lua.pl ./po i18n
 endef
 
 define Package/luci-app-weimarnetz/install
