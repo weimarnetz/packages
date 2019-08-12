@@ -12,6 +12,7 @@ define Package/luci-app-weimarnetz
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
   TITLE:=Weimarnetz LuCI APP
+  DEPENDS:=+luci-base
 endef
 
 define Package/luci-app-weimarnetz/description
@@ -28,7 +29,7 @@ define Build/Configure
 endef
 
 define Build/Compile
-	$(TOPDIR)/packages/feeds/luci/build/i18n-po2lua.pl ./po i18n
+	$(TOPDIR)/feeds/luci/build/i18n-po2lua.pl ./po i18n
 endef
 
 define Package/luci-app-weimarnetz/install
