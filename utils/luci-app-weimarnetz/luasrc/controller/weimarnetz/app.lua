@@ -22,6 +22,13 @@ function index()
    page.setuser  = false
    page.setgroup = false
 
+   page = node("freifunk", "map")
+   page.title    = luci.i18n.translate("Karte")
+   page.order    = 5
+   page.target   = template("weimarnetz/map")
+   page.setuser  = false
+   page.setgroup = false
+
    page = node("admin", "weimarnetz")
    page.target = firstchild()
    page.title  = _("Weimarnetz")
