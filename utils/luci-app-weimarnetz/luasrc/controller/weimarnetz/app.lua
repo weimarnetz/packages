@@ -25,7 +25,21 @@ function index()
    page = node("freifunk", "map")
    page.title    = luci.i18n.translate("Karte")
    page.order    = 5
-   page.target   = template("weimarnetz/map")
+   page.target   = template("weimarnetz/map_router")
+   page.setuser  = false
+   page.setgroup = false
+
+   page = node("freifunk", "map", "router")
+   page.title    = luci.i18n.translate("Karte Routerumgebung")
+   page.order    = 5
+   page.target   = template("weimarnetz/map_router")
+   page.setuser  = false
+   page.setgroup = false
+
+   page = node("freifunk", "map", "overview")
+   page.title    = luci.i18n.translate("Karte Überblick")
+   page.order    = 3 
+   page.target   = template("weimarnetz/map_overview")
    page.setuser  = false
    page.setgroup = false
 

@@ -1,0 +1,11 @@
+<%+header%>
+<%
+local uci = require "luci.model.uci".cursor()                        
+local mapserver = uci:get("freifunk", "community", "mapserver", "")
+%>
+<h1><%:Weimarnetz Überblick%></h1>
+<div class="span4">
+  <iframe id="ifrm" src="<%=mapserver%>/#!v:m" width="98%" scrolling="yes" marginwidth="0" marginheight="0" frameborder="0" style="height: 581px;">test</iframe>
+</div>
+
+<%+footer%>

@@ -11,7 +11,7 @@ uci:foreach("dhcp", "dnsmasq", function(s)
 end)
 local mapserver = uci:get("freifunk", "community", "mapserver", "")
 %>
-<h1><%:Weimarnetz Hopglass Map%></h1>
+<h1><%:Weimarnetz Routerumgebung%></h1>
 <div class="span4">
   <iframe id="ifrm" src="<%=mapserver%>/#!n:<%=hostname%>.<%=domain%>" width="98%" scrolling="yes" marginwidth="0" marginheight="0" frameborder="0" style="height: 581px;">test</iframe>
 </div>
