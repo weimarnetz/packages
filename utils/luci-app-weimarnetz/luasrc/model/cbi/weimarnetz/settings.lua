@@ -9,6 +9,7 @@ local profiles = "/etc/config/profile_*"
 m = Map("ffwizard", translate("Einstellungen fürs Weimarnetz"))
 w = m:section(NamedSection, "settings", "node", nil, translate("Allgemein"))
 s = m:section(TypedSection, "wifi", nil, translate("SSIDs"))
+h = m:section(TypedSection, "hna4", nil, translate("Eigene HNAs"))
 v = m:section(NamedSection, "vpn", "vpn", nil, translate("VPN"))
 
 publishEmail = w:option(Flag, "email2owm", translate("Email veröffentlichen"), translate("Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."))
@@ -35,6 +36,11 @@ function ssid:validate(value)
 		return false
 	end
 end
+
+h.addremove=true
+h.rmempty=true
+h:option(Value, "netaddr", translate("Netzwerkadresse"), translate("Netzwerkadresse, die in OLSR angekündigt werden soll"))
+h:option(Value, "netmask", translate("Netzwerkmaske"), translate("Netzwerkmaske, die zu dem Netzwerk gehört"))
 
 return m
 
