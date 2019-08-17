@@ -26,10 +26,6 @@ vpnNoInternet = v:option(Flag, "disableinternet", translate("Kein Internet bei V
 vpnNoInternet.rmempty=false
 vpnNoInternet.default='0'
 vpnNoInternet:depends("enable", "1")
-btn = v:option(Button, "_btn", translate("VPN-Änderungen anwenden"))
-function btn.write()
-    luci.sys.call(". /tmp/loader && _vpn restart")
-end
 
 ssid = s:option(Value, "ap_ssid", translate("SSID"), translate("SSID für das öffentlich zugängliche Netzwerk")) 
 function ssid:validate(value)
