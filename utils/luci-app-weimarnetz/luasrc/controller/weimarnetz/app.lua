@@ -13,6 +13,7 @@ $Id$
 ]]--
 
 module("luci.controller.weimarnetz.app", package.seeall)
+local uci = luci.model.uci.cursor_state()                                                          
 
 function index()
    page = node("freifunk", "info")
@@ -68,8 +69,23 @@ function index()
    page = entry({"admin", "weimarnetz", "registrator_register"}, post("registrator_register"), nil)
    page.leaf = true
 
+   page = entry({"admin", "weimarnetz", "update_nodenumber"}, post("update_nodenumber"), nil)
+   page.leaf = true
+
    page = entry({"admin", "weimarnetz", "local_nodenumber"}, call("registrator_nodenumber"), nil)
    page.leaf = true
+end
+
+function update_nodenumber(newNodeNumber) 
+  local status, error = luci.util.ubus("uci", "set", {cofig = "ffwizard", section = "settings", values= {nodenumber= newNodeNumber}})
+  luci.http.prepare_content("application/json")
+  luci.http.write_json(error)
+end
+
+function commit_and_apply_changes()
+  local status = luci.util.ubus("uci", "commit", {config = "ffwizard"})
+  luci.http.prepare_content("application/json")
+  luci.http.write_json(status)
 end
 
 function registrator_status()

@@ -16,8 +16,9 @@
 			function(x, json)
 			{
 				localNodeNumber = json.value
-				document.getElementById('localNodeNumber').innerHTML = json.value
-				document.getElementById('registerButton').remove()
+				document.getElementById('localNodeNumber').textContent = json.value
+				document.getElementById('nodeNumberInput').value = json.value
+				document.getElementById('registerNewNodenumber').style.display = "none";
 			}
 		);
 	}
@@ -56,20 +57,36 @@
 	function render_results(json) {
 		if (json)
 		{
-			document.getElementById('externalNodeNumber').innerHTML = json.nodenumber
-			document.getElementById('registratorClientMessage').innerHTML = json.message
+			document.getElementById('externalNodeNumber').textContent = json.nodenumber
+			document.getElementById('registratorClientMessage').textContent = json.message
 			if (json.success && json.nodenumber == localNodeNumber) {
 				document.getElementById('externalNodeNumber').classList.remove("error");
 				document.getElementById('externalNodeNumber').classList.add("alert-message","success");
 			} else {
 				document.getElementById('externalNodeNumber').classList.remove("success");
 				document.getElementById('externalNodeNumber').classList.add("alert-message","error");
+				document.getElementById('registerNewNodenumber').style.display = "unset";
 			}
 		}
 		else
 		{
 			document.getElementById('externalNodeNumber').innerHTML = "error" 
 		}
+	}
+
+	function reset_nodenumber() {
+		document.getElementById('registerNewNodenumber').style.display = "unset";
+	}
+
+	function update_and_register_nodenumber() {
+		var newNodeNumber = document.getElementById('nodeNumberInput').value
+		stxhr.post('<%=url('admin/weimarnetz/update_nodenumber')%>/' + newNodeNumber, { token: '<%=token%>' },
+			function(x, json)
+			{
+				if (!json)
+				localNodeNumber = newNodeNumber;
+			}
+		);		
 	}
 	document.addEventListener('DOMContentLoaded', get_local_nodenumber, false);
 	document.addEventListener('DOMContentLoaded', update_status, false);
@@ -110,7 +127,30 @@
 			</div>
 			<input type="button" value="<%:Update Status%>" class="cbi-button cbi-button-apply" onclick="update_status()" />
 			<input type="button" value="<%:Send Heartbeat%>" class="cbi-button cbi-button-apply" onclick="send_heartbeat()" />
-			<input id="registerButton" type="button" value="<%:Knoten registrieren%>" class="cbi-button cbi-button-apply" onclick="send_register()" />
+			<input type="button" value="<%:Zurücksetzen%>" class="cbi-button cbi-button-apply" onclick="reset_nodenumber()" />
+		</div>
+		<br/>
+		<div id="registerNewNodenumber" class="cbi-section">
+			<legend><%:Registrieren%></legend>
+			<div class="table">
+				<div class="tr">
+					<div class="td left">
+						<%:Nächste freie Knotennummer registrieren%>
+					</div>
+					<div class="td right">
+						<input type="button" value="<%:Knoten registrieren%>" class="cbi-button cbi-button-apply" onclick="send_register()" />
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td left">
+						<%:Knotennummer selbst setzen und registrieren%>
+					</div>
+					<div class="td right">
+						<input id="nodeNumberInput" type="number" min="2" max="980">
+						<input type="button" value="<%:Knoten registrieren%>" class="cbi-button cbi-button-apply" onclick="update_and_register_nodenumber()" />
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
