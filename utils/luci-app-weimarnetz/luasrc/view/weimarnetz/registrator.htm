@@ -83,8 +83,22 @@
 		stxhr.post('<%=url('admin/weimarnetz/update_nodenumber')%>/' + newNodeNumber, { token: '<%=token%>' },
 			function(x, json)
 			{
-				if (!json)
-				localNodeNumber = newNodeNumber;
+		                var output = document.getElementById('newnodenumber-output');
+
+				output.innerHTML =
+                                '<img src="<%=resource%>/icons/loading.gif" alt="<%:Loading%>" style="vertical-align:middle" /> ' +
+                                '<%:Neue Netzwerkkonfiguration wird angewendet...%><br/>'+
+				'<%:Der Router ist danach unter einer neuen Adresse erreichbar und kann diese Seite nicht mehr aktualisieren. Warte ein paar Sekunden ab!%><br/>' + 
+				'<%:Folge dann diesem %><a href="http://frei.funk/' + window.location.pathname + '"><%:Link%></a>';
+				if (output)
+				{
+					output.parentNode.style.display = 'block';
+				}
+				
+				if (json) {
+					render_results(json);
+					localNodeNumber = newNodeNumber;
+				}
 			}
 		);		
 	}
@@ -150,6 +164,9 @@
 						<input type="button" value="<%:Knoten registrieren%>" class="cbi-button cbi-button-apply" onclick="update_and_register_nodenumber()" />
 					</div>
 				</div>
+			</div>
+			<div class="cbi-section" style="display:none">
+				<span id="newnodenumber-output"></span>
 			</div>
 		</div>
 	</div>
