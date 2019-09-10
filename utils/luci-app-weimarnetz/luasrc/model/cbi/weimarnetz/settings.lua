@@ -26,7 +26,7 @@ vpnMode:value("innercity", translate("VPN aktivieren, nur zur Verbindung mit der
 vpnNoInternet = v:option(Flag, "disableinternet", translate("Kein Internet bei VPN-Ausfall"), translate("Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt?"))
 vpnNoInternet.rmempty=false
 vpnNoInternet.default='0'
-vpnNoInternet:depends("enable", "1")
+vpnNoInternet:depends("enable", "on")
 
 ssid = s:option(Value, "ap_ssid", translate("SSID"), translate("SSID für das öffentlich zugängliche Netzwerk")) 
 function ssid:validate(value)
