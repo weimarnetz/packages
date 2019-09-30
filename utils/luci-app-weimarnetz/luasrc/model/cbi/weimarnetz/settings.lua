@@ -19,22 +19,25 @@ publishEmail.default='0'
 restrict = w:option(Flag, "restrict", translate("LAN-Zugriff unterbinden"), translate("Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"))
 restrict.rmempty=false 
 
-vpnMode = v:option(ListValue, "enable", translate("VPN-Modus"), translate("Wie soll VPN genutzt werden?"))
-vpnMode:value("off", translate("VPN deaktivieren"))
-vpnMode:value("on", translate("VPN aktivieren und Internetverkehr darüber leiten"))
-vpnMode:value("innercity", translate("VPN aktivieren, nur zur Verbindung mit der Wolke"))
-vpnNoInternet = v:option(Flag, "disableinternet", translate("Kein Internet bei VPN-Ausfall"), translate("Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt?"))
+vpnEnable = v:option(Flag, "enabled", translate("VPN aktivieren"))
+vpnEnable.rmempty=false
+vpnEnable.default='1'
+vpnMode = v:option(ListValue, "mode", translate("VPN-Modus"), translate("Wie soll das VPN genutzt werden? Soll der komplette Datenverkehr über das VPN geleitet werden oder soll das VPN nur zur Verbindung zu anderen Geräten im Mesh genutzt werden?"))
+vpnMode:value("all", translate("Kompletten Internetverkehr darüber leiten"))
+vpnMode:value("innercity", translate("nur zur Verbindung mit der Weimarnetz-Wolke"))
+vpnMode.widget="radio"
+vpnNoInternet = v:option(Flag, "paranoia", translate("Kein Internet bei VPN-Ausfall"), translate("Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt? Ist diese Option deaktiviert wird Internet für lokal an diesem Gerät ausgeleitet! Auch für Datenverkehr aus dem Mesh!"))
 vpnNoInternet.rmempty=false
-vpnNoInternet.default='0'
-vpnNoInternet:depends("enable", "on")
+vpnNoInternet.default='1'
+vpnNoInternet:depends("enabled", true)
 
 ssid = s:option(Value, "ap_ssid", translate("SSID"), translate("SSID für das öffentlich zugängliche Netzwerk")) 
 function ssid:validate(value)
-	if value:len()<=32 and value:match("[0-9A-Za-z\ -\(\)]") then
-		return value
-	else
-		return false
-	end
+        if value:len()<=32 and value:match("[0-9A-Za-z\ -\(\)]") then
+                return value
+        else
+                return false
+        end
 end
 
 h.addremove=true
