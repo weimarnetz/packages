@@ -22,11 +22,11 @@ restrict.rmempty=false
 vpnEnable = v:option(Flag, "enabled", translate("VPN aktivieren"))
 vpnEnable.rmempty=false
 vpnEnable.default='1'
-vpnMode = v:option(ListValue, "mode", translate("VPN-Modus"), translate("Wie soll das VPN genutzt werden? Soll der komplette Datenverkehr über das VPN geleitet werden oder soll das VPN nur zur Verbindung zu anderen Geräten im Mesh genutzt werden?"))
-vpnMode:value("all", translate("Kompletten Internetverkehr darüber leiten"))
-vpnMode:value("innercity", translate("nur zur Verbindung mit der Weimarnetz-Wolke"))
+vpnMode = v:option(ListValue, "mode", translate("VPN-Modus"), translate("Wie soll das VPN genutzt werden? Kompletten Datenverkehr über VPN transportieren oder VPN nur für Verbindungen zu anderen Geräten im Mesh nutzen"))
+vpnMode:value("all", translate("Kompletten Internetverkehr über VPN leiten"))
+vpnMode:value("innercity", translate("Nur für Verbindung mit der Weimarnetz-Wolke"))
 vpnMode.widget="radio"
-vpnNoInternet = v:option(Flag, "paranoia", translate("Kein Internet bei VPN-Ausfall"), translate("Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt? Ist diese Option deaktiviert wird Internet für lokal an diesem Gerät ausgeleitet! Auch für Datenverkehr aus dem Mesh!"))
+vpnNoInternet = v:option(Flag, "paranoia", translate("Bei VPN-Ausfall Internet sperren"), translate("Soll die Nutzung des lokalen Internetzugang verweigert werden, wenn VPN ausfällt? Ist diese Option deaktiviert wird der lokale Internetanschluss genutzt. Auch für Datenverkehr aus dem Mesh!"))
 vpnNoInternet.rmempty=false
 vpnNoInternet.default='1'
 vpnNoInternet:depends("enabled", true)
