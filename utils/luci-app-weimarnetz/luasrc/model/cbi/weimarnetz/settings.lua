@@ -26,6 +26,7 @@ vpnMode = v:option(ListValue, "mode", translate("VPN-Modus"), translate("Wie sol
 vpnMode:value("all", translate("Kompletten Internetverkehr über VPN leiten"))
 vpnMode:value("innercity", translate("Nur für Verbindung mit der Weimarnetz-Wolke"))
 vpnMode.widget="radio"
+vpnMode:depends("enabled", true)
 vpnNoInternet = v:option(Flag, "paranoia", translate("Bei VPN-Ausfall Internet sperren"), translate("Soll die Nutzung des lokalen Internetzugang verweigert werden, wenn VPN ausfällt? Ist diese Option deaktiviert wird der lokale Internetanschluss genutzt. Auch für Datenverkehr aus dem Mesh!"))
 vpnNoInternet.rmempty=false
 vpnNoInternet.default='1'
