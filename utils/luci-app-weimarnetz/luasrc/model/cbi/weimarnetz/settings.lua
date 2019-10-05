@@ -16,6 +16,10 @@ publishEmail = w:option(Flag, "email2owm", translate("Email veröffentlichen"), 
 publishEmail.rmempty=false
 publishEmail.default='0'
 
+legacy = w:option(Flag, "legacy", translate("IBSS Kompatabilität aktivieren."), translate("Zusätzlich zum 802.11s Mesh gibt es ein IBSS (Ad-Hoc Modus) Interface für das Mesh. Notwendig zur Kommunikation mit älterer Firmware (pre brauhaus)"))
+legacy.rmempty=false 
+legacy.default='1'
+
 restrict = w:option(Flag, "restrict", translate("LAN-Zugriff unterbinden"), translate("Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"))
 restrict.rmempty=false 
 
