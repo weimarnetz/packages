@@ -255,6 +255,7 @@ function get()
 		branch=string.match(fff, "FFF_SOURCE_BRANCH=(%w*)" ),
 		version=string.match(fff, "FFF_VERSION=(%w*)" ),
 		distversion=boardinfo.release.version,
+		description=boardinfo.release.description,
 		revision=boardinfo.release.revision
 	}
 
