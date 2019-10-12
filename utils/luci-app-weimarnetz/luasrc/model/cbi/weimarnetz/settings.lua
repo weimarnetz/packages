@@ -23,6 +23,9 @@ legacy.default='1'
 restrict = w:option(Flag, "restrict", translate("LAN-Zugriff unterbinden"), translate("Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"))
 restrict.rmempty=false 
 
+restrict = w:option(Flag, "blockWanPort", translate("Zugriff auf WAN-Port sperren"), translate("Mit dieser Option kann der WAN-Port (das ist der Port, über den das Internet angeschlossen wird) für den Zugriff von außen gesperrt werden."))
+restrict.rmempty=false 
+
 vpnEnable = v:option(Flag, "enabled", translate("VPN aktivieren"))
 vpnEnable.rmempty=false
 vpnEnable.default='1'
