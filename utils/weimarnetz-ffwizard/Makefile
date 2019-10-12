@@ -5,7 +5,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_URL=https://github.com/weimarnetz/weimarnetz.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=02779683a84cad919b7c1a2ad402b1ecd1929726
+PKG_SOURCE_VERSION:=ad83d771cbc3266e9e9b6bda7b49ebbb9f5f51a1
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.xz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/weimarnetz-ffwizard
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+resolveip +luci-lib-httpclient
+  DEPENDS:=+resolveip +luci-lib-httpclient +freifunk-common
   TITLE:=Weimarnetz Scripts
   URL:=https://github.com/weimarnetz/weimarnetz
 endef
