@@ -10,6 +10,16 @@ msgstr "News"
 msgid "Allgemein"
 msgstr "General"
 
+msgid "Bei VPN-Ausfall Internet sperren"
+msgstr "Block internet access on VPN failure"
+
+msgid ""
+"Der Router ist danach unter einer neuen Adresse erreichbar und kann diese "
+"Seite nicht mehr aktualisieren. Warte ein paar Sekunden ab!"
+msgstr ""
+"This router will have a new network address afterwards and cannot update "
+"this page anymore. Please wait a second!"
+
 msgid ""
 "Diskussionen werden geladen. Falls nicht, hast Du entweder Javascript "
 "deaktiviert oder Dir steht kein Internet zur Verfuegung."
@@ -17,11 +27,20 @@ msgstr ""
 "Loading discussions. If they don't appear, you maybedisabled Javascript or "
 "there's no internet access"
 
+msgid "Eigene HNAs"
+msgstr "Own HNAs"
+
 msgid "Einstellungen fürs Weimarnetz"
 msgstr "Settings for Weimarnetz"
 
 msgid "Email veröffentlichen"
 msgstr "Publish email address"
+
+msgid "Folge dann diesem"
+msgstr "Follow this"
+
+msgid "IBSS Kompatabilität aktivieren."
+msgstr "Enable IBSS compatibility mode."
 
 msgid ""
 "Informationen zu Spenden werden geladen. Falls nicht, hast Du entweder "
@@ -33,11 +52,32 @@ msgstr ""
 msgid "Informationsseite"
 msgstr "Info pages"
 
-msgid "Kein Internet bei VPN-Ausfall"
-msgstr "No internet when VPN is not available"
+msgid "Karte"
+msgstr "Map"
+
+msgid "Karte Routerumgebung"
+msgstr "Map router environment"
+
+msgid "Karte Überblick"
+msgstr "Map overview"
+
+msgid "Knoten registrieren"
+msgstr "Register node"
+
+msgid "Knotennummer selbst setzen und registrieren"
+msgstr "Set node number and register"
+
+msgid "Kompletten Internetverkehr über VPN leiten"
+msgstr "Send all internet traffic via VPN"
 
 msgid "LAN-Zugriff unterbinden"
 msgstr "Restrict access to your local LAN"
+
+msgid "Link"
+msgstr ""
+
+msgid "Loading"
+msgstr "Loading"
 
 msgid "Lokale Knotennummer"
 msgstr "Local node number"
@@ -49,23 +89,55 @@ msgstr ""
 "Loading news. If they don't appear, you maybedisabled Javascript or there's "
 "no internet access"
 
+msgid ""
+"Mit dieser Option kann der WAN-Port (das ist der Port, über den das Internet "
+"angeschlossen wird) für den Zugriff von außen gesperrt werden. Eine Änderung "
+"erfordert aktuell einen Neustart des Routers."
+msgstr ""
+"With this option you can block access to the WAN port (the port used to connect "
+"to the internet) from outside. A change on this option maybe needs a reboot."
+
 msgid "Nachricht vom Registratorclient"
 msgstr "Message from registrator client"
 
+msgid "Netzwerkadresse"
+msgstr "Network address"
+
+msgid "Netzwerkadresse, die in OLSR angekündigt werden soll"
+msgstr "Network address to be announced via OLSR"
+
+msgid "Netzwerkmaske"
+msgstr "Network mask"
+
+msgid "Netzwerkmaske, die zu dem Netzwerk gehört"
+msgstr "Network mask of this network"
+
+msgid "Neue Netzwerkkonfiguration wird angewendet..."
+msgstr "New network configuration is being applied..."
+
+msgid "Nur für Verbindung mit der Weimarnetz-Wolke"
+msgstr "Only connect to other Weimarnetz routes"
+
+msgid "Nächste freie Knotennummer registrieren"
+msgstr "Register next free node number"
+
 msgid "Registrator"
-msgstr ""
+msgstr "Registrator"
+
+msgid "Registrieren"
+msgstr "Register"
 
 msgid "Registrierte Knotennummer"
 msgstr "Registered node number"
 
 msgid "SSID"
-msgstr ""
+msgstr "SSID"
 
 msgid "SSID für das öffentlich zugängliche Netzwerk"
 msgstr "SSID for public wifi access point"
 
 msgid "SSIDs"
-msgstr ""
+msgstr "SSIDs"
 
 msgid "Send Heartbeat"
 msgstr "Send heartbeat"
@@ -79,45 +151,37 @@ msgid ""
 "öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist "
 "die Adresse nur auf deinem Router sichtbar."
 msgstr ""
-"Should our email address be published at <a href=\"http://weimarnetz.de/monitoring"
-"\" target=\"_blank\">Monitoring</a>? The address is public available. For problems"
-"people can contact you. If not published your email address is only visible on your"
-"local router."
+"Should our email address be published at <a href=\"http://weimarnetz.de/"
+"monitoring\" target=\"_blank\">Monitoring</a>? The address is public "
+"available. For problems people can contact you. If not published your email "
+"address is only visible on yourlocal router."
 
 msgid ""
-"Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt?"
+"Soll die Nutzung des lokalen Internetzugang verweigert werden, wenn VPN "
+"ausfällt? Ist diese Option deaktiviert wird der lokale Internetanschluss "
+"genutzt. Auch für Datenverkehr aus dem Mesh!"
 msgstr ""
-"Should access to the internet be disabled when VPN is not available?"
 
 msgid "Spendenaufruf"
 msgstr "Call for funds"
 
 msgid "Status"
-msgstr ""
+msgstr "State"
 
 msgid "Update Status"
-msgstr ""
+msgstr "Update State"
 
 msgid "VPN"
-msgstr ""
+msgstr "VPN"
 
-msgid "VPN aktivieren und Internetverkehr darüber leiten"
-msgstr "Activate VPN and forward internet traffic"
-
-msgid "VPN aktivieren, nur zur Verbindung mit der Wolke"
-msgstr "Activate VPN  only to connect mesh clouds"
-
-msgid "VPN deaktivieren"
-msgstr "Disable VPN"
+msgid "VPN aktivieren"
+msgstr "Enable VPN"
 
 msgid "VPN-Modus"
 msgstr "VPN mode"
 
-msgid "VPN-Änderungen anwenden"
-msgstr "Apply VPN changes"
-
 msgid "Weimarnetz"
-msgstr ""
+msgstr "Weimarnetz"
 
 msgid "Weimarnetz News"
 msgstr "Weimarnetz news"
@@ -125,9 +189,53 @@ msgstr "Weimarnetz news"
 msgid "Weimarnetz Registrator"
 msgstr "Weimarnetz registrator"
 
+msgid "Weimarnetz Routerumgebung"
+msgstr "Weimarnetz router environment"
+
 msgid "Weimarnetz Settings"
 msgstr "Weimarnetz settings"
 
-msgid "Wie soll VPN genutzt werden?"
-msgstr ""
+msgid "Weimarnetz Überblick"
+msgstr "Weimarnetz overview"
 
+msgid ""
+"Wie soll das VPN genutzt werden? Kompletten Datenverkehr über VPN "
+"transportieren oder VPN nur für Verbindungen zu anderen Geräten im Mesh "
+"nutzen"
+msgstr ""
+"How should VPN be used? Transfer all traffic via VPN? Or simply use VPN "
+"to connect to other devices in the mesh network via internet?"
+
+msgid "Zugriff auf WAN-Port sperren"
+msgstr "Block access to WAN port"
+
+msgid "Zurücksetzen"
+msgstr "Reset"
+
+msgid ""
+"Zusätzlich zum 802.11s Mesh gibt es ein IBSS (Ad-Hoc Modus) Interface für "
+"das Mesh. Notwendig zur Kommunikation mit älterer Firmware (pre brauhaus)"
+msgstr ""
+"Additional to the 802.11s mesh we have an IBSS (Ad-Hoc mode) interface "
+"for mesh. That's necessary to communicate with older firmwares (pre brauhaus)"
+
+#~ msgid "Kein Internet bei VPN-Ausfall"
+#~ msgstr "No internet when VPN is not available"
+
+#~ msgid ""
+#~ "Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN "
+#~ "ausfällt?"
+#~ msgstr ""
+#~ "Should access to the internet be disabled when VPN is not available?"
+
+#~ msgid "VPN aktivieren und Internetverkehr darüber leiten"
+#~ msgstr "Activate VPN and forward internet traffic"
+
+#~ msgid "VPN aktivieren, nur zur Verbindung mit der Wolke"
+#~ msgstr "Activate VPN  only to connect mesh clouds"
+
+#~ msgid "VPN deaktivieren"
+#~ msgstr "Disable VPN"
+
+#~ msgid "VPN-Änderungen anwenden"
+#~ msgstr "Apply VPN changes"

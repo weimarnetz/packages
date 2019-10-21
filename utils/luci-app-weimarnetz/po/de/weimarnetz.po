@@ -10,15 +10,32 @@ msgstr ""
 msgid "Allgemein"
 msgstr ""
 
+msgid "Bei VPN-Ausfall Internet sperren"
+msgstr ""
+
+msgid ""
+"Der Router ist danach unter einer neuen Adresse erreichbar und kann diese "
+"Seite nicht mehr aktualisieren. Warte ein paar Sekunden ab!"
+msgstr ""
+
 msgid ""
 "Diskussionen werden geladen. Falls nicht, hast Du entweder Javascript "
 "deaktiviert oder Dir steht kein Internet zur Verfuegung."
+msgstr ""
+
+msgid "Eigene HNAs"
 msgstr ""
 
 msgid "Einstellungen fürs Weimarnetz"
 msgstr ""
 
 msgid "Email veröffentlichen"
+msgstr ""
+
+msgid "Folge dann diesem"
+msgstr ""
+
+msgid "IBSS Kompatabilität aktivieren."
 msgstr ""
 
 msgid ""
@@ -29,10 +46,31 @@ msgstr ""
 msgid "Informationsseite"
 msgstr ""
 
-msgid "Kein Internet bei VPN-Ausfall"
+msgid "Karte"
+msgstr ""
+
+msgid "Karte Routerumgebung"
+msgstr ""
+
+msgid "Karte Überblick"
+msgstr ""
+
+msgid "Knoten registrieren"
+msgstr ""
+
+msgid "Knotennummer selbst setzen und registrieren"
+msgstr ""
+
+msgid "Kompletten Internetverkehr über VPN leiten"
 msgstr ""
 
 msgid "LAN-Zugriff unterbinden"
+msgstr ""
+
+msgid "Link"
+msgstr ""
+
+msgid "Loading"
 msgstr ""
 
 msgid "Lokale Knotennummer"
@@ -43,10 +81,40 @@ msgid ""
 "Browser deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
 
+msgid ""
+"Mit dieser Option kann der WAN-Port (das ist der Port, über den das Internet "
+"angeschlossen wird) für den Zugriff von außen gesperrt werden. Eine Änderung "
+"erfordert aktuell einen Neustart des Routers."
+msgstr ""
+
 msgid "Nachricht vom Registratorclient"
 msgstr ""
 
+msgid "Netzwerkadresse"
+msgstr ""
+
+msgid "Netzwerkadresse, die in OLSR angekündigt werden soll"
+msgstr ""
+
+msgid "Netzwerkmaske"
+msgstr ""
+
+msgid "Netzwerkmaske, die zu dem Netzwerk gehört"
+msgstr ""
+
+msgid "Neue Netzwerkkonfiguration wird angewendet..."
+msgstr ""
+
+msgid "Nur für Verbindung mit der Weimarnetz-Wolke"
+msgstr ""
+
+msgid "Nächste freie Knotennummer registrieren"
+msgstr ""
+
 msgid "Registrator"
+msgstr ""
+
+msgid "Registrieren"
 msgstr ""
 
 msgid "Registrierte Knotennummer"
@@ -75,7 +143,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Soll der Internetzugang für WLAN-Nutzer gesperrt werden, wenn VPN ausfällt?"
+"Soll die Nutzung des lokalen Internetzugang verweigert werden, wenn VPN "
+"ausfällt? Ist diese Option deaktiviert wird der lokale Internetanschluss "
+"genutzt. Auch für Datenverkehr aus dem Mesh!"
 msgstr ""
 
 msgid "Spendenaufruf"
@@ -90,19 +160,10 @@ msgstr ""
 msgid "VPN"
 msgstr ""
 
-msgid "VPN aktivieren und Internetverkehr darüber leiten"
-msgstr ""
-
-msgid "VPN aktivieren, nur zur Verbindung mit der Wolke"
-msgstr ""
-
-msgid "VPN deaktivieren"
+msgid "VPN aktivieren"
 msgstr ""
 
 msgid "VPN-Modus"
-msgstr ""
-
-msgid "VPN-Änderungen anwenden"
 msgstr ""
 
 msgid "Weimarnetz"
@@ -114,8 +175,28 @@ msgstr ""
 msgid "Weimarnetz Registrator"
 msgstr ""
 
+msgid "Weimarnetz Routerumgebung"
+msgstr ""
+
 msgid "Weimarnetz Settings"
 msgstr ""
 
-msgid "Wie soll VPN genutzt werden?"
+msgid "Weimarnetz Überblick"
+msgstr ""
+
+msgid ""
+"Wie soll das VPN genutzt werden? Kompletten Datenverkehr über VPN "
+"transportieren oder VPN nur für Verbindungen zu anderen Geräten im Mesh "
+"nutzen"
+msgstr ""
+
+msgid "Zugriff auf WAN-Port sperren"
+msgstr ""
+
+msgid "Zurücksetzen"
+msgstr ""
+
+msgid ""
+"Zusätzlich zum 802.11s Mesh gibt es ein IBSS (Ad-Hoc Modus) Interface für "
+"das Mesh. Notwendig zur Kommunikation mit älterer Firmware (pre brauhaus)"
 msgstr ""
