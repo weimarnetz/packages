@@ -11,6 +11,7 @@ w = m:section(NamedSection, "settings", "node", nil, translate("Allgemein"))
 s = m:section(TypedSection, "wifi", nil, translate("SSIDs"))
 h = m:section(TypedSection, "hna4", nil, translate("Eigene HNAs"))
 v = m:section(NamedSection, "vpn", "vpn", nil, translate("VPN"))
+o = m:section(NamedSection, "olsr", "olsr", nil, translate("OLSR"))
 
 publishEmail = w:option(Flag, "email2owm", translate("Email veröffentlichen"), translate("Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."))
 publishEmail.rmempty=false
@@ -47,6 +48,9 @@ function ssid:validate(value)
                 return false
         end
 end
+
+o.rmempty=true
+o:option(DynamicList, "service", "OLSR Service", translate("Serivce, der per OLSR im Netz angekündigt werden soll. Das Format sieht so aus: '&lt;service url&gt;|&lt;protocol&gt;|&lt;Beschreibung&gt;'. Das Protokll kann entweder tcp oder udp sein. Die URL, z.B. http://hostname:8080/service muss im Netz des Routers erreichbar sein. Die Beschreibung darf keine Umlaute enthalten."))
 
 h.addremove=true
 h.rmempty=true
