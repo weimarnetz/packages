@@ -111,6 +111,9 @@ msgstr ""
 msgid "Nächste freie Knotennummer registrieren"
 msgstr ""
 
+msgid "OLSR"
+msgstr ""
+
 msgid "Registrator"
 msgstr ""
 
@@ -130,6 +133,14 @@ msgid "SSIDs"
 msgstr ""
 
 msgid "Send Heartbeat"
+msgstr ""
+
+msgid ""
+"Serivce, der per OLSR im Netz angekündigt werden soll. Das Format sieht so "
+"aus: '&lt;service url&gt;|&lt;protocol&gt;|&lt;Beschreibung&gt;'. Das "
+"Protokoll kann entweder tcp oder udp sein. Die URL, z.B. http://"
+"hostname:8080/service muss im Netz des Routers erreichbar sein. Die "
+"Beschreibung darf keine Umlaute enthalten."
 msgstr ""
 
 msgid "Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"
