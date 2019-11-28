@@ -1,0 +1,175 @@
+<%#
+ Copyright 2010 Jo-Philipp Wich <jow@openwrt.org>
+ Copyright 2019 Andreas Braeu <freifunk@andi95.de>
+ Licensed to the public under the Apache License 2.0.
+-%>
+
+<%+header%>
+
+<script type="text/javascript">//<![CDATA[
+	var stxhr = new XHR();
+	var localNodeNumber;
+
+	function get_local_nodenumber()
+	{
+		stxhr.get('<%=url('admin/weimarnetz/local_nodenumber')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				localNodeNumber = json.value
+				document.getElementById('localNodeNumber').textContent = json.value
+				document.getElementById('nodeNumberInput').value = json.value
+				document.getElementById('registerNewNodenumber').style.display = "none";
+			}
+		);
+	}
+
+	function update_status()
+	{
+		stxhr.get('<%=url('admin/weimarnetz/registrator_status')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				render_results(json);
+			}
+		);
+	}
+
+	function send_heartbeat()
+	{
+		stxhr.post('<%=url('admin/weimarnetz/registrator_heartbeat')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				render_results(json);
+			}
+		);
+	}
+
+	function send_register()
+	{
+		stxhr.post('<%=url('admin/weimarnetz/registrator_register')%>', { token: '<%=token%>' },
+			function(x, json)
+			{
+				get_local_nodenumber();
+				render_results(json);
+			}
+		);
+	}
+
+	function render_results(json) {
+		if (json)
+		{
+			document.getElementById('externalNodeNumber').textContent = json.nodenumber
+			document.getElementById('registratorClientMessage').textContent = json.message
+			if (json.success && json.nodenumber == localNodeNumber) {
+				document.getElementById('externalNodeNumber').classList.remove("error");
+				document.getElementById('externalNodeNumber').classList.add("alert-message","success");
+			} else {
+				document.getElementById('externalNodeNumber').classList.remove("success");
+				document.getElementById('externalNodeNumber').classList.add("alert-message","error");
+				document.getElementById('registerNewNodenumber').style.display = "unset";
+			}
+		}
+		else
+		{
+			document.getElementById('externalNodeNumber').innerHTML = "error" 
+		}
+	}
+
+	function reset_nodenumber() {
+		document.getElementById('registerNewNodenumber').style.display = "unset";
+	}
+
+	function update_and_register_nodenumber() {
+		var newNodeNumber = document.getElementById('nodeNumberInput').value
+		stxhr.post('<%=url('admin/weimarnetz/update_nodenumber')%>/' + newNodeNumber, { token: '<%=token%>' },
+			function(x, json)
+			{
+		                var output = document.getElementById('newnodenumber-output');
+
+				output.innerHTML =
+                                '<img src="<%=resource%>/icons/loading.gif" alt="<%:Loading%>" style="vertical-align:middle" /> ' +
+                                '<%:Neue Netzwerkkonfiguration wird angewendet...%><br/>'+
+				'<%:Der Router ist danach unter einer neuen Adresse erreichbar und kann diese Seite nicht mehr aktualisieren. Warte ein paar Sekunden ab!%><br/>' + 
+				'<%:Folge dann diesem %><a href="http://frei.funk/' + window.location.pathname + '"><%:Link%></a>';
+				if (output)
+				{
+					output.parentNode.style.display = 'block';
+				}
+				
+				if (json) {
+					render_results(json);
+					localNodeNumber = newNodeNumber;
+				}
+			}
+		);		
+	}
+	document.addEventListener('DOMContentLoaded', get_local_nodenumber, false);
+	document.addEventListener('DOMContentLoaded', update_status, false);
+//]]></script>
+
+<form method="post" action="<%=url('admin/weimarnetz/registrator')%>">
+	<div class="cbi-map">
+		<h2 name="content"><%:Registrator%></h2>
+
+		<div class="cbi-section">
+			<legend><%:Status%></legend>
+
+			<div class="table">
+				<div class="tr">
+					<div class="td left">
+						<%:Lokale Knotennummer%>
+					</div>
+					<div class="td right">
+						<span id="localNodeNumber"></span>
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td left">
+						<%:Registrierte Knotennummer%>
+					</div>
+					<div class="td right">
+						<span id="externalNodeNumber"></span>
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td left">
+						<%:Nachricht vom Registratorclient%>
+					</div>
+					<div class="td right">
+						<span id="registratorClientMessage"></span>
+					</div>
+				</div>
+			</div>
+			<input type="button" value="<%:Update Status%>" class="cbi-button cbi-button-apply" onclick="update_status()" />
+			<input type="button" value="<%:Send Heartbeat%>" class="cbi-button cbi-button-apply" onclick="send_heartbeat()" />
+			<input type="button" value="<%:Zurücksetzen%>" class="cbi-button cbi-button-apply" onclick="reset_nodenumber()" />
+		</div>
+		<br/>
+		<div id="registerNewNodenumber" class="cbi-section">
+			<legend><%:Registrieren%></legend>
+			<div class="table">
+				<div class="tr">
+					<div class="td left">
+						<%:Nächste freie Knotennummer registrieren%>
+					</div>
+					<div class="td right">
+						<input type="button" value="<%:Knoten registrieren%>" class="cbi-button cbi-button-apply" onclick="send_register()" />
+					</div>
+				</div>
+				<div class="tr">
+					<div class="td left">
+						<%:Knotennummer selbst setzen und registrieren%>
+					</div>
+					<div class="td right">
+						<input id="nodeNumberInput" type="number" min="2" max="980">
+						<input type="button" value="<%:Knoten registrieren%>" class="cbi-button cbi-button-apply" onclick="update_and_register_nodenumber()" />
+					</div>
+				</div>
+			</div>
+			<div class="cbi-section" style="display:none">
+				<span id="newnodenumber-output"></span>
+			</div>
+		</div>
+	</div>
+
+</form>
+<%+footer%>

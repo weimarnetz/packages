@@ -236,15 +236,17 @@ function get()
 	root.hostname = sys.hostname() --owm
 	
 	local nn = uci:get("ffwizard","settings","nodenumber")
+  local registrator = util.ubus("registrator", "status") or { }
 	root.weimarnetz = {
 		nodenumber=nn,
+    registratorstatus=registrator,
 	}
 
 	-- s system,a arch,r ram owm
 	local s,a,r = info --owm
 	root.hardware = boardinfo.system or "?"
 	
-	fff = nixio.fs.readfile('/etc/variables_fff+')
+	fff = nixio.fs.readfile('/etc/weimarnetz_release')
 	
 	root.firmware = {
 		luciname=version.luciname,
@@ -253,6 +255,7 @@ function get()
 		branch=string.match(fff, "FFF_SOURCE_BRANCH=(%w*)" ),
 		version=string.match(fff, "FFF_VERSION=(%w*)" ),
 		distversion=boardinfo.release.version,
+		description=boardinfo.release.description,
 		revision=boardinfo.release.revision
 	}
 
