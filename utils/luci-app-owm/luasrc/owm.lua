@@ -25,7 +25,6 @@ local json = require "luci.json"
 local netm = require "luci.model.network"
 local table = require "table"
 local nixio = require "nixio"
-local neightbl = require "neightbl"
 local ip = require "luci.ip"
 
 
@@ -455,19 +454,6 @@ function get()
 if #root.interfaces ~= 0 then
 		for idx,iface in ipairs(root.interfaces) do
 			local t = {}
-			if iface['ifname'] and neightbl then
-				t = neightbl.get(iface['ifname']) or {}
-				local neightbl_get
-				for ip,mac in pairs(t) do
-					if not mac then
-						os.execute("ping6 -q -c1 -w1 -I"..iface['ifname'].." "..ip.." 2&>1 >/dev/null")
-						neightbl_get = true
-					end
-				end
-				if neightbl_get then
-					t = neightbl.get(iface['ifname']) or {}
-				end
-			end
 			local neigh_mac = {}
 			for ip,mac in pairs(t) do
 				if mac and not string.find(mac, "33:33:") then
