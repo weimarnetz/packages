@@ -20,7 +20,6 @@ local uci = require "luci.model.uci".cursor_state()
 local util = require "luci.util"
 local version = require "luci.version"
 local webadmin = require "luci.tools.webadmin"
-local status = require "luci.tools.status"
 local json = require "luci.json"
 local netm = require "luci.model.network"
 local table = require "table"
