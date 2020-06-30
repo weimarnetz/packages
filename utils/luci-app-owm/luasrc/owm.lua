@@ -406,11 +406,11 @@ function get()
 				root.interfaces[#root.interfaces].encryption = v.encryption
 				root.interfaces[#root.interfaces].access = 'free'
 				root.interfaces[#root.interfaces].accessNote = "everyone is welcome!"
-				root.interfaces[#root.interfaces].channel = v.wirelessdevice.channel
-				root.interfaces[#root.interfaces].txpower = v.wirelessdevice.txpower
+				--root.interfaces[#root.interfaces].channel = v.wirelessdevice.channel
+				--root.interfaces[#root.interfaces].txpower = v.wirelessdevice.txpower
 				root.interfaces[#root.interfaces].bssid = v.bssid
 				root.interfaces[#root.interfaces].ssid = v.ssid
-				root.interfaces[#root.interfaces].antenna = v.wirelessdevice.antenna
+				--root.interfaces[#root.interfaces].antenna = v.wirelessdevice.antenna
 				wireless_add[#wireless_add+1] = v --owm
 			end
 		end
