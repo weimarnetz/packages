@@ -226,6 +226,7 @@ function get_position()
 	uci:foreach("system", "system", function(s)
 		position['latitude'] = tonumber(s.latitude)
 		position['longitude'] = tonumber(s.longitude)
+		position['location'] = s.location
 	end)
 	if (position['latitude'] and  position['longitude']) then
 		return position
@@ -307,9 +308,10 @@ function get()
 		root.freifunk[pname] = s
 	end)
 
-	if not position == nil then
-		root.latitude = position["latitude"] --owm
-		root.longitude = position["longitude"] --owm
+	if position then
+		root.latitude = position['latitude'] --owm
+		root.longitude = position['longitude'] --owm
+		root.location = position['location'] --owm
 	end
 
 	if not root.latitude or not root.longitude then
