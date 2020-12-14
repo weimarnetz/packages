@@ -45,7 +45,7 @@ jobs:
         cd assemble
         ./compile_packages.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
         ./configure_imagebuilder.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
-        ./assmble_firmware.sh -t ${{ matrix.target }} -i "ib/" -u weimarnetz -o ${{ matrix.openwrt }}
+        ./assemble_firmware.sh -t ${{ matrix.target }} -i "ib/" -u weimarnetz -o ${{ matrix.openwrt }}
     - name: upload
       if: github.event_name == 'push'
       env:
