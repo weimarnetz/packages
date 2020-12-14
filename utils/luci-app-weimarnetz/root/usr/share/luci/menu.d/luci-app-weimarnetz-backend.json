@@ -1,0 +1,12 @@
+{
+  "admin/weimarnetz": {
+    "title": "Weimarnetz",
+    "action": {
+      "type": "view",
+      "path": "minidlna"
+    },
+    "depends": {
+      "uci": { "minidlna": true }
+    }
+  }
+}

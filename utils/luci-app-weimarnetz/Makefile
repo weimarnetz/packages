@@ -29,7 +29,7 @@ define Build/Configure
 endef
 
 define Build/Compile
-	$(TOPDIR)/feeds/luci/build/i18n-po2lua.pl ./po i18n
+	$(TOPDIR)/feeds/packages_weimar/build/i18n-po2lua.pl ./po i18n
 endef
 
 define Package/luci-app-weimarnetz/install
