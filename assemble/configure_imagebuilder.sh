@@ -97,11 +97,12 @@ MAINTARGET="$(echo $TARGET|cut -d '_' -f 1)"
 CUSTOMTARGET="$(echo $TARGET|cut -d '_' -f 2)"
 SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
 
-info "Download and extract sdk"
+info "Download and extract image builder"
 wget -qO "$TEMP_DIR/ib.tar.xz"  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-imagebuilder-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
 mkdir "$TEMP_DIR/ib"
 tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
 
 echo "src custom file://$(to_absolute_path packages_weimar)" >> $TEMP_DIR/ib/repositories.conf 
+cat $TEMP_DIR/ib/repositories.conf
 
 cp -r $TEMP_DIR/ib ./
