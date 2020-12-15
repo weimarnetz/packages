@@ -24,6 +24,15 @@ info() {
 	echo "$@"
 }
 
+signal_handler() {
+	# only remove directory when not in debug mode
+	if [ -z "$DEBUG" ] ; then
+		rm -Rf "$TEMP_DIR"
+	else
+		info "Not removing temp dir $TEMP_DIR"
+	fi
+}
+
 error() {
 	echo "$@" >&2
 }
