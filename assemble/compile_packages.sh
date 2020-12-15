@@ -97,9 +97,10 @@ EOF
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 make defconfig
-
+./staging_dir/host/bin/usign -G -s ./key-build -p ./key-build.pub -c "Local build key"
 for package in $(cat feeds/packages_weimar.index|grep Source-Makefile:|cut -d '/' -f 4); do
   make package/$package/compile;
 done
+make package/index
 
 cp -r bin/packages/*/packages_weimar ../../
