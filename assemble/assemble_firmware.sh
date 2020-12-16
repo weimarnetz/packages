@@ -143,6 +143,8 @@ echo $DEST_DIR
 DEST_DIR=$(to_absolute_path "$DEST_DIR")
 info $DEST_DIR
 
+failed_profiles=
+
 for profile in $PROFILES ; do
 	info "Building a profile for $profile"
 
@@ -200,6 +202,10 @@ for profile in $PROFILES ; do
 		# ensure BIN_DIR is valid
 		mkdir -p "${DEST_DIR}/${package_list}"
 
-		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${package_list}" $img_params
+		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${package_list}" $img_params || failed_profile="${profile}; ${failed_profile}" 
 	done
 done
+
+if [ -n "$failed_profiles" ]; then
+  echo "We weren't able to build the following profiles: ${failed_profiles}. The successful ones will be uploaded."
+fi
