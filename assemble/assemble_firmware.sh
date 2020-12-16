@@ -157,7 +157,11 @@ for profile in $PROFILES ; do
 		img_params=""
 
 		# check if packagelist with suffix exist
-		if [ -e "${PKGLIST_DIR}/${usecase}_${suffix}.txt" ] ; then
+		if [ -e "${PKGLIST_DIR}/${OPENWRT}/${usecase}_${suffix}.txt" ] ; then
+			package_list="${OPENWRT}/${usecase}_${suffix}"
+		elif [ -e "${PKGLIST_DIR}/${OPENWRT}/${usecase}.txt" ] ; then
+			package_list="${OPENWRT}/${usecase}"
+		elif [ -e "${PKGLIST_DIR}/${usecase}_${suffix}.txt" ] ; then
 			package_list="${usecase}_${suffix}"
 		else
 			package_list="${usecase}"
