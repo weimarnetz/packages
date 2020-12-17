@@ -143,11 +143,11 @@ echo $DEST_DIR
 DEST_DIR=$(to_absolute_path "$DEST_DIR")
 info $DEST_DIR
 
-failed_profiles=
 
 for profile in $PROFILES ; do
 	info "Building a profile for $profile"
 
+  failed_profiles=
 	# profiles can have a suffix. like 4mb devices get a smaller package list pro use case
 	# UBNT:4MB -> profile "UBNT" suffix "4MB"
 	suffix="$(echo $profile | cut -d':' -f 2)"
@@ -202,10 +202,10 @@ for profile in $PROFILES ; do
 		# ensure BIN_DIR is valid
 		mkdir -p "${DEST_DIR}/${package_list}"
 
-		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${package_list}" $img_params || failed_profile="${profile}; ${failed_profile}" 
+		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${usecase}_${suffix}" $img_params || failed_profiles="${profile}; ${failed_profiles}" 
+
+    if [ -n "$failed_profiles" ]; then
+      echo "We weren't able to build the following profiles for : ${failed_profiles}." >> ${DEST_DIR}/${usecase}_${suffix}/failedprofiles.txt
+    fi
 	done
 done
-
-if [ -n "$failed_profiles" ]; then
-  echo "We weren't able to build the following profiles: ${failed_profiles}. The successful ones will be uploaded."
-fi
