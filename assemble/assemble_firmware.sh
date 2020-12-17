@@ -200,12 +200,13 @@ for profile in $PROFILES ; do
 		fi
 
 		# ensure BIN_DIR is valid
-		mkdir -p "${DEST_DIR}/${package_list}"
+    base_target_dir=$(basename ${package_list})
+		mkdir -p "${DEST_DIR}/${base_target_dir}"
 
-		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${usecase}_${suffix}" $img_params || failed_profiles="${profile}; ${failed_profiles}" 
+		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${base_target_dir}" $img_params || failed_profiles="${profile}; ${failed_profiles}" 
 
     if [ -n "$failed_profiles" ]; then
-      echo "We weren't able to build the following profiles for : ${failed_profiles}." >> ${DEST_DIR}/${usecase}_${suffix}/failedprofiles.txt
+      echo "We weren't able to build the following profiles for : ${failed_profiles}." >> ${DEST_DIR}/${base_target_dir}/failedprofiles.txt
     fi
 	done
 done
