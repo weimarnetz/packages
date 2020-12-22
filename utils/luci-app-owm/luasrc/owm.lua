@@ -275,15 +275,16 @@ function get()
 
 	root.hardware = boardinfo['system'] --owm
 
-	fff = nixio.fs.readfile('/etc/weimarnetz_release')
+	weimarnetz_release = nixio.fs.readfile('/etc/weimarnetz_release')
 
 	root.firmware = {
 		name=version.distname, --owm
 		luciname=version.luciname,
 		luciversion=version.luciversion,
 		distname=boardinfo.release.distribution,
-		branch=string.match(fff, "FFF_SOURCE_BRANCH=(%w*)" ),
-		version=string.match(fff, "FFF_VERSION=(%w*)" ),
+		package_branch=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGE_BRANCH=(%w*)" ),
+		package_description=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGE_DESCRIPTION=(%w*)" ),
+		package_revision=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGE_REVISION=(%w*)" ),
 		distversion=boardinfo.release.version,
 		description=boardinfo.release.description,
 		revision=boardinfo.release.revision	}

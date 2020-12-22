@@ -106,3 +106,8 @@ echo "src custom file://$(to_absolute_path packages_weimar)" >> $TEMP_DIR/ib/rep
 cat $TEMP_DIR/ib/repositories.conf
 
 cp -r $TEMP_DIR/ib ./
+
+mkdir -p ./EMBEDDED_FILES/etc
+echo "WEIMARNETZ_PACKAGES_DESCRIPTION=$(git describe --always --dirty)" > ./EMBEDDED_FILES/etc/weimarnetz_release
+echo "WEIMARNETZ_PACKAGES_BRANCH=$(git branch --show-current)" >> ./EMBEDDED_FILES/etc/weimarnetz_release
+echo "WEIMARNETZ_PACKAGES_REV=$(git rev-parse $(git branch --show-current))" >> ./EMBEDDED_FILES/etc/weimarnetz_release
