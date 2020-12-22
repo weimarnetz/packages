@@ -282,9 +282,9 @@ function get()
 		luciname=version.luciname,
 		luciversion=version.luciversion,
 		distname=boardinfo.release.distribution,
-		package_branch=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGE_BRANCH=(%w*)" ),
-		package_description=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGE_DESCRIPTION=(%w*)" ),
-		package_revision=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGE_REVISION=(%w*)" ),
+		packageBranch=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGES_BRANCH=([%w%p]*)" ),
+		packageDescription=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGES_DESCRIPTION=([%w%p]*)" ),
+		packageRevision=string.match(weimarnetz_release, "WEIMARNETZ_PACKAGES_REV=([%w%p]*)" ),
 		distversion=boardinfo.release.version,
 		description=boardinfo.release.description,
 		revision=boardinfo.release.revision	}
