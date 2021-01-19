@@ -103,7 +103,6 @@ mkdir "$TEMP_DIR/ib"
 tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
 
 echo "src custom file://$(to_absolute_path packages_weimar)" >> $TEMP_DIR/ib/repositories.conf 
-cat $TEMP_DIR/ib/repositories.conf
 
 cp -r $TEMP_DIR/ib ./
 
@@ -111,3 +110,18 @@ mkdir -p ./EMBEDDED_FILES/etc
 echo "WEIMARNETZ_PACKAGES_DESCRIPTION=$(git describe --always --dirty --tags)" > ./EMBEDDED_FILES/etc/weimarnetz_release
 echo "WEIMARNETZ_PACKAGES_BRANCH=$(git branch --show-current)" >> ./EMBEDDED_FILES/etc/weimarnetz_release
 echo "WEIMARNETZ_PACKAGES_REV=$(git rev-parse $(git branch --show-current))" >> ./EMBEDDED_FILES/etc/weimarnetz_release
+
+version_code=$(cat ib/.config|grep CONFIG_VERSION_CODE=|cut -d '=' -f 2|tr -d '\",')
+cat << EOF > ./EMBEDDED_FILES/etc/banner
+___       __      _____                                           _____
+__ |     / /_____ ___(_)_______ ___ ______ ________________ _____ __  /_______
+__ | /| / / _  _ \__  / __  __ `__ \_  __ `/__  ___/__  __ \_  _ \_  __/___  /
+__ |/ |/ /  /  __/_  /  _  / / / / // /_/ / _  /    _  / / //  __// /_  __  /_
+____/|__/   \___/ /_/   /_/ /_/ /_/ \__,_/  /_/     /_/ /_/ \___/ \__/  _____/
+                                  F R E I F U N K   W E I M A R
+-------------------------------------------------------------------------------
+OpenWrt: $version_code
+Packages: $(git branch --show-current), $(git describe --always --dirty --tags)
+-------------------------------------------------------------------------------
+EOF
+
