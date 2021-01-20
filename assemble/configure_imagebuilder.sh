@@ -119,6 +119,8 @@ __ | /| / / _  _ \__  / __  __ `__ \_  __ `/__  ___/__  __ \_  _ \_  __/___  /
 __ |/ |/ /  /  __/_  /  _  / / / / // /_/ / _  /    _  / / //  __// /_  __  /_
 ____/|__/   \___/ /_/   /_/ /_/ /_/ \__,_/  /_/     /_/ /_/ \___/ \__/  _____/
                                   F R E I F U N K   W E I M A R
+EOF
+cat << EOF >> ./EMBEDDED_FILES/etc/banner
 -------------------------------------------------------------------------------
 OpenWrt: $version_code
 Packages: $(git branch --show-current), $(git describe --always --dirty --tags)
