@@ -112,7 +112,7 @@ echo "WEIMARNETZ_PACKAGES_BRANCH=$(git branch --show-current)" >> ./EMBEDDED_FIL
 echo "WEIMARNETZ_PACKAGES_REV=$(git rev-parse $(git branch --show-current))" >> ./EMBEDDED_FILES/etc/weimarnetz_release
 
 version_code=$(cat ib/.config|grep CONFIG_VERSION_CODE=|cut -d '=' -f 2|tr -d '\",')
-cat << EOF > ./EMBEDDED_FILES/etc/banner
+cat << "EOF" > ./EMBEDDED_FILES/etc/banner
 ___       __      _____                                           _____
 __ |     / /_____ ___(_)_______ ___ ______ ________________ _____ __  /_______
 __ | /| / / _  _ \__  / __  __ `__ \_  __ `/__  ___/__  __ \_  _ \_  __/___  /
