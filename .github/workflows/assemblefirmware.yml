@@ -41,8 +41,11 @@ jobs:
 
     # Build firmware for ar71xx target
     - name: Assemble OpenWrt ${{ matrix.openwrt }} for target ${{ matrix.target }} 
+      env:
+        PACKAGE_SIGNING_KEY: ${{ secrets.PACKAGE_SIGNING_PRIVATE_KEY }}
       run: |
         cd assemble
+        echo "$PACKAGE_SIGNING_KEY" > keys/key-build
         ./compile_packages.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
         ./configure_imagebuilder.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
         ./assemble_firmware.sh -t ${{ matrix.target }} -i "ib/" -u weimarnetz -o ${{ matrix.openwrt }} -e "EMBEDDED_FILES/"

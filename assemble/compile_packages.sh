@@ -88,8 +88,10 @@ info "Download and extract sdk"
 wget -qO "$TEMP_DIR/sdk.tar.xz"  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
 mkdir "$TEMP_DIR/sdk"
 tar -xf "$TEMP_DIR/sdk.tar.xz" --strip-components=1 -C "$TEMP_DIR/sdk"
+cp keys/key-build* "$TEMP_DIR/sdk"
 
 cd "$TEMP_DIR/sdk"
+ls -al
 cat << EOF >> feeds.conf
 src-link packages_weimar ../../../../
 EOF
@@ -97,7 +99,11 @@ EOF
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 make defconfig
-./staging_dir/host/bin/usign -G -s ./key-build -p ./key-build.pub -c "Local build key"
+if [[ ! -f "key-build" ]]; then
+  rm key-build*
+  ./staging_dir/host/bin/usign -G -s ./key-build -p ./key-build.pub -c "Local build key"
+  cp key-build* ../../keys
+fi
 for package in $(cat feeds/packages_weimar.index|grep Source-Makefile:|cut -d '/' -f 4); do
   make package/$package/compile;
 done
