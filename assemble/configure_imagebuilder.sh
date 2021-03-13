@@ -106,6 +106,7 @@ echo "src custom file://$(to_absolute_path packages_weimar)" >> $TEMP_DIR/ib/rep
 
 cp -r $TEMP_DIR/ib ./
 
+mkdir -p ./ib/keys
 cat keys/key-build.pub > "./ib/keys/$(./ib/staging_dir/host/bin/usign -F -p keys/key-build.pub)"
 mkdir -p ./EMBEDDED_FILES/etc
 echo "WEIMARNETZ_PACKAGES_DESCRIPTION=$(git describe --always --dirty --tags)" > ./EMBEDDED_FILES/etc/weimarnetz_release

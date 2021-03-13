@@ -91,7 +91,6 @@ tar -xf "$TEMP_DIR/sdk.tar.xz" --strip-components=1 -C "$TEMP_DIR/sdk"
 cp keys/key-build* "$TEMP_DIR/sdk"
 
 cd "$TEMP_DIR/sdk"
-ls -al
 cat << EOF >> feeds.conf
 src-link packages_weimar ../../../../
 EOF
