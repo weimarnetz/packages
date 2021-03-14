@@ -6,6 +6,7 @@
 -firewall
 -opkg
 -wpad-basic
+-stubby
 hostapd-mini
 #kmod-sched-cake
 kmod-ipt-nat
