@@ -12,7 +12,6 @@ kmod-ipt-nat
 kmod-ipt-conntrack
 iptables-mod-ipopt
 dnsmasq
-stubby
 rpcd-mod-iwinfo
 rpcd
 iw
