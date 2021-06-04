@@ -149,8 +149,7 @@ for model in $PROFILES ; do
 	info "Building a profile for $profile"
 
 	profile="$(echo $model | cut -d';' -f 1)"
-	model_packages=""
-	model_packages="$(echo $model | cut -d';' -f 2)"
+	model_packages="$(echo $model | cut -d';' -s -f 2)"
 
 	# profiles can have a suffix. like 4mb devices get a smaller package list pro use case
 	# UBNT:4MB -> profile "UBNT" suffix "4MB"
@@ -183,7 +182,7 @@ for model in $PROFILES ; do
 		info "Using package list $package_list"
 
 		packages=$(parse_pkg_list_file "${PKGLIST_DIR}/${package_list}.txt")
-		packages="$packages $model_packages"
+		packages="${packages} ${model_packages}"
 
 		if [ -z "${packages}" ] ; then
 			info "skipping this usecase, as package list is empty"
