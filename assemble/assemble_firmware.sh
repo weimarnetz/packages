@@ -146,10 +146,12 @@ failed_profiles=
 
 
 for model in $PROFILES ; do
-	info "Building a profile for $profile"
+	info "Building an image for $model"
 
 	profile="$(echo $model | cut -d';' -f 1)"
+	info "profile is $profile"
 	model_packages="$(echo $model | cut -d';' -s -f 2)"
+	info "we include these extra packages: $model_packages"
 
 	# profiles can have a suffix. like 4mb devices get a smaller package list pro use case
 	# UBNT:4MB -> profile "UBNT" suffix "4MB"
