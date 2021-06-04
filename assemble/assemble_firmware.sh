@@ -145,7 +145,7 @@ info $DEST_DIR
 failed_profiles=
 
 
-for model in $PROFILES ; do
+for model in "$PROFILES" ; do
 	info "Building an image for $model"
 
 	profile="$(echo $model | cut -d';' -f 1)"
