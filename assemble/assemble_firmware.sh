@@ -142,15 +142,16 @@ echo $DEST_DIR
 # sanitize dest_dir
 DEST_DIR=$(to_absolute_path "$DEST_DIR")
 info $DEST_DIR
+failed_profiles=
 
 
 for model in $PROFILES ; do
 	info "Building a profile for $profile"
 
 	profile="$(echo $model | cut -d';' -f 1)"
+	model_packages=""
 	model_packages="$(echo $model | cut -d';' -f 2)"
 
-	failed_profiles=
 	# profiles can have a suffix. like 4mb devices get a smaller package list pro use case
 	# UBNT:4MB -> profile "UBNT" suffix "4MB"
 	suffix="$(echo $profile | cut -d':' -f 2)"
@@ -210,7 +211,7 @@ for model in $PROFILES ; do
 		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${base_target_dir}" $img_params || failed_profiles="${profile}; ${failed_profiles}" 
 
 	done
-	if [ -n "$failed_profiles" ]; then
-		echo "We weren't able to build the following profiles for : ${failed_profiles}." >> ${DEST_DIR}/${base_target_dir}/failedprofiles.txt
-	fi
 done
+if [ -n "$failed_profiles" ]; then
+	echo "We weren't able to build the following profiles for : ${failed_profiles}." >> ${DEST_DIR}/${base_target_dir}/failedprofiles.txt
+fi
