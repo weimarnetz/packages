@@ -92,7 +92,7 @@ ubnt_bullet-m-xw
 ubnt_lap-120
 ubnt_nanobeam-ac;-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct kmod-ath10k ath10k-firmware-qca988x
 ubnt_nanostation-ac;-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct kmod-ath10k ath10k-firmware-qca988x
-ubnt_nanostation-ac;-loco-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct kmod-ath10k ath10k-firmware-qca988x
+ubnt_nanostation-ac-loco;-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct kmod-ath10k ath10k-firmware-qca988x
 ubnt_nanostation-loco-m
 ubnt_nanostation-loco-m-xw
 ubnt_nanostation-m
