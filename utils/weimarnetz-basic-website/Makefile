@@ -30,7 +30,7 @@ define Build/Compile
 endef
 
 define Package/weimarnetz-basic-website/install
-	$(CP) -R /root/* $(1)/
+	$(CP) -R root/* $(1)/
 endef
 
 $(eval $(call BuildPackage,weimarnetz-basic-website))
