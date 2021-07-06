@@ -21,7 +21,6 @@ define Package/weimarnetz-basic-website/description
 endef
 
 define Build/Prepare
-	mkdir -p $(PKG_BUILD_DIR)
 endef
 
 define Build/Configure
@@ -31,7 +30,7 @@ define Build/Compile
 endef
 
 define Package/weimarnetz-basic-website/install
-	$(CP) -R $(PKG_BUILD_DIR)/root/* $(1)/
+	$(CP) -R /root/* $(1)/
 endef
 
 $(eval $(call BuildPackage,weimarnetz-basic-website))
