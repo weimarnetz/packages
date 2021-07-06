@@ -40,7 +40,6 @@ olsrd-mod-dyn-gw
 vtun 
 resolveip
 freifunk-common
-luci-app-owm-cmd
 libiwinfo-lua
 
 # Weimarnetz
