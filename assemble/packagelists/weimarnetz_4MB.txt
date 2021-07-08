@@ -28,6 +28,8 @@ iw
 # GUI-basics
 uhttpd
 uhttpd-mod-ubus
+luci-app-owm-cmd
+
 # OLSR
 olsrd
 olsrd-mod-arprefresh
@@ -41,7 +43,6 @@ olsrd-mod-dyn-gw
 vtun 
 resolveip
 freifunk-common-olsr
-libiwinfo-lua
 
 # Weimarnetz
 weimarnetz-ffwizard
