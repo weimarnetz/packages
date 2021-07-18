@@ -14,3 +14,5 @@ Routers we want to build images for are defined in the `profiles` directory. It 
 Device packages must be space separated, prepend a `-` if you don't want a package to be installed.
 
 In the `packagelist` repository you can configure packages that are globally installed. The suffixes after `_` correspond to the suffixes in the `profiles` directory. It is possible to define packages for every OpenWrt Build we support.
+
+Currently we build images for OpenWrt 19.07 and OpenWrt 21.02.
