@@ -29,6 +29,7 @@ iw
 uhttpd
 uhttpd-mod-ubus
 luci-app-owm-cmd
+luci-compat
 
 # OLSR
 olsrd
