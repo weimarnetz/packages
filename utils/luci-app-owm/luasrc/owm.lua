@@ -19,7 +19,6 @@ local sys = require "luci.sys"
 local uci = require "luci.model.uci".cursor_state()
 local util = require "luci.util"
 local json = require "luci.json"
-local netm = require "luci.model.network"
 local sysinfo = luci.util.ubus("system", "info") or { }
 local boardinfo = luci.util.ubus("system", "board") or { }
 local table = require "table"
@@ -182,16 +181,6 @@ function fetch_olsrd_neighbors(interfaces)
 					if #interfaces ~= 0 then
 						for _,iface in ipairs(interfaces) do
 							local name = iface['.name']
-							local net = netm:get_network(name)
-							local device = net and net:get_interface()
-							if device and device:ip6addrs() then
-								local local_ip = ip.IPv6(link.localIP)
-								for _, a in ipairs(device:ip6addrs()) do
-									if a:host() == local_ip:host() then
-										data[index]['interface'] = name
-									end
-								end
-							end
 						end
 					end
 				end
@@ -237,20 +226,9 @@ end
 
 function get()
 	local root = {}
-	local ntm = netm.init()
-	local devices  = ntm:get_wifidevs()
 	local assoclist = {}
 	local position = get_position()
 	local version = get_version()
-	for _, dev in ipairs(devices) do
-		for _, net in ipairs(dev:get_wifinets()) do
-			assoclist[#assoclist+1] = {}
-			assoclist[#assoclist]['ifname'] = net:ifname()
-			assoclist[#assoclist]['network'] = net:shortname()
-			assoclist[#assoclist]['device'] = dev:name()
-			assoclist[#assoclist]['list'] = net:assoclist()
-		end
-	end
 	root.type = 'node' --owm
 	root.updateInterval = 600
 	local info = nixio.sysinfo()
