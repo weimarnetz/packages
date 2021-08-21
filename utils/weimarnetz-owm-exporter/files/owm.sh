@@ -91,7 +91,6 @@ latitude="$(uci_get system @system[-1] latitude)"
 #
 type="node"
 if [ -z "$latitude" ] || [ -z "$longitude" ]; then
-	printf "latitude/longitude is not set.\nStopping now...\n"
 	type="node_no_loc"	
 fi
 
