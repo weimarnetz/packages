@@ -1,0 +1,6 @@
+#!/bin/sh 
+
+. /lib/functions.sh
+
+uci_set uhttpd main index_page "index2.html"
+uci_commit

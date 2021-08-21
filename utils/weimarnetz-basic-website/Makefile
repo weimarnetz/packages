@@ -30,7 +30,10 @@ define Build/Compile
 endef
 
 define Package/weimarnetz-basic-website/install
-	$(CP) -R root/* $(1)/
+	$(INSTALL_DIR) $(1)/www/
+	$(CP) -R files/www/index2.html $(1)/www/index2.html
+	$(INSTALL_DIR) $(1)/etc/uci-defaults/
+	$(CP) -R files/etc/uci-defaults/weimarnetz-basic-website-defaults $(1)/etc/uci-defaults/weimarnetz-basic-website-defaults
 endef
 
 $(eval $(call BuildPackage,weimarnetz-basic-website))
