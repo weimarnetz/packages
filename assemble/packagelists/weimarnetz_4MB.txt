@@ -28,7 +28,6 @@ iw
 # GUI-basics
 uhttpd
 uhttpd-mod-ubus
-luci-app-owm-cmd
 
 # OLSR
 olsrd
@@ -47,3 +46,4 @@ freifunk-common-olsr
 # Weimarnetz
 weimarnetz-ffwizard
 weimarnetz-basic-website
+weimarnetz-owm-exporter
