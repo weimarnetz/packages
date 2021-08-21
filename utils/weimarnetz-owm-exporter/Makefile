@@ -12,7 +12,7 @@ define Package/weimarnetz-owm-exporter
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
   TITLE:=Weimarnetz owm json exporter 
-  DEPENDS:=+weimarnetz-ffwizard
+  DEPENDS:=+weimarnetz-ffwizard +olsrd-mod-jsoninfo
 endef
 
 define Package/weimarnetz-owm-exporter/description
