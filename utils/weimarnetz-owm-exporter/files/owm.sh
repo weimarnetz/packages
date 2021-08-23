@@ -91,6 +91,7 @@ latitude="$(uci_get system @system[-1] latitude)"
 #
 type="node"
 if [ -z "$latitude" ] || [ -z "$longitude" ]; then
+	printf "latitude/longitude is not set.\nFYI ...\n"
 	type="node_no_loc"	
 fi
 
@@ -180,7 +181,6 @@ if [ "$showMail" -eq "1" ]; then
 	phone="$(uci_get freifunk contact phone)"
 else
 	mail="Email hidden"
-	phone="phone hidden"
 fi
 homepage="$(uci_get freifunk contact homepage)" # whitespace-separated, with single quotes, if string contains whitspace
 note="$(uci_get freifunk contact note)"
