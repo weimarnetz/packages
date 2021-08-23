@@ -56,7 +56,7 @@ olsr4_links() {
 	json_select $2
 	json_get_var localIP localIP
 	json_get_var remoteIP remoteIP
-	remotehost="$(nslookup $remoteIP | grep name | sed -e 's/.*name = \(.*\)/\1/')"
+	remotehost="$(nslookup $remoteIP | grep name | sed -e 's/.*name = \(.*\)/\1/'  -e 's/mid[0-9]\.//')"
 	json_get_var linkQuality linkQuality
 	json_get_var linkCost linkCost
 	json_get_var olsrInterface olsrInterface
@@ -69,7 +69,7 @@ olsr6_links() {
 	json_select $2
 	json_get_var localIP localIP
 	json_get_var remoteIP remoteIP
-	remotehost="$(nslookup $remoteIP | grep name | sed -e 's/.*name = \(.*\)/\1/')"
+	remotehost="$(nslookup $remoteIP | grep name | sed -e 's/.*name = \(.*\)/\1/' -e 's/mid[0-9]\.//')"
 	json_get_var linkQuality linkQuality
 	json_get_var linkCost linkCost
 	json_get_var olsrInterface olsrInterface
@@ -179,7 +179,7 @@ if [ "$showMail" -eq "1" ]; then
 	mail="$(uci_get freifunk contact mail)"
 	phone="$(uci_get freifunk contact phone)"
 else
-	mail="email hidden"
+	mail="Email hidden"
 	phone="phone hidden"
 fi
 homepage="$(uci_get freifunk contact homepage)" # whitespace-separated, with single quotes, if string contains whitspace
@@ -266,7 +266,9 @@ json_add_object system
 		json_add_int "" $uptime
 	json_close_array
 	json_add_array loadavg
-		json_add_double "" $load5
+		json_add_double $load1
+		json_add_double $load5
+		json_add_double $load15
 	json_close_array
 json_close_object
 
@@ -301,6 +303,7 @@ json_add_array links
 		json_add_string id "$3"
 		json_add_double quality "$4"
 		json_add_double linkCost "$5"
+		json_add_string interface "$6"
 		json_close_object
 		IFS=';'
 	done
@@ -313,6 +316,7 @@ json_add_array links
 		json_add_string id "$3"
 		json_add_double quality "$4"
 		json_add_double linkCost "$5"
+		json_add_string interface "$6"
 		json_close_object
 		IFS=';'
 	done
