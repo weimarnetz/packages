@@ -329,8 +329,10 @@ json_close_array
 # General node info
 # Bug in add_double function. Mostly it adds unwanted digits
 # but they disappear, if we send stuff to the server
-json_add_double latitude $latitude
-json_add_double longitude $longitude
+if [ -n "$latitude" ] && [ -n "$longitude" ]; then
+	json_add_double latitude $latitude
+	json_add_double longitude $longitude
+fi
 json_add_string hostname "$hostname"
 json_add_int updateInterval 3600
 json_add_string hardware "$system"
