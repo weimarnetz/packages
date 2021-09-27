@@ -31,9 +31,12 @@ endef
 
 define Package/weimarnetz-basic-website/install
 	$(INSTALL_DIR) $(1)/www/
-	$(CP) -R files/www/index2.html $(1)/www/index2.html
+	$(CP) files/www/index_basic.html $(1)/www/index_basic.html
+	$(CP) files/www/cgi-bin-status.html $(1)/www/cgi-bin-status.html
+	$(INSTALL_DIR) $(1)/www/cgi-bin/
+	$(INSTALL_BIN) files/www/cgi-bin/status.sh $(1)/www/cgi-bin/status.sh
 	$(INSTALL_DIR) $(1)/etc/uci-defaults/
-	$(CP) -R files/etc/uci-defaults/weimarnetz-basic-website-defaults $(1)/etc/uci-defaults/weimarnetz-basic-website-defaults
+	$(CP) files/etc/uci-defaults/weimarnetz-basic-website-defaults $(1)/etc/uci-defaults/weimarnetz-basic-website-defaults
 endef
 
 $(eval $(call BuildPackage,weimarnetz-basic-website))

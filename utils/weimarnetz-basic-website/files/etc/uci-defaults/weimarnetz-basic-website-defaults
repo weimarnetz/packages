@@ -2,5 +2,6 @@
 
 . /lib/functions.sh
 
-uci_set uhttpd main index_page "index2.html"
+uci_set uhttpd main index_page "index_basic.html"
+uci_set uhttpd main error_page "/"
 uci_commit
