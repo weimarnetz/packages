@@ -1,0 +1,16 @@
+<%+header%>
+<script type="text/javascript" src="<%=resource%>/view/example/template.js"></script>
+
+<div id="luci-app-example"></div>
+
+<script type="text/javascript">
+    data = {};
+    data["ubus_rpc_session"] = "<%=luci.dispatcher.context.authsession%>"
+    origin = document.location.href.replace(location.pathname, "")
+    ubus_url = origin + "/ubus/"
+
+    var uci_data = ubus_call("uci", "get", {'config': 'example'});
+
+    renderExampleInfo(uci_data);
+</script>
+<%+footer%>
