@@ -92,10 +92,8 @@ cp keys/key-build* "$TEMP_DIR/sdk"
 
 cd "$TEMP_DIR/sdk"
 cat << EOF >> feeds.conf
+src-link base ../../ib/packages
 src-link packages_weimar ../../../../
-src-git base https://git.openwrt.org/openwrt/openwrt.git
-src-git packages https://git.openwrt.org/feed/packages.git
-src-git luci https://github.com/openwrt/luci.git
 EOF
 
 ./scripts/feeds update -a
