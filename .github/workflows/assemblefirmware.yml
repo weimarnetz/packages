@@ -39,6 +39,13 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
 
+    - name: Build po2lmo
+      run: |
+        git clone https://github.com/weimarnetz/po2lmo
+        cd po2lmo
+        make
+        sudo make install
+
     # Build firmware for ar71xx target
     - name: Assemble OpenWrt ${{ matrix.openwrt }} for target ${{ matrix.target }} 
       env:

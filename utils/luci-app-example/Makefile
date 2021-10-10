@@ -6,6 +6,6 @@ include $(TOPDIR)/rules.mk
 LUCI_TITLE:=LuCI example app for js based luci
 LUCI_DEPENDS:=+luci-base +uhttpd-mod-ubus
 
-include ../../weimarnetz-generic.mk
+include ../../luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
