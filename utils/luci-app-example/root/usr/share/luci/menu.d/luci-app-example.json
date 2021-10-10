@@ -19,12 +19,12 @@
 		}
 	},
 
-	"admin/example/template": {
-		"title": "Template",
+	"admin/example/html": {
+		"title": "HTML Page",
 		"order": 2,
 		"action": {
-			"type": "template",
-			"path": "example/template"
+			"type": "view",
+			"path": "example/htmlview"
 		}
 	}
 }
