@@ -1,0 +1,34 @@
+{
+	"luci-app-weimarnetz-backend": {
+		"description": "Grant UCI access to the weimarnetz luci app",
+		"read": {
+			"ubus": {
+				"uci": [
+					"get"
+				],
+				"registrator": [
+					"status"
+				]
+			},
+			"uci": [
+				"ffwizard"
+			]
+		},
+		"write": {
+			"ubus": {
+				"uci": [
+					"set",
+					"commit"
+				],
+				"registrator": [
+					"heartbeat",
+					"register",
+					"given_number"
+				]
+			},
+			"uci": [
+				"ffwizard"
+			]
+		}
+	}
+}
