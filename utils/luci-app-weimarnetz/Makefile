@@ -44,3 +44,5 @@ define Package/luci-app-weimarnetz/install
 endef
 
 $(eval $(call BuildPackage,luci-app-weimarnetz))
+
+include ../../luci.mk

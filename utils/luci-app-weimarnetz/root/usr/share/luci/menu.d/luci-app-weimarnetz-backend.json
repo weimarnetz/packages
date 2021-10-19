@@ -1,12 +1,20 @@
 {
   "admin/weimarnetz": {
     "title": "Weimarnetz",
-    "action": {
-      "type": "view",
-      "path": "minidlna"
-    },
-    "depends": {
-      "uci": { "minidlna": true }
-    }
-  }
+		"order": 10,
+		"action": {
+			"type": "firstchild"
+		},
+		"depends": {
+			"acl": [ "luci-app-weimarnetz-backend" ]
+		}
+  },
+	"admin/weimarnetz/registrator": {
+		"title": "Weimarnetz Registrator",
+		"order": 1,
+		"action": {
+			"type": "view",
+			"path": "weimarnetz/registrator"
+		}
+	}
 }
