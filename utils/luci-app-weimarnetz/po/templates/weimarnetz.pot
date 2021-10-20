@@ -1,140 +1,205 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:20
 msgid "Aktuelle Diskussionen"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:7
 msgid "Aktuelle Meldungen"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:8
 msgid "Allgemein"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:8
+msgid "Allgemeine Einstellungen"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:35
 msgid "Bei VPN-Ausfall Internet sperren"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:190
 msgid ""
 "Der Router ist danach unter einer neuen Adresse erreichbar und kann diese "
 "Seite nicht mehr aktualisieren. Warte ein paar Sekunden ab!"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:26
 msgid ""
 "Diskussionen werden geladen. Falls nicht, hast Du entweder Javascript "
 "deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:11
 msgid "Eigene HNAs"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:7
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:15
+msgid "Einstellungen"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:13
+msgid "Einstellungen für OLSR"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:7
 msgid "Einstellungen fürs Weimarnetz"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:16
 msgid "Email veröffentlichen"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:191
 msgid "Folge dann diesem"
 msgstr ""
 
-msgid "IBSS Kompatabilität aktivieren."
+#: utils/luci-app-weimarnetz/root/usr/share/rpcd/acl.d/luci-app-weimarnetz-backend.json:3
+msgid "Grant UCI access to the weimarnetz luci app"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:39
 msgid ""
 "Informationen zu Spenden werden geladen. Falls nicht, hast Du entweder "
 "Javascript deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/controller/weimarnetz/app.lua:19
 msgid "Informationsseite"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/controller/weimarnetz/app.lua:26
 msgid "Karte"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/controller/weimarnetz/app.lua:33
 msgid "Karte Routerumgebung"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/controller/weimarnetz/app.lua:40
 msgid "Karte Überblick"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:151
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:162
 msgid "Knoten registrieren"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:154
 msgid "Knotennummer selbst setzen und registrieren"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:31
 msgid "Kompletten Internetverkehr über VPN leiten"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:21
 msgid "LAN-Zugriff unterbinden"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:191
 msgid "Link"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:188
 msgid "Loading"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:33
 msgid "Lokale Knotennummer"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:13
 msgid ""
 "Meldungen werden geladen. Falls nicht, hast Du entweder Javascript im "
 "Browser deaktiviert oder Dir steht kein Internet zur Verfuegung."
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:24
 msgid ""
 "Mit dieser Option kann der WAN-Port (das ist der Port, über den das Internet "
 "angeschlossen wird) für den Zugriff von außen gesperrt werden. Eine Änderung "
 "erfordert aktuell einen Neustart des Routers."
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:41
 msgid "Nachricht vom Registratorclient"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:62
 msgid "Netzwerkadresse"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:62
 msgid "Netzwerkadresse, die in OLSR angekündigt werden soll"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:63
 msgid "Netzwerkmaske"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:63
 msgid "Netzwerkmaske, die zu dem Netzwerk gehört"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:189
 msgid "Neue Netzwerkkonfiguration wird angewendet..."
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:61
+msgid "Neues Netzwerk ankündigen (Name eingeben)"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:32
 msgid "Nur für Verbindung mit der Weimarnetz-Wolke"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:144
 msgid "Nächste freie Knotennummer registrieren"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:13
 msgid "OLSR"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:116
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:23
 msgid "Registrator"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:141
 msgid "Registrieren"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:37
 msgid "Registrierte Knotennummer"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:40
 msgid "SSID"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:43
+msgid "SSID darf nicht länger als 32 Zeichen sein!"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:40
 msgid "SSID für das öffentlich zugängliche Netzwerk"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:10
 msgid "SSIDs"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:131
 msgid "Send Heartbeat"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:56
 msgid ""
 "Serivce, der per OLSR im Netz angekündigt werden soll. Das Format sieht so "
 "aus: '&lt;service url&gt;|&lt;protocol&gt;|&lt;Beschreibung&gt;'. Das "
@@ -143,9 +208,15 @@ msgid ""
 "Beschreibung darf keine Umlaute enthalten."
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:27
+msgid "Soll VPN überhaupt aktiviert werden?"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:21
 msgid "Soll Zugriff auf das eigene lokale Netzwerk blockiert werden?"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:17
 msgid ""
 "Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring"
 "\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort "
@@ -153,61 +224,76 @@ msgid ""
 "die Adresse nur auf deinem Router sichtbar."
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:35
 msgid ""
 "Soll die Nutzung des lokalen Internetzugang verweigert werden, wenn VPN "
 "ausfällt? Ist diese Option deaktiviert wird der lokale Internetanschluss "
 "genutzt. Auch für Datenverkehr aus dem Mesh!"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:33
 msgid "Spendenaufruf"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:118
 msgid "Status"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:125
 msgid "Update Status"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:12
 msgid "VPN"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:27
 msgid "VPN aktivieren"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:30
 msgid "VPN-Modus"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:12
+msgid "Verbindungen zum VPN-Server konfigurieren"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:10
+msgid "WLAN-Namen konfigurieren für alle Geräte (z.B. 2,4GHz und ggf. 5GHz)"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:3
 msgid "Weimarnetz"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:2
 msgid "Weimarnetz News"
 msgstr ""
 
-msgid "Weimarnetz Registrator"
-msgstr ""
-
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/map_router.htm:14
 msgid "Weimarnetz Routerumgebung"
 msgstr ""
 
-msgid "Weimarnetz Settings"
-msgstr ""
-
+#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/map_overview.htm:6
 msgid "Weimarnetz Überblick"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:11
+msgid "Weitere Netze ankündigen"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:30
 msgid ""
 "Wie soll das VPN genutzt werden? Kompletten Datenverkehr über VPN "
 "transportieren oder VPN nur für Verbindungen zu anderen Geräten im Mesh "
 "nutzen"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:24
 msgid "Zugriff auf WAN-Port sperren"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:137
 msgid "Zurücksetzen"
-msgstr ""
-
-msgid ""
-"Zusätzlich zum 802.11s Mesh gibt es ein IBSS (Ad-Hoc Modus) Interface für "
-"das Mesh. Notwendig zur Kommunikation mit älterer Firmware (pre brauhaus)"
 msgstr ""
