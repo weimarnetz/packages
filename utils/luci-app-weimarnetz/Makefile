@@ -41,6 +41,6 @@ define Package/luci-app-weimarnetz/install
 	$(CP) ./i18n/* $(1)/usr/lib/lua/luci/i18n
 endef
 
-$(eval $(call BuildPackage,luci-app-weimarnetz))
-
 include ../../luci.mk
+
+$(eval $(call BuildPackage,luci-app-weimarnetz))
