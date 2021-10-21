@@ -44,6 +44,22 @@ const table = '\
 </div>\
 ';
 
+const css = '\
+    input[type="number"] {\
+        border-bottom: 2px solid transparent;\
+        box-shadow: inset 0 0 1px var(--main-dark-color);\
+        line-height: 1.5rem;\
+        min-height: calc(1.5rem + 2px);\
+        min-width: 4rem;\
+        border-radius: .25em;\
+        padding: 0 .2rem;\
+        margin-right: 1rem;\
+    }\
+    input[type="number"]:focus {\
+        border-color: var(--main-dark-color);\
+    }\
+';
+
 var RPC = {
     listeners: [],
     on: function on(event, callback) {
@@ -113,6 +129,7 @@ return view.extend({
     },
     render: function (data) {
         var body = E('div', { 'class': 'cbi-map' }, [
+            E('style', { 'type': 'text/css' }, [css]),
             E('h2', _('Registrator')),
             E('div', { 'class': 'cbi-section' }, [
                 E('legend', _('Status')),
@@ -153,13 +170,25 @@ return view.extend({
                     E('div', { 'class': 'tr' }, [
                         E('div', { 'class': 'td left' }, _('Knotennummer selbst setzen und registrieren')),
                         E('div', { 'class': 'td right' }, [
-                            E('input', { 'id': 'nodeNumberInput', 'class': 'cbi-input-text select', 'min': 1, 'max': 980, 'type': 'number' }),
-                            E('button', {
-                                'class': 'cbi-button',
-                                'click': function (ev) {
-                                    RPC.sendRegisterWithGivenNumber();
-                                }
-                            }, _('Knoten registrieren'))])
+                            E('div', {}, [
+                                E('span', {}, _('Neue Knotennummer: ')),
+                                E('input', { 'id': 'nodeNumberInput', 'class': 'cbi-input-text select', 'min': 2, 'max': 980, 'type': 'number' }),
+                                E('button', {
+                                    'class': 'cbi-button',
+                                    'click': function (ev) {
+                                        const nodenumber = document.getElementById('nodeNumberInput').value;
+                                        const newNodeNumber = parseInt(nodenumber);
+                                        if (newNodeNumber > 980 || newNodeNumber < 2) {
+                                            var output = document.getElementById('newnodenumber-output');
+                                            output.innerHTML = '<p class="label warning">' + _('Die Knotennummer muss zwischen 2 und 980 liegen!') + '</p>'
+                                            output.parentNode.removeAttribute('hidden');    
+                                        } else {
+                                            RPC.sendRegisterWithGivenNumber(newNodeNumber);
+                                        }
+                                    }
+                                }, _('Knoten registrieren'))
+                            ])
+                        ])
                     ])
                 ]),
                 E('div', { 'class': 'cbi-section', 'hidden': true }, [
@@ -185,10 +214,10 @@ return view.extend({
             var output = document.getElementById('newnodenumber-output');
 
             output.innerHTML =
-                '<img src="/luci-static/resources/icons/loading.gif" alt="' + _('Loading') + '" style="vertical-align:middle" /> ' +
+                '<p class="spinning"> ' +
                 _('Neue Netzwerkkonfiguration wird angewendet...') + '<br/>' +
                 _('Der Router ist danach unter einer neuen Adresse erreichbar und kann diese Seite nicht mehr aktualisieren. Warte ein paar Sekunden ab!') + '<br/>' +
-                _('Folge dann diesem') + ' <a href="http://frei.funk/' + window.location.pathname + '">' + _('Link') + '</a>';
+                _('Folge dann diesem') + ' <a href="http://frei.funk/' + window.location.pathname + '">' + _('Link') + '</a></p>';
             if (output) {
                 output.parentNode.removeAttribute('hidden');
             }

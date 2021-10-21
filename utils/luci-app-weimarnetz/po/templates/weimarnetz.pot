@@ -21,10 +21,14 @@ msgstr ""
 msgid "Bei VPN-Ausfall Internet sperren"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:190
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:219
 msgid ""
 "Der Router ist danach unter einer neuen Adresse erreichbar und kann diese "
 "Seite nicht mehr aktualisieren. Warte ein paar Sekunden ab!"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:183
+msgid "Die Knotennummer muss zwischen 2 und 980 liegen!"
 msgstr ""
 
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:26
@@ -39,6 +43,7 @@ msgstr ""
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:7
 #: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:15
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:15
 msgid "Einstellungen"
 msgstr ""
 
@@ -54,7 +59,7 @@ msgstr ""
 msgid "Email veröffentlichen"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:191
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:220
 msgid "Folge dann diesem"
 msgstr ""
 
@@ -84,12 +89,12 @@ msgstr ""
 msgid "Karte Überblick"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:151
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:162
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:168
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:189
 msgid "Knoten registrieren"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:154
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:171
 msgid "Knotennummer selbst setzen und registrieren"
 msgstr ""
 
@@ -101,12 +106,8 @@ msgstr ""
 msgid "LAN-Zugriff unterbinden"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:191
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:220
 msgid "Link"
-msgstr ""
-
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:188
-msgid "Loading"
 msgstr ""
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:33
@@ -146,7 +147,11 @@ msgstr ""
 msgid "Netzwerkmaske, die zu dem Netzwerk gehört"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:189
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:174
+msgid "Neue Knotennummer:"
+msgstr ""
+
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:218
 msgid "Neue Netzwerkkonfiguration wird angewendet..."
 msgstr ""
 
@@ -158,7 +163,7 @@ msgstr ""
 msgid "Nur für Verbindung mit der Weimarnetz-Wolke"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:144
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:161
 msgid "Nächste freie Knotennummer registrieren"
 msgstr ""
 
@@ -166,12 +171,13 @@ msgstr ""
 msgid "OLSR"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:116
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:133
 #: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:23
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:23
 msgid "Registrator"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:141
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:158
 msgid "Registrieren"
 msgstr ""
 
@@ -201,7 +207,7 @@ msgstr ""
 msgid "SSIDs"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:131
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:148
 msgid "Send Heartbeat"
 msgstr ""
 
@@ -241,11 +247,11 @@ msgstr ""
 msgid "Spendenaufruf"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:118
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:135
 msgid "Status"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:125
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:142
 msgid "Update Status"
 msgstr ""
 
@@ -270,6 +276,7 @@ msgid "WLAN-Namen konfigurieren für alle Geräte (z.B. 2,4GHz und ggf. 5GHz)"
 msgstr ""
 
 #: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:3
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:3
 msgid "Weimarnetz"
 msgstr ""
 
@@ -300,6 +307,6 @@ msgstr ""
 msgid "Zugriff auf WAN-Port sperren"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:137
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:154
 msgid "Zurücksetzen"
 msgstr ""
