@@ -35,9 +35,7 @@ endef
 define Package/luci-app-weimarnetz/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller/weimarnetz
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model
 	$(CP) $(PKG_BUILD_DIR)/luasrc/controller/weimarnetz/* $(1)/usr/lib/lua/luci/controller/weimarnetz
-	$(CP) $(PKG_BUILD_DIR)/luasrc/model/* $(1)/usr/lib/lua/luci/model
 	$(CP) $(PKG_BUILD_DIR)/luasrc/view/* $(1)/usr/lib/lua/luci/view
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
 	$(CP) ./i18n/* $(1)/usr/lib/lua/luci/i18n
