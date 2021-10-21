@@ -42,30 +42,5 @@ function index()
    page.target   = template("weimarnetz/map_overview")
    page.setuser  = false
    page.setgroup = false
-
-   page = node("admin", "weimarnetz")
-   page.target = firstchild()
-   page.title  = _("Weimarnetz")
-   page.order  = 5
-   page.index  = true
-
-   page        = node("admin", "weimarnetz", "settings")
-   page.target = cbi("weimarnetz/settings")
-   page.title  = _("Weimarnetz Settings")
-   page.order  = 6
   
-   page = entry({"admin", "weimarnetz", "update_nodenumber"}, post("update_nodenumber"), nil)
-   page.leaf = true
-
-   page = entry({"admin", "weimarnetz", "local_nodenumber"}, call("registrator_nodenumber"), nil)
-   page.leaf = true
 end
-
-
-
-function registrator_nodenumber()
-  local value = luci.util.ubus("uci", "get", {config = "ffwizard", section = "settings", option= "nodenumber"})
-  luci.http.prepare_content("application/json")
-  luci.http.write_json(value)
-end
-
