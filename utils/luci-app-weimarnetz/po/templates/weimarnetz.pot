@@ -130,19 +130,19 @@ msgstr ""
 msgid "Nachricht vom Registratorclient"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:62
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:58
 msgid "Netzwerkadresse"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:62
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:58
 msgid "Netzwerkadresse, die in OLSR angekündigt werden soll"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:63
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:59
 msgid "Netzwerkmaske"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:63
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:59
 msgid "Netzwerkmaske, die zu dem Netzwerk gehört"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 msgid "Neue Netzwerkkonfiguration wird angewendet..."
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:61
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:57
 msgid "Neues Netzwerk ankündigen (Name eingeben)"
 msgstr ""
 
@@ -187,6 +187,12 @@ msgstr ""
 msgid "SSID darf nicht länger als 32 Zeichen sein!"
 msgstr ""
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:46
+msgid ""
+"SSID darf nur alphanumerischen Zeichen, Klammern, Bindestrich oder "
+"Leerzeichen enthalten!"
+msgstr ""
+
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:40
 msgid "SSID für das öffentlich zugängliche Netzwerk"
 msgstr ""
@@ -199,7 +205,7 @@ msgstr ""
 msgid "Send Heartbeat"
 msgstr ""
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:56
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:52
 msgid ""
 "Serivce, der per OLSR im Netz angekündigt werden soll. Das Format sieht so "
 "aus: '&lt;service url&gt;|&lt;protocol&gt;|&lt;Beschreibung&gt;'. Das "
@@ -218,10 +224,10 @@ msgstr ""
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:17
 msgid ""
-"Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring"
-"\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort "
-"öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist "
-"die Adresse nur auf deinem Router sichtbar."
+"Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/"
+"uebersicht-weimarnetz/status\" target=\"_blank\">Monitoring</a> erscheinen? "
+"Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann man dich "
+"kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."
 msgstr ""
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:35

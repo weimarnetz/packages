@@ -14,7 +14,7 @@ return view.extend({
 
 		var publishEmail = generalSettings.option(form.Flag, "email2owm",
 			_("Email veröffentlichen"),
-			_("Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/monitoring\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."));
+			_("Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de/uebersicht-weimarnetz/status\" target=\"_blank\">Monitoring</a> erscheinen? Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann man dich kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."));
 		publishEmail.rmempty = false;
 		publishEmail.default = '0';
 
@@ -40,17 +40,13 @@ return view.extend({
 		var ssid = s.option(form.Value, "ap_ssid", _("SSID"), _("SSID für das öffentlich zugängliche Netzwerk"));
 		ssid.validate = function(section, value) {
 			if (value.length > 32) {
-				return _('SSID darf nicht länger als 32 Zeichen sein!')
+				return _('SSID darf nicht länger als 32 Zeichen sein!');
+			}
+			if (!value.match(/^[a-zA-Z0-9\ -\(\)]+$/)) {
+				return _('SSID darf nur alphanumerischen Zeichen, Klammern, Bindestrich oder Leerzeichen enthalten!')
 			}
 			return true;
 		}
-		// function ssid: validate(value)
-		// if value: len() <= 32 and value: match("[0-9A-Za-z\ -\(\)]") then
-		// return value
-		// 		else
-		// 				return false
-		// 		end
-		// end
 
 		olsrSettings.addremove = true;
 		var olsrService = olsrSettings.option(form.DynamicList, "service", "OLSR Service", _("Serivce, der per OLSR im Netz angekündigt werden soll. Das Format sieht so aus: '&lt;service url&gt;|&lt;protocol&gt;|&lt;Beschreibung&gt;'. Das Protokoll kann entweder tcp oder udp sein. Die URL, z.B. http://hostname:8080/service muss im Netz des Routers erreichbar sein. Die Beschreibung darf keine Umlaute enthalten."));

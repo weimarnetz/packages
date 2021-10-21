@@ -150,19 +150,19 @@ msgstr ""
 msgid "Nachricht vom Registratorclient"
 msgstr "Message from registrator client"
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:62
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:58
 msgid "Netzwerkadresse"
 msgstr "Network address"
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:62
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:58
 msgid "Netzwerkadresse, die in OLSR angekündigt werden soll"
 msgstr "Network address to be announced via OLSR"
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:63
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:59
 msgid "Netzwerkmaske"
 msgstr "Network mask"
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:63
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:59
 msgid "Netzwerkmaske, die zu dem Netzwerk gehört"
 msgstr "Network mask of this network"
 
@@ -170,7 +170,7 @@ msgstr "Network mask of this network"
 msgid "Neue Netzwerkkonfiguration wird angewendet..."
 msgstr "New network configuration is being applied..."
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:61
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:57
 msgid "Neues Netzwerk ankündigen (Name eingeben)"
 msgstr "Announce new network (type name first)"
 
@@ -207,6 +207,14 @@ msgstr "SSID"
 msgid "SSID darf nicht länger als 32 Zeichen sein!"
 msgstr "SSID must not be longer than 32 characters!"
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:46
+msgid ""
+"SSID darf nur alphanumerischen Zeichen, Klammern, Bindestrich oder "
+"Leerzeichen enthalten!"
+msgstr ""
+"Your SSID may only contain alphanumeric characters, spaces, brackets and "
+"hyphens!"
+
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:40
 msgid "SSID für das öffentlich zugängliche Netzwerk"
 msgstr "SSID for public wifi access point"
@@ -219,7 +227,7 @@ msgstr "SSIDs"
 msgid "Send Heartbeat"
 msgstr "Send Heartbeat"
 
-#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:56
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:52
 msgid ""
 "Serivce, der per OLSR im Netz angekündigt werden soll. Das Format sieht so "
 "aus: '&lt;service url&gt;|&lt;protocol&gt;|&lt;Beschreibung&gt;'. Das "
@@ -243,15 +251,15 @@ msgstr "Should access to your local network be disabled?"
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:17
 msgid ""
-"Soll deine Emailadresse auf unserem <a "
-"href=\"http://weimarnetz.de/monitoring\" target=\"_blank\">Monitoring</a> "
-"erscheinen? Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann "
-"man dich kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."
+"Soll deine Emailadresse auf unserem <a href=\"http://weimarnetz.de"
+"/uebersicht-weimarnetz/status\" target=\"_blank\">Monitoring</a> erscheinen?"
+" Die Adresse ist dort öffentlich einsehbar. Bei Problemen kann man dich "
+"kontaktieren. Sonst ist die Adresse nur auf deinem Router sichtbar."
 msgstr ""
-"Should our email address be published at <a href=\\\"http://weimarnetz.de"
-"/uebersicht-weimarnetz/status\\\" target=\\\"_blank\\\">Monitoring</a>? The "
+"Should our email address be published at <a href=\"http://weimarnetz.de"
+"/uebersicht-weimarnetz/status\" target=\"_blank\">Monitoring</a>? The "
 "address is public available. For problems people can contact you. If not "
-"published your email address is only visible on yourlocal router."
+"published your email address is only visible on yourlocal router.\""
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:35
 msgid ""
