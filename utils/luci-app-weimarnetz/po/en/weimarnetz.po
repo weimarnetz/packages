@@ -10,10 +10,13 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:151
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:20
 msgid "Aktuelle Diskussionen"
 msgstr "Current Discussions"
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:8
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:140
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:7
 msgid "Aktuelle Meldungen"
 msgstr "News"
@@ -42,6 +45,7 @@ msgstr ""
 msgid "Die Knotennummer muss zwischen 2 und 980 liegen!"
 msgstr "The node number must be between 2 and 980!"
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:156
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:26
 msgid ""
 "Diskussionen werden geladen. Falls nicht, hast Du entweder Javascript "
@@ -56,7 +60,6 @@ msgstr "Own HNA's"
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:7
 #: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:15
-#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:15
 msgid "Einstellungen"
 msgstr "Settings"
 
@@ -76,10 +79,7 @@ msgstr "Publish email address"
 msgid "Folge dann diesem"
 msgstr "Follow this"
 
-#: utils/luci-app-weimarnetz/root/usr/share/rpcd/acl.d/luci-app-weimarnetz-backend.json:3
-msgid "Grant UCI access to the weimarnetz luci app"
-msgstr "Grant UCI access to the weimarnetz luci app"
-
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:167
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:39
 msgid ""
 "Informationen zu Spenden werden geladen. Falls nicht, hast Du entweder "
@@ -92,15 +92,15 @@ msgstr ""
 msgid "Informationsseite"
 msgstr "Info page"
 
-#: utils/luci-app-weimarnetz/luasrc/controller/weimarnetz/app.lua:26
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:3
 msgid "Karte"
 msgstr "Map"
 
-#: utils/luci-app-weimarnetz/luasrc/controller/weimarnetz/app.lua:33
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:18
 msgid "Karte Routerumgebung"
 msgstr "Map router environment"
 
-#: utils/luci-app-weimarnetz/luasrc/controller/weimarnetz/app.lua:40
+#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:10
 msgid "Karte Überblick"
 msgstr "Map overview"
 
@@ -129,6 +129,8 @@ msgstr "Link"
 msgid "Lokale Knotennummer"
 msgstr "Local node number"
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:13
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:145
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:13
 msgid ""
 "Meldungen werden geladen. Falls nicht, hast Du entweder Javascript im "
@@ -193,7 +195,6 @@ msgstr "OLSR"
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:133
 #: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:23
-#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:23
 msgid "Registrator"
 msgstr "Registrator"
 
@@ -277,6 +278,7 @@ msgstr ""
 "this option is disabled, the local internet connection will be used, also "
 "for traffic from the mesh network!"
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:162
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:33
 msgid "Spendenaufruf"
 msgstr "Call for funds"
@@ -284,6 +286,10 @@ msgstr "Call for funds"
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:135
 msgid "Status"
 msgstr "State"
+
+#: utils/luci-app-weimarnetz/root/usr/share/rpcd/acl.d/luci-app-weimarnetz-backend.json:3
+msgid "UCI-Zugriff für die Weimarnetz luci app gewähren"
+msgstr "Grant UCI access to the weimarnetz luci app"
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/registrator.js:142
 msgid "Update Status"
@@ -310,10 +316,11 @@ msgid "WLAN-Namen konfigurieren für alle Geräte (z.B. 2,4GHz und ggf. 5GHz)"
 msgstr "Configure Wifi names for all devices (2,4 GHz and maybe 5 GHz)"
 
 #: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-backend.json:3
-#: utils/luci-app-weimarnetz/root/usr/share/luci/menu.d/luci-app-weimarnetz-frontend.json:3
 msgid "Weimarnetz"
 msgstr "Weimarnetz"
 
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:4
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/infopage.js:138
 #: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/infopage.htm:2
 msgid "Weimarnetz News"
 msgstr "Weimarnetz NEws"
@@ -322,7 +329,8 @@ msgstr "Weimarnetz NEws"
 msgid "Weimarnetz Routerumgebung"
 msgstr "Weimarnetz router environment"
 
-#: utils/luci-app-weimarnetz/luasrc/view/weimarnetz/map_overview.htm:6
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/map-overview.js:17
+#: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/map-router.js:21
 msgid "Weimarnetz Überblick"
 msgstr "Weimarnetz overview"
 
@@ -338,6 +346,10 @@ msgid ""
 msgstr ""
 "How should VPN be used? Transfer all traffic via VPN? Or simply use VPN to "
 "connect to other devices in the mesh network via internet?"
+
+#: utils/luci-app-weimarnetz/root/usr/share/rpcd/acl.d/luci-app-weimarnetz-unauthenticated.json:3
+msgid "Zugriff auf Konfigurationen"
+msgstr "Grant access to configuration files"
 
 #: utils/luci-app-weimarnetz/htdocs/luci-static/resources/view/weimarnetz/settings.js:24
 msgid "Zugriff auf WAN-Port sperren"

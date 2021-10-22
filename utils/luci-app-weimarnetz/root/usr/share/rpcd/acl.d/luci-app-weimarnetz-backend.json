@@ -1,6 +1,6 @@
 {
 	"luci-app-weimarnetz-backend": {
-		"description": "Grant UCI access to the weimarnetz luci app",
+		"description": "UCI-Zugriff für die Weimarnetz luci app gewähren",
 		"read": {
 			"ubus": {
 				"uci": [

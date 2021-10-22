@@ -1,0 +1,18 @@
+{
+	"unauthenticated": {
+		"description": "Zugriff auf Konfigurationen",
+		"read": {
+			"ubus": {
+				"uci": [
+					"get"
+				]
+			},
+			"uci": [
+				"ffwizard",
+				"freifunk",
+				"system",
+				"dhcp"
+			]
+		}
+	}
+}

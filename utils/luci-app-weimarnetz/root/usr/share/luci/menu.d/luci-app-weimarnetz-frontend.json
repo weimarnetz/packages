@@ -1,0 +1,33 @@
+{
+	"freifunk/info": {
+		"title": "Informationsseite",
+		"order": 1,
+		"action": {
+			"type": "view",
+			"path": "weimarnetz/infopage"
+		}
+	},
+	"freifunk/map": {
+		"title": "Karte",
+		"order": 5,
+		"action": {
+			"type": "firstchild"
+		}
+	},
+	"freifunk/map/overview": {
+		"title": "Karte Überblick",
+		"order": 3,
+		"action": {
+			"type": "view",
+			"path": "weimarnetz/map-overview"
+		}
+	},
+	"freifunk/map/router": {
+		"title": "Karte Routerumgebung",
+		"order": 5,
+		"action": {
+			"type": "view",
+			"path": "weimarnetz/map-router"
+		}
+	}
+}
