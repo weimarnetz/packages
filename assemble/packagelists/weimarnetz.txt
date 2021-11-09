@@ -27,7 +27,6 @@ luci-app-olsr
 luci-app-olsr-services
 luci-theme-freifunk-generic
 libiwinfo-lua
-luci-app-example
 # GUI addon
 luci-i18n-base-de
 luci-i18n-base-en
