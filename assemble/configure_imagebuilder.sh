@@ -12,7 +12,7 @@ set -e
 
 TARGET=
 OPENWRT=
-OPENWRT_BASE_URL="http://buildbot.weimarnetz.de/builds/openwrt-base"
+OPENWRT_BASE_URL="http://builds.weimarnetz.de/openwrt-base"
 DEBUG=""
 
 signal_handler() {
