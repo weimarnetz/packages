@@ -143,6 +143,13 @@ DEST_DIR=$(to_absolute_path "$DEST_DIR")
 info $DEST_DIR
 failed_profiles=
 
+# check if packagelist with suffix exist
+if [ -e "profiles/${OPENWRT}/${TARGET}.profiles" ] ; then
+	profiles="profiles/${OPENWRT}/${TARGET}.profiles"
+else
+	profiles="profiles/${TARGET}.profiles"
+fi
+
 while read model; do
 	info "Building an image for $model"
 
@@ -210,7 +217,7 @@ while read model; do
 		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${base_target_dir}" $img_params || failed_profiles="${profile}; ${failed_profiles}" 
 
 	done
-done < profiles/$TARGET.profiles
+done < $profiles
 
 if [ -n "$failed_profiles" ]; then
 	echo "We weren't able to build the following profiles for : ${failed_profiles}." >> ${DEST_DIR}/${base_target_dir}/failedprofiles.txt
