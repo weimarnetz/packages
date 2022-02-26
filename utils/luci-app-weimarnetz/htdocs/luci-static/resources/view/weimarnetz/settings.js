@@ -7,7 +7,7 @@ return view.extend({
 		var ffwizardMap = new form.Map("ffwizard", _("Einstellungen"), _("Einstellungen fürs Weimarnetz"));
 		var generalSettings = ffwizardMap.section(form.NamedSection, 'settings', 'node', _('Allgemein'), _('Allgemeine Einstellungen'));
 
-		var s = ffwizardMap.section(form.TypedSection, "wifi", _("SSIDs"), _('WLAN-Namen konfigurieren für alle Geräte (z.B. 2,4GHz und ggf. 5GHz)'));
+		var s = ffwizardMap.section(form.TypedSection, "wifi", _("WLAN-Einstellungen"), _('WLAN-Namen, Mesh und Roaming konfigurieren für alle Geräte (z.B. 2,4GHz und ggf. 5GHz)'));
 		var hnaSettings = ffwizardMap.section(form.TypedSection, "hna4", _("Eigene HNAs"), _('Weitere Netze ankündigen'))
 		var vpnSettings = ffwizardMap.section(form.NamedSection, 'vpn', 'vpn', _('VPN'), _('Verbindungen zum VPN-Server konfigurieren'));
 		var olsrSettings = ffwizardMap.section(form.NamedSection, "olsr", "olsr", _("OLSR"), _('Einstellungen für OLSR'))
@@ -37,6 +37,15 @@ return view.extend({
 		vpnNoInternet.default = '1';
 		vpnNoInternet.depends("enabled", '1');
 
+		var roaming = s.option(form.Flag, "roaming", _("Roaming"), _("Soll das Roamingnetzwerk aktiv sein?"));
+		roaming.rmempty = false;
+		roaming.default = '1';
+		var mesh = s.option(form.Flag, "", _("Mesh"), _("Soll das Meshnetzwerk aktiv sein?"));
+		mesh.rmempty = false;
+		mesh.default = '1';
+		var vap = s.option(form.Flag, "vap", _("Access Point"), _("Soll der Access Point aktiv sein?"));
+		vap.rmempty = false;
+		vap.default = '1';
 		var ssid = s.option(form.Value, "ap_ssid", _("SSID"), _("SSID für das öffentlich zugängliche Netzwerk"));
 		ssid.validate = function(section, value) {
 			if (value.length > 32) {
