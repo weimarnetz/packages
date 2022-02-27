@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# 2020 Andreas Bräu
+# 2020 - 2022 Andreas Bräu
 
 # build weimarnetz packages
 
@@ -30,6 +30,16 @@ info() {
 
 error() {
 	echo "$@" >&2
+}
+
+download() {
+  URL=$1
+
+  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/sdk.tar.xz" --write-out "%{http_code}" $URL)
+  if [[ "${HTTP_CODE}" -lt 200 || "${HTTP_CODE}" -gt 399 ]]; then
+    info "no sdk found ${HTTP_CODE}"
+    exit 0
+  fi
 }
 
 usage() {
@@ -85,12 +95,7 @@ CUSTOMTARGET="$(echo $TARGET|cut -d '_' -f 2)"
 SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
 
 info "Download and extract sdk"
-wget -qO "$TEMP_DIR/sdk.tar.xz"  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
-result=$?
-if [ $result -ne 0 ]; then
-  info "No SDK found"
-  exit 0
-fi
+download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
 mkdir "$TEMP_DIR/sdk"
 tar -xf "$TEMP_DIR/sdk.tar.xz" --strip-components=1 -C "$TEMP_DIR/sdk"
 cp keys/key-build* "$TEMP_DIR/sdk"

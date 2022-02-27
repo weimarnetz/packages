@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# 2020 Andreas Bräu
+# 2020 - 2022 Andreas Bräu
 
 # configure imagebuilder for weimarnetz images 
 
@@ -12,7 +12,7 @@ set -e
 
 TARGET=
 OPENWRT=
-OPENWRT_BASE_URL="http://builds.weimarnetz.de/openwrt-base"
+OPENWRT_BASE_URL="https://builds.weimarnetz.de/openwrt-base"
 DEBUG=""
 
 signal_handler() {
@@ -55,6 +55,16 @@ $0 -t <target> -o <openwrt>
 "
 }
 
+download() {
+  URL=$1
+
+  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/ib.tar.xz" --write-out "%{http_code}" $URL)
+  if [[ "${HTTP_CODE}" -lt 200 || "${HTTP_CODE}" -gt 399 ]]; then
+    info "no imagebuilder found"
+    exit 0
+  fi
+}
+
 while getopts "dt:o:" option; do
 	case "$option" in
 		d)
@@ -90,7 +100,7 @@ if [ -z "$OPENWRT" ] ; then
 fi
 
 mkdir -p "$TEMP_DIR"
-trap signal_handler 0 1 2 3 15
+trap signal_handler 0 1 2 3 15 
 
 # get main- and subtarget name from TARGET
 MAINTARGET="$(echo $TARGET|cut -d '_' -f 1)"
@@ -98,12 +108,7 @@ CUSTOMTARGET="$(echo $TARGET|cut -d '_' -f 2)"
 SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
 
 info "Download and extract image builder"
-wget -qO "$TEMP_DIR/ib.tar.xz"  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-imagebuilder-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
-result=$?
-if [ $result -ne 0 ]; then
-  info "No imagebuilder found"
-  exit 0
-fi
+download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-imagebuilder-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
 mkdir "$TEMP_DIR/ib"
 tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
 
