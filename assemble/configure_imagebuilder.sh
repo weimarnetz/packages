@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # 2020 - 2022 Andreas Bräu
 

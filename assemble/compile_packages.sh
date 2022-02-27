@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # 2020 - 2022 Andreas Bräu
 
@@ -12,7 +12,7 @@ set -e
 
 TARGET=
 OPENWRT=
-OPENWRT_BASE_URL="http://builds.weimarnetz.de/openwrt-base"
+OPENWRT_BASE_URL="https://builds.weimarnetz.de/openwrt-base"
 DEBUG=""
 
 signal_handler() {
