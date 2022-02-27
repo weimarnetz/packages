@@ -1,3 +1,5 @@
+[![Weimarnetz Firmware Assembly](https://github.com/weimarnetz/packages/actions/workflows/assemblefirmware.yml/badge.svg)](https://github.com/weimarnetz/packages/actions/workflows/assemblefirmware.yml)
+
 # Weimarnetz Package Feed 
 
     # feeds.conf
