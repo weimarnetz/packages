@@ -106,8 +106,8 @@ done
 shift $((OPTIND - 1))
 
 if [ ! -e "$IB_DIR" ] ; then
-	error "IB_DIR does not exist $IB_DIR"
-	exit 1
+	warn "IB_DIR does not exist $IB_DIR"
+	exit 0
 fi
 
 if [ -z "$USECASES" ] ; then

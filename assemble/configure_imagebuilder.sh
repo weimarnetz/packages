@@ -99,6 +99,11 @@ SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
 
 info "Download and extract image builder"
 wget -qO "$TEMP_DIR/ib.tar.xz"  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-imagebuilder-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
+result=$?
+if [ $result -ne 0 ]; then
+  info "No imagebuilder found"
+  exit 0
+fi
 mkdir "$TEMP_DIR/ib"
 tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
 

@@ -86,6 +86,11 @@ SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
 
 info "Download and extract sdk"
 wget -qO "$TEMP_DIR/sdk.tar.xz"  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
+result=$?
+if [ $result -ne 0 ]; then
+  info "No SDK found"
+  exit 0
+fi
 mkdir "$TEMP_DIR/sdk"
 tar -xf "$TEMP_DIR/sdk.tar.xz" --strip-components=1 -C "$TEMP_DIR/sdk"
 cp keys/key-build* "$TEMP_DIR/sdk"

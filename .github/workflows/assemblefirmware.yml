@@ -64,4 +64,4 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add - <<< "${SSH_KEY}"
         cd assemble
-        rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' firmwares/ buildbot@buildbot.weimarnetz.de:/brauhaus
+        [ -d "firmwares/" ] && rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' firmwares/ buildbot@buildbot.weimarnetz.de:/brauhaus
