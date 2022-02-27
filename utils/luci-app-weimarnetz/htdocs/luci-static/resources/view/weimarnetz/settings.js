@@ -40,7 +40,7 @@ return view.extend({
 		var roaming = s.option(form.Flag, "roaming", _("Roaming"), _("Soll das Roamingnetzwerk aktiv sein?"));
 		roaming.rmempty = false;
 		roaming.default = '1';
-		var mesh = s.option(form.Flag, "", _("Mesh"), _("Soll das Meshnetzwerk aktiv sein?"));
+		var mesh = s.option(form.Flag, "olsr_mesh", _("Mesh"), _("Soll das Meshnetzwerk aktiv sein?"));
 		mesh.rmempty = false;
 		mesh.default = '1';
 		var vap = s.option(form.Flag, "vap", _("Access Point"), _("Soll der Access Point aktiv sein?"));
