@@ -106,7 +106,7 @@ done
 shift $((OPTIND - 1))
 
 if [ ! -e "$IB_DIR" ] ; then
-	warn "IB_DIR does not exist $IB_DIR"
+	info "IB_DIR does not exist $IB_DIR"
 	exit 0
 fi
 
