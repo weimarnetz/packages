@@ -28,7 +28,7 @@ iodata_wn-ac1167dgr;-kmod-ath10k-ct -ath10k-firmware-qca988x-ct kmod-ath10k-smal
 iodata_wn-ac1600dgr;-kmod-ath10k-ct -ath10k-firmware-qca988x-ct kmod-ath10k-smallbuffers ath10k-firmware-qca988x
 iodata_wn-ac1600dgr2;-kmod-ath10k-ct -ath10k-firmware-qca988x-ct kmod-ath10k-smallbuffers ath10k-firmware-qca988x
 iodata_wn-ag300dgr
-joyit_jt-or750i
+joyit_jt-or750i;-kmod-ath10k-ct -ath10k-firmware-qca9887-ct kmod-ath10k-smallbuffers ath10k-firmware-qca9887
 librerouter_librerouter-v1
 nec_wg1200cr;-kmod-ath10k-ct -ath10k-firmware-qca9888-ct kmod-ath10k-smallbuffers ath10k-firmware-qca9888
 nec_wg800hp;-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca9887-ct kmod-ath10k-smallbuffers ath10k-firmware-qca9887
