@@ -68,7 +68,7 @@ tplink_cpe220-v3
 tplink_cpe510-v1
 tplink_cpe510-v2
 tplink_cpe510-v3
-tplink_eap225-outdoor-v1;-kmod-ath10k-ct-smallbuffers kmod-ath10k-smallbuffers -ath10k-firmware-qca9888-ct ath10k-firmware-qca9888
+tplink_eap225-outdoor-v1;-kmod-ath10k-ct kmod-ath10k-smallbuffers -ath10k-firmware-qca9888-ct ath10k-firmware-qca9888
 tplink_re350k-v1;-kmod-ath10k-ct -ath10k-firmware-qca988x-ct kmod-ath10k-smallbuffers ath10k-firmware-qca988x
 tplink_re450-v2;-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct kmod-ath10k-smallbuffers ath10k-firmware-qca988x -iperf -tcpdump-mini
 tplink_tl-wdr3500-v1
