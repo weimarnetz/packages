@@ -5,7 +5,8 @@
 wpad-mesh-wolfssl 
 -wpad-basic-wolfssl
 -firewall
--wpad-basic
+-firewall4
+ -wpad-basic
 
 -hostapd-mini
 kmod-ipt-nat
