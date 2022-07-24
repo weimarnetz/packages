@@ -1,0 +1,50 @@
+# 
+# Translators:
+# Andi Bräu <freifunk@andi95.de>, 2022
+# 
+msgid ""
+msgstr ""
+"Last-Translator: Andi Bräu <freifunk@andi95.de>, 2022\n"
+"Language-Team: English (https://www.transifex.com/forderverein-freie-netzwerke-ev/teams/147382/en/)\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:7
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:9
+#: utils/weimarnetz-button-config/root/usr/share/luci/menu.d/weimarnetz-button-config.json:3
+msgid "Buttons"
+msgstr "Buttons"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:9
+msgid "Buttons konfigurieren"
+msgstr "Configure Buttons"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:13
+msgid "Das Gerät wird neu gestartet."
+msgstr "The device will be rebooted."
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:14
+msgid ""
+"Das Gerät wird zurückgesetzt und neu gestartet. Alle Weimarnetzfunktionen "
+"gehen dabei verloren."
+msgstr ""
+"The device will be reset and rebooted. All Weimarnetz functionality will be "
+"gone."
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:7
+msgid "Einstellungen fürs Hardwarebuttons"
+msgstr "Settings for hardware buttons"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:12
+msgid "Nichts!"
+msgstr "Nothing"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:11
+msgid "Reset Button"
+msgstr "Reset Button"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:11
+msgid "Was soll nach längerem Drücken auf den Reset-Button passieren?"
+msgstr ""
+"What should happen when someone presses the reset button for a longer time?"

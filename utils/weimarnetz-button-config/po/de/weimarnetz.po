@@ -1,0 +1,41 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:7
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:9
+#: utils/weimarnetz-button-config/root/usr/share/luci/menu.d/weimarnetz-button-config.json:3
+msgid "Buttons"
+msgstr "Buttons"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:9
+msgid "Buttons konfigurieren"
+msgstr "Buttons konfigurieren"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:13
+msgid "Das Gerät wird neu gestartet."
+msgstr "Das Gerät wird neu gestartet."
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:14
+msgid ""
+"Das Gerät wird zurückgesetzt und neu gestartet. Alle Weimarnetzfunktionen "
+"gehen dabei verloren."
+msgstr ""
+"Das Gerät wird zurückgesetzt und neu gestartet. Alle Weimarnetzfunktionen "
+"gehen dabei verloren."
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:7
+msgid "Einstellungen fürs Hardwarebuttons"
+msgstr "Einstellungen fürs Hardwarebuttons"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:12
+msgid "Nichts!"
+msgstr "Nichts!"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:11
+msgid "Reset Button"
+msgstr "Reset Button"
+
+#: utils/weimarnetz-button-config/htdocs/luci-static/resources/view/weimarnetz/buttons.js:11
+msgid "Was soll nach längerem Drücken auf den Reset-Button passieren?"
+msgstr "Was soll nach längerem Drücken auf den Reset-Button passieren?"

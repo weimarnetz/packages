@@ -52,6 +52,7 @@ resolveip
 weimarnetz-ffwizard
 luci-app-weimarnetz
 weimarnetz-owm-exporter
+weimarnetz-button-config
 
 # extra
 tcpdump-mini
