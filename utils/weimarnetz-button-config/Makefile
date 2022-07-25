@@ -16,6 +16,16 @@ define Package/weimarnetz-button-config/description
   hardware buttons like the reset button
 endef
 
+define Package/weimarnetz-button-config/postinst
+	#!/bin/sh
+	cp /etc/rc.button/reset.new /etc/rc.button/reset
+endef
+
+define Package/weimarnetz-button-config/postrm
+	#!/bin/sh
+	cp /rom/etc/rc.button/reset /etc/rc.button/reset
+endef
+
 include ../../luci.mk
 
 # $(eval $(call BuildPackage,weimarnetz-button-config))
