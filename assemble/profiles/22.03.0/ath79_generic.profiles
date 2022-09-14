@@ -43,6 +43,8 @@ tplink_tl-wr1043n-v5
 tplink_tl-wr1043nd-v2
 tplink_tl-wr1043nd-v3
 tplink_tl-wr1043nd-v4
+tplink_tl-wr841-v8-16m
+tplink_tl-wr841-v8-8m
 ubnt_lap-120
 ubnt_nanobeam-ac;-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct kmod-ath10k-smallbuffers ath10k-firmware-qca988x
 ubnt_nanostation-ac;-kmod-ath10k-ct-smallbuffers -ath10k-firmware-qca988x-ct kmod-ath10k-smallbuffers ath10k-firmware-qca988x
