@@ -86,6 +86,8 @@ tplink_tl-wr2543-v1
 tplink_tl-wr710n-v1
 tplink_tl-wr810n-v1
 tplink_tl-wr810n-v2
+tplink_tl-wr841-v8-16m;-wpad-basic -wpad -wpad-mini -wpad-mesh-wolfssl hostapd-mini
+tplink_tl-wr841-v8-8m;-wpad-basic -wpad -wpad-mini -wpad-mesh-wolfssl hostapd-mini
 tplink_tl-wr842n-v3
 tplink_tl-wr842n-v2
 ubnt_airrouter
