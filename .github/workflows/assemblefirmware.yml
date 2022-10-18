@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_generic, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
-        openwrt: ["19.07.10", "21.02.3", "22.03.0"]
+        openwrt: ["19.07.10", "21.02.5", "22.03.2"]
       fail-fast: false
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
