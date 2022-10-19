@@ -7,8 +7,18 @@ name: Weimarnetz Firmware Assembly
 on:
   push:
     branches: [ brauhaus-19.07 ]
+    paths:
+      - 'assemble/**'
+      - 'build/**'
+      - 'net/**'
+      - 'utils/**'
   pull_request:
     branches: [ brauhaus-19.07 ]
+    paths:
+      - 'assemble/**'
+      - 'build/**'
+      - 'net/**'
+      - 'utils/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
