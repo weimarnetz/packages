@@ -8,7 +8,6 @@ wpad-mesh-wolfssl
 -firewall4
 -wpad-basic
 
--hostapd-mini
 kmod-ipt-nat
 kmod-ipt-conntrack
 iptables-mod-ipopt
