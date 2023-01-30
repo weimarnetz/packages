@@ -77,7 +77,7 @@ jobs:
         if [ -d "firmwares/" ]; then
           rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' firmwares/ buildbot@buildbot.weimarnetz.de:/brauhaus
         fi
-    - name: upload packages
+    - name: upload packages directory
       if: github.event_name == 'push'
       env:
         SSH_KEY: ${{ secrets.BUILDBOT_PRIVATE_KEY }}
