@@ -2,6 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=weimarnetz-fastd-config
 PKG_RELEASE:=1.0.0
+PKG_RELEASE:=1
 
 define Package/weimarnetz-fastd-config
   SECTION:=net
