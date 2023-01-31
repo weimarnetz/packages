@@ -56,7 +56,7 @@ setup_fastd() {
     uci_set fastd vpn persist_interface '0'
     uci_set fastd vpn offload_l2tp  '0'
     uci_set fastd vpn secret "$secret"
-    uci_set fastd vpn on_up "/lib/netifd/fastd-up \$INTERFACE $vpn_ip \$PEER_ADDRESS"
+    uci_set fastd vpn on_establish "/lib/netifd/fastd-up \$INTERFACE $vpn_ip \$PEER_ADDRESS"
     uci_set fastd vpn on_down '/lib/netifd/fastd-down $INTERFACE $PEER_ADDRESS'
 
     uci_add fastd peer "server"                                                                      
