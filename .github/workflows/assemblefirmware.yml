@@ -87,6 +87,7 @@ jobs:
         version="$(git describe --always --dirty --tags)"
         cd assemble
         if [ -d "packages_weimar/" ]; then
+          target="$(echo ${{ matrix.target }}|tr '_' /)"
           mkdir -p packages_weimar/$version/${{ matrix.openwrt }}/${{ matrix.target }}/packages
           find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/$version/${{ matrix.openwrt }}/${{ matrix.target }}/packages \;
           rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/ buildbot@buildbot.weimarnetz.de:/brauhaus/
