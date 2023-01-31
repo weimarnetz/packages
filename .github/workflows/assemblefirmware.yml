@@ -5,6 +5,7 @@ name: Weimarnetz Firmware Assembly
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
+  workflow_dispatch:
   push:
     branches: [ brauhaus-19.07 ]
     paths:
@@ -89,6 +90,6 @@ jobs:
         if [ -d "packages_weimar/" ]; then
           target="$(echo ${{ matrix.target }}|tr '_' /)"
           mkdir -p packages_weimar/$version/${{ matrix.openwrt }}/${{ matrix.target }}/packages
-          find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/$version/${{ matrix.openwrt }}/${{ matrix.target }}/packages \;
+          find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/$version/${{ matrix.openwrt }}/$target/packages \;
           rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/ buildbot@buildbot.weimarnetz.de:/brauhaus/
         fi    

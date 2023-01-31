@@ -7,6 +7,7 @@ log_fastd() {
 
 setup_network() {
 	local cfg="$1"
+    log_fastd "INFO - configure network $cfg for fastd"
 	if uci_get network "$cfg" >/dev/null; then 
 		uci_remove network "$cfg"
 	fi
@@ -15,7 +16,6 @@ setup_network() {
 		uci_remove network "tap0"
 	fi
 	uci_add network interface "$cfg"
-	config_get type "$cfg" type "fastd"
     uci_set network "$cfg" proto "static"
     uci_set network "$cfg" auto "0"
     uci_set network "$cfg" device "tap0"
@@ -24,21 +24,27 @@ setup_network() {
 setup_fastd() {
     local cfg="$1"
     local secret="$2"
+    local net="$3"
 
-    if uci_get fastd "$cfg" >/dev/null; then 
-		uci_remove fastd "$cfg"
+    if uci_get fastd "$net" >/dev/null; then 
+		uci_remove fastd "$net"
+	fi
+
+    if uci_get fastd "server" >/dev/null; then 
+		uci_remove fastd "server"
 	fi
 
     json_init
     json_load "$nodedata"
     json_get_var vpn_ip vpn_ip
+    log_fastd "INFO $cfg - vpn ip is $vpn_ip"
     [ -n "$vpn_ip" ] || {
         log_fastd "ERR $cfg - missing vpn ip" 
         return 1
     }
     json_cleanup
 
-    uci_add fastd fastd "vpn"
+    uci_add fastd fastd "$net"
     uci_set fastd vpn enabled '1'
     uci_set fastd vpn syslog_level 'debug'
     uci_add_list fastd vpn method 'null@l2tp'
@@ -55,7 +61,7 @@ setup_fastd() {
 
     uci_add fastd peer "server"                                                                      
     uci_set fastd server enabled '1'
-    uci_set fastd server net 'vpn'
+    uci_set fastd server net "$net"
     uci_set fastd server key '09f8934b3e7e684be6dc8fd0cfeeea1bf30ab701aa83ae6f916f82c6993309fe'
     uci_add_list fastd server remote '77.87.48.35:10000'
 }
@@ -83,6 +89,7 @@ remove_section() {
 
 disable_fastd() {
     local cfg="$1"
+    log_fastd "INFO - disable $cfg in fastd config"
     uci_set fastd $cfg enabled "0"
 }
 
@@ -96,11 +103,13 @@ config_foreach disable_fastd peer
 config_foreach disable_fastd peer_group
 uci_commit fastd
 
-config_load ffwizard
-config_foreach setup_network fastd
-config_foreach setup_fastd fastd vpn $secret
+setup_olsr "fastd"
+setup_network "fastd"
+setup_fastd "fastd" $secret "vpn"
 
 
 uci_commit network
 uci_commit olsrd
 uci_commit fastd
+
+/etc/init.d/fastd generate_key vpn
