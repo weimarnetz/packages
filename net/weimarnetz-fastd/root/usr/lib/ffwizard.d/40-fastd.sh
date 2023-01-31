@@ -55,7 +55,7 @@ setup_fastd() {
     uci_set fastd vpn forward '0'
     uci_set fastd vpn persist_interface '0'
     uci_set fastd vpn offload_l2tp  '0'
-    uci_set fastd vpn secret "$secret"
+    [ -n "$secret" ] && uci_set fastd vpn secret "$secret"
     uci_set fastd vpn on_establish "/lib/netifd/fastd-up \$INTERFACE $vpn_ip \$PEER_ADDRESS"
     uci_set fastd vpn on_down '/lib/netifd/fastd-down $INTERFACE $PEER_ADDRESS'
 
@@ -120,6 +120,7 @@ add_vpn_peers() {
 config_load olsrd
 config_foreach remove_section Interface fastd
 
+uci -m import fastd < /dev/null
 config_load fastd
 secret="$(uci_get fastd vpn secret '')"
 config_foreach disable_fastd fastd
@@ -128,7 +129,7 @@ config_foreach disable_fastd peer_group
 
 setup_olsr "fastd"
 setup_network "fastd"
-setup_fastd "fastd" $secret "vpn"
+setup_fastd "fastd" "$secret" "vpn"
 
 config_load profile_${community}
 config_foreach add_vpn_peers vpn
