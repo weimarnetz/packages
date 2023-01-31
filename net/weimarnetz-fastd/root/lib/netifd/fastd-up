@@ -19,7 +19,14 @@ json="$(uclient-fetch -q -T 4 -O- "http://$remote/freifunk/vpn")"
 json_load "$json" 2>/dev/null
 json_get_var gateway_ip gateway_ip
 
-ip route add default via $gateway_ip table 50
+# if we don't have a gateway ip, make sure, we add routing rules anyways. 
+# so we don't use local internet in that case by accident
+if [ -n "$gateway_ip" ]; then 
+	ip route add default via $gateway_ip table 50
+else
+    log_fastd "ERROR: We got no gateway ip, internet access will not work"
+fi
+
 ip rule add to 10.0.0.0/8 prio 30001 table main
 ip rule add from 10.63.0.0/16 prio 30010 table 50
 ip rule add to 100.64.0.1/10 prio 30002 table main
