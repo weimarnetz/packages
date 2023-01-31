@@ -211,7 +211,7 @@ while read model; do
 		fi
 
 		# ensure BIN_DIR is valid
-    base_target_dir=$(basename ${package_list})
+    	base_target_dir=$(basename ${package_list})
 		mkdir -p "${DEST_DIR}/${base_target_dir}"
 
 		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${base_target_dir}" $img_params || failed_profiles="${profile}; ${failed_profiles}" 
