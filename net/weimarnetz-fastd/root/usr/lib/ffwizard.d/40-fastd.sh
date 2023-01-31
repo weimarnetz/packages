@@ -55,15 +55,13 @@ setup_fastd() {
     uci_set fastd vpn forward '0'
     uci_set fastd vpn persist_interface '0'
     uci_set fastd vpn offload_l2tp  '0'
-    uci_set fastd vpn secret '70734f206efdc91e2d973eb2c4fe943c73b9f8ed74fa6d687ca53a591a80366e'
+    uci_set fastd vpn secret "$secret"
     uci_set fastd vpn on_up "/lib/netifd/fastd-up \$INTERFACE $vpn_ip \$PEER_ADDRESS"
     uci_set fastd vpn on_down '/lib/netifd/fastd-down $INTERFACE $PEER_ADDRESS'
 
     uci_add fastd peer "server"                                                                      
     uci_set fastd server enabled '1'
     uci_set fastd server net "$net"
-    uci_set fastd server key '09f8934b3e7e684be6dc8fd0cfeeea1bf30ab701aa83ae6f916f82c6993309fe'
-    uci_add_list fastd server remote '77.87.48.35:10000'
 }
 
 setup_olsr() {
@@ -93,6 +91,32 @@ disable_fastd() {
     uci_set fastd $cfg enabled "0"
 }
 
+add_vpn_remotes() {
+    local value="$1"
+    uci_add_list fastd server remote "$value"
+}
+
+add_vpn_peers() {
+    local cfg="$1"
+
+    if [ "$cfg" != "fastd" ]; then
+        return 1
+    fi
+
+    log_fastd "add vpn peers for cfg $cfg"
+
+    config_get pubkey "$cfg" pubkey ""
+    config_get url "$cfg" url ""
+
+    if [ -z "$pubkey" ] || [ -z "$url" ]; then
+        log_fastd "WARN - no vpn peers in $cfg found"
+		return 1
+	fi
+
+    uci_set fastd server key "$pubkey"
+    config_list_foreach "$cfg" url add_vpn_remotes 
+}
+
 config_load olsrd
 config_foreach remove_section Interface fastd
 
@@ -101,12 +125,20 @@ secret="$(uci_get fastd vpn secret '')"
 config_foreach disable_fastd fastd
 config_foreach disable_fastd peer
 config_foreach disable_fastd peer_group
-uci_commit fastd
 
 setup_olsr "fastd"
 setup_network "fastd"
 setup_fastd "fastd" $secret "vpn"
 
+config_load profile_${community}
+config_foreach add_vpn_peers vpn
+
+community_key="$(uci_get fastd server key '')"
+if [ -z $community_key ]; then
+    log_fastd "INFO - no community server, using default"
+    config_load ffwizard
+    config_foreach add_vpn_peers vpn
+fi
 
 uci_commit network
 uci_commit olsrd
