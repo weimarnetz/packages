@@ -18,7 +18,13 @@ setup_network() {
 	uci_add network interface "$cfg"
     uci_set network "$cfg" proto "static"
     uci_set network "$cfg" auto "0"
-    uci_set network "$cfg" device "tap0"
+
+    offload_l2tp="$(uci_get ffwizard fastf offload_l2tp '0')"
+    if [ "$offload_l2tp" == "1"]; then
+        uci_set network "$cfg" device "l2tpeth0"
+    else
+        uci_set network "$cfg" device "tap0"
+    fi
 }
 
 setup_fastd() {
@@ -44,20 +50,27 @@ setup_fastd() {
     }
     json_cleanup
 
+    offload_l2tp="$(uci_get ffwizard fastf offload_l2tp '0')"
+
     uci_add fastd fastd "$net"
     uci_set fastd vpn enabled '1'
     uci_set fastd vpn syslog_level 'debug'
-    uci_add_list fastd vpn method 'null@l2tp'
-    uci_add_list fastd vpn method 'null'
+    if [ "$offload_l2tp" == "1"]; then
+        uci_add_list fastd vpn method 'null@l2tp'
+        uci_set fastd vpn offload_l2tp  '1'
+    else
+        uci_add_list fastd vpn method 'null'
+        uci_set fastd vpn offload_l2tp  '0'
+    fi
     uci_set fastd vpn mode 'multitap'
     uci_add_list fastd vpn bind '0.0.0.0:10000'
     uci_set fastd vpn mtu '1280'
     uci_set fastd vpn forward '0'
     uci_set fastd vpn persist_interface '0'
-    uci_set fastd vpn offload_l2tp  '0'
     [ -n "$secret" ] && uci_set fastd vpn secret "$secret"
-    uci_set fastd vpn on_establish "/lib/netifd/fastd-up \$INTERFACE $vpn_ip \$PEER_ADDRESS"
-    uci_set fastd vpn on_down '/lib/netifd/fastd-down $INTERFACE $PEER_ADDRESS'
+    uci_set fastd vpn on_up '/lib/netifd/fastd-up $INTERFACE'
+    uci_set fastd vpn on_establish "/lib/netifd/fastd-establish \$INTERFACE $vpn_ip \$PEER_ADDRESS"
+    uci_set fastd vpn on_down '/lib/netifd/fastd-down $INTERFACE'
 
     uci_add fastd peer "server"                                                                      
     uci_set fastd server enabled '1'
