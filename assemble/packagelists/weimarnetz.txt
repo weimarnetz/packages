@@ -45,7 +45,9 @@ olsrd-mod-watchdog
 olsrd-mod-dyn-gw
 
 # VPN
-vtun 
+weimarnetz-fastd-config
+fastd
+kmod-l2tp-eth 
 resolveip
 
 # Weimarnetz
