@@ -120,7 +120,6 @@ mkdir -p ./ib/keys
 cat keys/key-build.pub > "./ib/keys/$(./ib/staging_dir/host/bin/usign -F -p keys/key-build.pub)"
 mkdir -p ./EMBEDDED_FILES/etc/opkg/keys
 cp "./ib/keys/$(./ib/staging_dir/host/bin/usign -F -p keys/key-build.pub)" ./EMBEDDED_FILES/etc/opkg/keys/
-echo "src/gz ffweimar_packages http://buildbot.weimarnetz.de/builds/brauhaus/$(git describe --always --dirty --tags)/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/packages" > ./EMBEDDED_FILES/etc/opkg/customfeeds.conf
 echo "WEIMARNETZ_PACKAGES_DESCRIPTION=$(git describe --always --dirty --tags)" > ./EMBEDDED_FILES/etc/weimarnetz_release
 echo "WEIMARNETZ_PACKAGES_BRANCH=$(git branch --show-current)" >> ./EMBEDDED_FILES/etc/weimarnetz_release
 echo "WEIMARNETZ_PACKAGES_REV=$(git rev-parse $(git branch --show-current))" >> ./EMBEDDED_FILES/etc/weimarnetz_release
