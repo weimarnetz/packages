@@ -20,7 +20,7 @@ setup_network() {
     uci_set network "$cfg" auto "0"
 
     offload_l2tp="$(uci_get ffwizard fastd offload_l2tp '0')"
-    if [ "$offload_l2tp" -eq 1 ] && [ -f "/lib/modules/5.10.146/l2tp_eth.ko" ]; then
+    if [ "$offload_l2tp" -eq 1 ] && [ -f "/lib/modules/$(uname -r)/l2tp_eth.ko" ]; then
         uci_set network "$cfg" device "l2tpeth0"
     else
         uci_set network "$cfg" device "tap0"
@@ -55,7 +55,7 @@ setup_fastd() {
     uci_add fastd fastd "$net"
     uci_set fastd vpn enabled '1'
     uci_set fastd vpn syslog_level 'debug'
-    if [ "$offload_l2tp" -eq 1 ] && [ -f "/lib/modules/5.10.146/l2tp_eth.ko" ]; then
+    if [ "$offload_l2tp" -eq 1 ] && [ -f "/lib/modules/$(uname -r)/l2tp_eth.ko" ]; then
         uci_add_list fastd vpn method 'null@l2tp'
         uci_set fastd vpn offload_l2tp  '1'
     else
