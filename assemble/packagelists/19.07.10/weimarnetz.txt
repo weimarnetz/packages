@@ -45,8 +45,8 @@ olsrd-mod-watchdog
 olsrd-mod-dyn-gw
 
 # VPN
-vtun 
 resolveip
+fastd
 
 # Weimarnetz
 weimarnetz-ffwizard
