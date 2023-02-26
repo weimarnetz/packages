@@ -159,3 +159,4 @@ uci_commit olsrd
 uci_commit fastd
 
 /etc/init.d/fastd generate_key vpn
+/etc/init.d/fastd disable

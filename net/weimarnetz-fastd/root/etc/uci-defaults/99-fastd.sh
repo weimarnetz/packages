@@ -15,4 +15,7 @@ uci_commit ffwizard
 sed -i -e '/vpnwatchdog$/d' /etc/crontabs/root
 rm /etc/hotplug.d/iface/90-vpn
 
+# disable fastd autostart
+/etc/init.d/fastd disable
+
 # vim: set filetype=sh ai noet ts=4 sw=4 sts=4 :
