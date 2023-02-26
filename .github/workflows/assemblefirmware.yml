@@ -23,17 +23,17 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  compile_packages:
     strategy:
       matrix:
-        target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_generic, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
-        openwrt: ["21.02.5", "22.03.2"]
+        target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
+        include:
+        - openwrt: 22.03.2
+        - target: x86_64
+          openwrt: 21.02.5
       fail-fast: false
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
@@ -57,14 +57,63 @@ jobs:
         make
         sudo make install
 
-    # Build firmware for ar71xx target
-    - name: Assemble OpenWrt ${{ matrix.openwrt }} for target ${{ matrix.target }} 
+    - name: compile packages for target ${{ matrix.target }} 
       env:
         PACKAGE_SIGNING_KEY: ${{ secrets.PACKAGE_SIGNING_PRIVATE_KEY }}
       run: |
         cd assemble
         echo "$PACKAGE_SIGNING_KEY" > keys/key-build
         ./compile_packages.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
+
+    - name: upload packages directory
+      if: github.event_name == 'push'
+      env:
+        SSH_KEY: ${{ secrets.BUILDBOT_PRIVATE_KEY }}
+      run: |
+        eval "$(ssh-agent -s)"
+        ssh-add - <<< "${SSH_KEY}"
+        version="$(git describe --always --dirty --tags)"
+        cd assemble
+        if [ -d "packages_weimar/" ]; then
+          target="$(echo ${{ matrix.target }}|tr '_' /)"
+          mkdir -p packages_weimar/packages/$target
+          find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/packages/$target \;
+          rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/packages/$target/ buildbot@buildbot.weimarnetz.de:/brauhaus/packages/$target/
+        fi    
+
+  build:
+    strategy:
+      matrix:
+        target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
+        openwrt: [21.02.5, 22.03.2]
+        exlude: 
+          - target: x86_64
+            openwrt: 22.03.2
+      fail-fast: false
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+    - run: |
+        git fetch --prune --unshallow
+    
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install bash build-essential curl flex gawk gettext git libncurses5-dev libssl-dev libxml-perl openssh-server python2 qemu-utils quilt rsync subversion sudo unzip wget zlib1g-dev
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+
+    # Build firmware for ar71xx target
+    - name: Assemble OpenWrt ${{ matrix.openwrt }} for target ${{ matrix.target }} 
+      run: |
+        cd assemble
         ./configure_imagebuilder.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
         ./assemble_firmware.sh -t ${{ matrix.target }} -i "ib/" -u weimarnetz -o ${{ matrix.openwrt }} -e "EMBEDDED_FILES/"
     - name: upload
@@ -78,18 +127,4 @@ jobs:
         if [ -d "firmwares/" ]; then
           rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' firmwares/ buildbot@buildbot.weimarnetz.de:/brauhaus
         fi
-    - name: upload packages directory
-      if: github.event_name == 'push'
-      env:
-        SSH_KEY: ${{ secrets.BUILDBOT_PRIVATE_KEY }}
-      run: |
-        eval "$(ssh-agent -s)"
-        ssh-add - <<< "${SSH_KEY}"
-        version="$(git describe --always --dirty --tags)"
-        cd assemble
-        if [ -d "packages_weimar/" ]; then
-          target="$(echo ${{ matrix.target }}|tr '_' /)"
-          mkdir -p packages_weimar/$version/${{ matrix.openwrt }}/$target/packages
-          find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/$version/${{ matrix.openwrt }}/$target/packages \;
-          rsync -avz '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/ buildbot@buildbot.weimarnetz.de:/brauhaus/
-        fi    
+

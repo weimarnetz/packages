@@ -13,6 +13,7 @@ set -e
 TARGET=
 OPENWRT=
 OPENWRT_BASE_URL="https://builds.weimarnetz.de/openwrt-base"
+PACKAGES_URL="https://builds.weimarnetz.de/brauhaus/packages"
 DEBUG=""
 
 signal_handler() {
@@ -112,7 +113,7 @@ download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt
 mkdir "$TEMP_DIR/ib"
 tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
 
-echo "src custom file://$(to_absolute_path packages_weimar)" >> $TEMP_DIR/ib/repositories.conf 
+echo "src custom $PACKAGES_URL/packages/$MAINTARGET/$CUSTOMTARGET" >> $TEMP_DIR/ib/repositories.conf 
 
 cp -r $TEMP_DIR/ib ./
 
