@@ -32,6 +32,8 @@ jobs:
         - openwrt: 22.03.2
         - target: x86_64
           openwrt: 21.02.5
+        - target: mpc85xx_p1010
+          openwrt: 21.02.5
       fail-fast: false
     runs-on: ubuntu-latest
 
