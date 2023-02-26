@@ -113,7 +113,7 @@ download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt
 mkdir "$TEMP_DIR/ib"
 tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
 
-echo "src custom $PACKAGES_URL/packages/$MAINTARGET/$CUSTOMTARGET" >> $TEMP_DIR/ib/repositories.conf 
+echo "src/gz custom $PACKAGES_URL/$MAINTARGET/$CUSTOMTARGET" >> $TEMP_DIR/ib/repositories.conf 
 
 cp -r $TEMP_DIR/ib ./
 
