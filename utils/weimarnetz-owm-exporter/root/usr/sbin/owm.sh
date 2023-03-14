@@ -194,11 +194,11 @@ com_name="$(uci_get freifunk community name)"
 com_homepage="$(uci_get freifunk community homepage)"
 com_longitude="$(uci_get freifunk community longitude)"
 com_latitude="$(uci_get freifunk community latitude)"
-com_ssid_scheme=$(uci_get freifunk community ssid_scheme)
-com_splash_network=$(uci_get freifunk community splash_network)
-com_splash_prefix=$(uci_get freifunk community splash_prefix)
+com_ssid_scheme="$(uci_get freifunk community ssid_scheme)"
+com_splash_network="$(uci_get freifunk community splash_network)"
+com_splash_prefix="$(uci_get freifunk community splash_prefix)"
 uci_load ffwizard
-nodenumber=$(uci_get ffwizard settings nodenumber)
+nodenumber="$(uci_get ffwizard settings nodenumber)"
 json_load "$(ubus call registrator status)"
 json_get_var regmessage message
 json_get_var regnodenumber nodenumber
@@ -275,7 +275,10 @@ json_close_object
 # OLSR-Config
 # That string gets substituted by the olsrd-config-string afterwards
 json_add_object olsr
+send_olsrd_config="$(uci_get ffwizard owm send_olsrd_config '1')"
+if [ "$send_olsrd_config" = "1" ]; then
 	json_add_string ipv4Config '$OLSRCONFIG'
+fi
 json_close_object
 
 json_add_array links
