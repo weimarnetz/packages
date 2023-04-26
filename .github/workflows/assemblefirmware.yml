@@ -29,11 +29,11 @@ jobs:
       matrix:
         target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
         include:
-        - openwrt: 22.03.3
+        - openwrt: 22.03.4
         - target: x86_64
-          openwrt: 21.02.5
+          openwrt: 21.02.6
         - target: mpc85xx_p1010
-          openwrt: 21.02.5
+          openwrt: 21.02.6
       fail-fast: false
     runs-on: ubuntu-latest
 
@@ -89,12 +89,12 @@ jobs:
     strategy:
       matrix:
         target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
-        openwrt: [21.02.5, 22.03.3]
+        openwrt: [21.02.6, 22.03.4]
         exlude: 
           - target: x86_64
-            openwrt: 22.03.3
+            openwrt: 22.03.4
           - target: mpc85xx_p1010
-            openwrt: 22.03.3
+            openwrt: 22.03.4
       fail-fast: false
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
