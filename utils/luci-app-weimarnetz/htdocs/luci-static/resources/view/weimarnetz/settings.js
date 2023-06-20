@@ -51,7 +51,7 @@ return view.extend({
 			if (value.length > 32) {
 				return _('SSID darf nicht länger als 32 Zeichen sein!');
 			}
-			if (value.length > 0 && !value.match(/^[a-zA-Z0-9\ -\(\)]+$/)) {
+			if (value.length > 0 && !value.match(/^[a-zA-Z0-9\-\(\)\|\ \.]+$/)) {
 				return _('SSID darf nur alphanumerischen Zeichen, Klammern, Bindestrich oder Leerzeichen enthalten!')
 			}
 			return true;
