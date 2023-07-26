@@ -29,7 +29,6 @@ jobs:
       matrix:
         target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
         include:
-        - openwrt: 23.05.0.rc2
         - openwrt: 22.03.5
         - target: x86_64
           openwrt: 21.02.7
@@ -90,7 +89,7 @@ jobs:
     strategy:
       matrix:
         target: [ath79_generic, ath79_generic-tight, ath79_tiny, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
-        openwrt: [21.02.6, 22.03.4, 23.05.0.rc2]
+        openwrt: [21.02.7, 22.03.5, 23.05.0.rc2]
         exlude: 
           - target: x86_64
             openwrt: 22.03.5
