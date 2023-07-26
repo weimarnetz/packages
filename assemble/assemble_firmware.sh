@@ -132,6 +132,7 @@ trap signal_handler 0 1 2 3 15
 MAINTARGET="$(echo $TARGET|cut -d '_' -f 1)"
 CUSTOMTARGET="$(echo $TARGET|cut -d '_' -f 2)"
 SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
+MAINVERSION="$(echo $OPENWRT|cut -d '.' -f1-2)" # extract 22.03 from 22.03.5
 
 if [ -z "$DEST_DIR" ]; then
   GIT=$(git describe --always --dirty --tags)
@@ -144,8 +145,8 @@ info $DEST_DIR
 failed_profiles=
 
 # check if packagelist with suffix exist
-if [ -e "profiles/${OPENWRT}/${TARGET}.profiles" ] ; then
-	profiles="profiles/${OPENWRT}/${TARGET}.profiles"
+if [ -e "profiles/${MAINVERSION}/${TARGET}.profiles" ] ; then
+	profiles="profiles/${MAINVERSION}/${TARGET}.profiles"
 else
 	profiles="profiles/${TARGET}.profiles"
 fi
@@ -169,10 +170,10 @@ while read model; do
 		img_params=""
 
 		# check if packagelist with suffix exist
-		if [ -e "${PKGLIST_DIR}/${OPENWRT}/${usecase}_${suffix}.txt" ] ; then
-			package_list="${OPENWRT}/${usecase}_${suffix}"
-		elif [ -e "${PKGLIST_DIR}/${OPENWRT}/${usecase}.txt" ] ; then
-			package_list="${OPENWRT}/${usecase}"
+		if [ -e "${PKGLIST_DIR}/${MAINVERSION}/${usecase}_${suffix}.txt" ] ; then
+			package_list="${MAINVERSION}/${usecase}_${suffix}"
+		elif [ -e "${PKGLIST_DIR}/${MAINVERSION}/${usecase}.txt" ] ; then
+			package_list="${MAINVERSION}/${usecase}"
 		elif [ -e "${PKGLIST_DIR}/${usecase}_${suffix}.txt" ] ; then
 			package_list="${usecase}_${suffix}"
 		else
@@ -213,6 +214,9 @@ while read model; do
 		# ensure BIN_DIR is valid
     	base_target_dir=$(basename ${package_list})
 		mkdir -p "${DEST_DIR}/${base_target_dir}"
+    cd "firmwares"
+    ln -sf ${GIT} current
+    cd ..
 
 		make -C "${IB_DIR}/" image "PROFILE=$profile" "PACKAGES=$packages" "BIN_DIR=${DEST_DIR}/${base_target_dir}" $img_params || failed_profiles="${profile}; ${failed_profiles}" 
 
