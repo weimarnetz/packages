@@ -3,33 +3,40 @@
 -ppp-mod-pppoe
 -wpad-mini
 -wpad 
--firewall
+-firewall4
 kmod-mac80211-hwsim
 # Defaults
 hostapd-mini
--kmod-ipt-offload
+kmod-ipt-nat
+kmod-ipt-conntrack
+iptables-mod-ipopt
 
 # Common
 # mtr
 iperf
 dnsmasq
-#iwinfo
-libiwinfo-lua
 rpcd-mod-iwinfo
+rpcd
+iw
+tc
 
 # GUI-basics
 uhttpd
+uhttpd-mod-ubus
 luci-mod-admin-full
 luci-mod-freifunk
 freifunk-common-olsr
 luci-app-olsr
 luci-app-olsr-services
-luci-app-owm
-luci-app-owm-cmd
-luci-theme-bootstrap
+luci-theme-freifunk-generic
+libiwinfo-lua
 # GUI addon
-#luci-i18n-base-de
-#luci-i18n-olsr-de
+luci-i18n-base-de
+luci-i18n-base-en
+luci-i18n-olsr-de
+luci-i18n-olsr-en
+luci-i18n-freifunk-de
+luci-i18n-freifunk-en
 
 # OLSR
 olsrd
@@ -41,12 +48,18 @@ olsrd-mod-watchdog
 olsrd-mod-dyn-gw
 
 # VPN
+weimarnetz-fastd-config
 fastd
+kmod-l2tp-eth
+resolveip
 
 # Weimarnetz
 weimarnetz-ffwizard
 luci-app-weimarnetz
+weimarnetz-owm-exporter
+weimarnetz-button-config
 kmod-sched-cake
 kmod-ifb
 sqm-scripts
 iw
+openssh-sftp-server

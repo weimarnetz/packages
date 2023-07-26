@@ -29,7 +29,9 @@ luci-app-owm-cmd
 luci-theme-bootstrap
 # GUI addon
 #luci-i18n-base-de
+#luci-i18n-base-en
 #luci-i18n-olsr-de
+#luci-i18n-olsr-en
 
 # OLSR
 olsrd

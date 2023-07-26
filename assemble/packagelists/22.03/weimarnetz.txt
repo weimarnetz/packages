@@ -2,11 +2,14 @@
 -ppp
 -ppp-mod-pppoe
 -wpad-mini
--wpad 
+wpad-mesh-wolfssl 
+-wpad-basic-wolfssl
 -firewall
-
-hostapd-mini
+-firewall4
+-wpad-basic
 kmod-ipt-nat
+kmod-ipt-conntrack
+iptables-mod-ipopt
 dnsmasq
 rpcd-mod-iwinfo
 rpcd
@@ -21,14 +24,15 @@ luci-mod-freifunk
 freifunk-common-olsr
 luci-app-olsr
 luci-app-olsr-services
-luci-app-owm
-luci-app-owm-cmd
-luci-theme-bootstrap
+luci-theme-freifunk-generic
 libiwinfo-lua
 # GUI addon
 luci-i18n-base-de
+luci-i18n-base-en
 luci-i18n-olsr-de
+luci-i18n-olsr-en
 luci-i18n-freifunk-de
+luci-i18n-freifunk-en
 
 # OLSR
 olsrd
@@ -40,20 +44,18 @@ olsrd-mod-watchdog
 olsrd-mod-dyn-gw
 
 # VPN
-fastd 
+weimarnetz-fastd-config
+fastd
+kmod-l2tp-eth 
 resolveip
 
 # Weimarnetz
 weimarnetz-ffwizard
-data-weimar
+luci-app-weimarnetz
+weimarnetz-owm-exporter
+weimarnetz-button-config
 
 # extra
-# mtr
 tcpdump-mini
 iperf
 kmod-sched-cake
-
-# usb thether
-kmod-usb-net
-kmod-usb-net-rndis
-kmod-usb-net-cdc-ether
