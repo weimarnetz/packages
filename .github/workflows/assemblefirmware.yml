@@ -81,7 +81,7 @@ jobs:
           target="$(echo ${{ matrix.target }}|tr '_' /)"
           mkdir -p packages_weimar/packages/$target
           find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/packages/$target \;
-          rsync -avz --relative '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/packages/./$target/ buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
+          rsync -avz --delete --relative '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/packages/./$target/ buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
         fi    
 
   assemble:
