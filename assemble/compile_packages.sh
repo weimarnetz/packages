@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# 2020 - 2022 Andreas Bräu
+# 2020 - 2025 Andreas Bräu
 
 # build weimarnetz packages
 
@@ -34,8 +34,9 @@ error() {
 
 download() {
   URL=$1
+  EXTENSION=$2
 
-  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/sdk.tar.xz" --write-out "%{http_code}" $URL)
+  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/sdk.tar.$EXTENSION" --write-out "%{http_code}" $URL)
   if [[ "${HTTP_CODE}" -lt 200 || "${HTTP_CODE}" -gt 399 ]]; then
     info "no sdk found ${HTTP_CODE}"
     exit 0
@@ -93,11 +94,19 @@ trap signal_handler 0 1 2 3 15
 MAINTARGET="$(echo $TARGET|cut -d '_' -f 1)"
 CUSTOMTARGET="$(echo $TARGET|cut -d '_' -f 2)"
 SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
+EXTENSION="zst"
+if [[ "$OPENWRT" == 23* ]]; then
+  EXTENSION="xz"
+fi
 
 info "Download and extract sdk"
-download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
+download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.$EXTENSION" "$EXTENSION"
 mkdir "$TEMP_DIR/sdk"
-tar -xf "$TEMP_DIR/sdk.tar.xz" --strip-components=1 -C "$TEMP_DIR/sdk"
+if [ "$EXTENSION" = "xz" ]; then
+  tar -xf "$TEMP_DIR/sdk.tar.xz" --strip-components=1 -C "$TEMP_DIR/sdk"
+elif [ "$EXTENSION" = "zst" ]; then
+  tar --use-compress-program=unzstd -xf "$TEMP_DIR/sdk.tar.zst" --strip-components=1 -C "$TEMP_DIR/sdk"
+fi
 cp keys/key-build* "$TEMP_DIR/sdk"
 
 cd "$TEMP_DIR/sdk"

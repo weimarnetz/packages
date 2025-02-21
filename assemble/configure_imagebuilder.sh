@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# 2020 - 2022 Andreas Bräu
+# 2020 - 2025 Andreas Bräu
 
 # configure imagebuilder for weimarnetz images 
 
@@ -58,8 +58,9 @@ $0 -t <target> -o <openwrt>
 
 download() {
   URL=$1
+  EXTENSION=$2
 
-  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/ib.tar.xz" --write-out "%{http_code}" $URL)
+  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/ib.tar.$EXTENSION" --write-out "%{http_code}" $URL)
   if [[ "${HTTP_CODE}" -lt 200 || "${HTTP_CODE}" -gt 399 ]]; then
     info "no imagebuilder found"
     exit 0
@@ -107,11 +108,19 @@ trap signal_handler 0 1 2 3 15
 MAINTARGET="$(echo $TARGET|cut -d '_' -f 1)"
 CUSTOMTARGET="$(echo $TARGET|cut -d '_' -f 2)"
 SUBTARGET="$(echo $CUSTOMTARGET|cut -d '-' -f 1)"
+EXTENSION="zst"
+if [[ "$OPENWRT" == 23* ]]; then
+  EXTENSION="xz"
+fi
 
 info "Download and extract image builder"
-download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-imagebuilder-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.xz" 
+download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-imagebuilder-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.$EXTENSION" "$EXTENSION" 
 mkdir "$TEMP_DIR/ib"
-tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
+if [ "$EXTENSION" = "xz" ]; then
+  tar -xf "$TEMP_DIR/ib.tar.xz" --strip-components=1 -C "$TEMP_DIR/ib"
+elif [ "$EXTENSION" = "zst" ]; then
+  tar --use-compress-program=unzstd -xf "$TEMP_DIR/ib.tar.zst" --strip-components=1 -C "$TEMP_DIR/ib"
+fi
 
 echo "src/gz custom $PACKAGES_URL/$MAINTARGET/$CUSTOMTARGET" >> $TEMP_DIR/ib/repositories.conf 
 
