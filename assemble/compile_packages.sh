@@ -124,7 +124,7 @@ if [[ ! -f "key-build" ]]; then
   cp key-build* ../../keys
 fi
 for package in $(cat feeds/packages_weimar.index|grep Source-Makefile:|cut -d '/' -f 4); do
-  make -j1 V=s package/$package/compile;
+  make package/$package/compile;
 done
 make package/index
 
