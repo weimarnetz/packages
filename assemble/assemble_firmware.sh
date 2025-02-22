@@ -3,7 +3,7 @@
 # 2016 Alexander Couzens
 # 2020-2025 Andreas Bräu
 
-# generate LEDE images
+# generate OpenWrt images
 
 ### inputs
 # profile file
