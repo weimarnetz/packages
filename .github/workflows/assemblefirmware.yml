@@ -105,7 +105,9 @@ jobs:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           owner: weimarnetz
-          repositories: imagebuilder
+          repositories: |
+            imagebuilder
+            packages
         
       - name: Trigger firmware build
         run: |
@@ -129,8 +131,14 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/weimarnetz/imagebuilder
 
-      - name: Test admin permissions
+      - name: Test admin permissions ib
         run: |
           curl -s -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/weimarnetz/imagebuilder | jq .permissions
+      - name: Test admin permissions packages
+        run: |
+          curl -s -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/weimarnetz/packages | jq .permissions
+    
