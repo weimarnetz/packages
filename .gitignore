@@ -1,0 +1,25 @@
+# Editor-spezifische Dateien
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*~
+
+# Temporäre Dateien
+*.tmp
+*.bak
+*.log
+tmp/
+temp/
+
+# Build-Dateien
+/firmwares/
+/ib/
+/packages_weimar/
+
+# OSX-spezifische Dateien
+.DS_Store
+
+# Umgebungsvariablen
+.env
+.env.local
