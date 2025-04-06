@@ -106,6 +106,7 @@ jobs:
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           owner: weimarnetz
           permission-contents: write
+          permission-actions: write
           repositories: |
             imagebuilder
             packages
