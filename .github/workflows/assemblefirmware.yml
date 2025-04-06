@@ -114,7 +114,7 @@ jobs:
       - name: Trigger firmware build
         run: |
           curl -X POST \
-          -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
+          -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/weimarnetz/imagebuilder/dispatches \
           -d '{"event_type": "package_update", "client_payload": {"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}}'
