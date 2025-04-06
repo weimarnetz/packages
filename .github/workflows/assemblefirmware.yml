@@ -104,9 +104,7 @@ jobs:
         with:
           app_id: ${{ secrets.GH_APP_ID }}
           private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          repositories: >-
-            ["weimarnetz/imagebuilder"]
-          
+
       - name: Trigger firmware build
         run: |
           echo "Using token starting with: ${TOKEN:0:5}..."
