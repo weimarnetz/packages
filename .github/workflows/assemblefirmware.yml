@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
   push:
     branches: [ brauhaus-19.07 ]
-    paths:
-      - 'assemble/**'
-      - 'build/**'
-      - 'net/**'
-      - 'utils/**'
-      - '.github/**'
+    #paths:
+    #  - 'assemble/**'
+    #  - 'build/**'
+    #  - 'net/**'
+    #  - 'utils/**'
+    #  - '.github/**'
   pull_request:
     branches: [ brauhaus-19.07 ]
     paths:
@@ -32,7 +32,7 @@ jobs:
   compile_packages:
     strategy:
       matrix:
-        target: [ath79_generic, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
+        target: [ath79_generic] #, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
         include:
         - openwrt: 23.05.5
       fail-fast: false
@@ -94,7 +94,7 @@ jobs:
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
-    needs: compile_packages
+    # needs: compile_packages
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
@@ -104,6 +104,8 @@ jobs:
         with:
           app_id: ${{ secrets.GH_APP_ID }}
           private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          repositories: >-
+            ["weimarnetz/imagebuilder"]
           
       - name: Trigger firmware build
         run: |
@@ -136,3 +138,9 @@ jobs:
           curl -s -H "Authorization: token ${{ steps.generate_token.outputs.token }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/weimarnetz/imagebuilder
+
+      - name: Test admin permissions
+        run: |
+          curl -s -H "Authorization: token ${{ steps.generate_token.outputs.token }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/weimarnetz/imagebuilder | jq .permissions
