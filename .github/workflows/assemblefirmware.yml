@@ -91,10 +91,17 @@ jobs:
           find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/packages/$target \;
           rsync -avz --delete --relative '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/packages/./$target/ buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
         fi
+
+  # Separate job that runs after all matrix jobs are completed
+  trigger_firmware_build:
+    needs: compile_packages
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
     - name: Trigger firmware build
       run: |
         curl -X POST \
         -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
         -H "Accept: application/vnd.github.v3+json" \
-        https://api.github.com/repos/weimarnetz/imagebuilder/dispatch \
+        https://api.github.com/repos/weimarnetz/imagebuilder/dispatches \
         -d '{"event_type": "package_update", "client_payload": {"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}}'
