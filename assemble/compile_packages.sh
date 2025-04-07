@@ -33,14 +33,52 @@ error() {
 }
 
 download() {
-  URL=$1
+  PRIMARY_URL=$1
   EXTENSION=$2
-
-  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/sdk.tar.$EXTENSION" --write-out "%{http_code}" $URL)
-  if [[ "${HTTP_CODE}" -lt 200 || "${HTTP_CODE}" -gt 399 ]]; then
-    info "no sdk found ${HTTP_CODE}"
-    exit 0
+  
+  # Try the primary URL first
+  info "Trying primary URL: $PRIMARY_URL"
+  HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/sdk.tar.$EXTENSION" --write-out "%{http_code}" "$PRIMARY_URL")
+  
+  # If successful, end the function
+  if [[ "${HTTP_CODE}" -ge 200 && "${HTTP_CODE}" -lt 400 ]]; then
+    info "Successfully downloaded SDK from primary URL"
+    return 0
   fi
+  
+  # If not successful, look for alternatives in the configuration file
+  info "Primary download failed with code ${HTTP_CODE}, trying alternatives..."
+  
+  local config_file="$(dirname "$0")/sdk_sources.conf"
+  if [ -f "$config_file" ]; then
+    while IFS="|" read -r version_pattern target_pattern url || [ -n "$url" ]; do
+      # Ignore comments and empty lines
+      [[ "$version_pattern" == \#* || -z "$version_pattern" ]] && continue
+      
+      # Check if version and target match (with wildcard support)
+      if [[ "$OPENWRT" == $version_pattern && "$TARGET" == $target_pattern ]]; then
+        # Replace placeholders in the URL
+        alt_url="${url//%OPENWRT%/$OPENWRT}"
+        alt_url="${alt_url//%MAINTARGET%/$MAINTARGET}"
+        alt_url="${alt_url//%SUBTARGET%/$SUBTARGET}"
+        alt_url="${alt_url//%EXTENSION%/$EXTENSION}"
+        
+        info "Trying alternative URL: $alt_url"
+        HTTP_CODE=$(curl -s -L -o "$TEMP_DIR/sdk.tar.$EXTENSION" --write-out "%{http_code}" "$alt_url")
+        
+        if [[ "${HTTP_CODE}" -ge 200 && "${HTTP_CODE}" -lt 400 ]]; then
+          info "Successfully downloaded SDK from alternative URL"
+          return 0
+        else
+          info "Alternative download failed with code ${HTTP_CODE}"
+        fi
+      fi
+    done < "$config_file"
+  fi
+  
+  # If no matching alternative was found or no download attempts were successful
+  error "Failed to download SDK from all sources"
+  return 1
 }
 
 usage() {
@@ -100,8 +138,12 @@ if [[ "$OPENWRT" == 23* ]]; then
 fi
 
 info "Download and extract sdk"
-download  "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.$EXTENSION" "$EXTENSION"
-mkdir "$TEMP_DIR/sdk"
+if ! download "$OPENWRT_BASE_URL/$OPENWRT/$MAINTARGET/$CUSTOMTARGET/ffweimar-openwrt-sdk-$MAINTARGET-${SUBTARGET}.Linux-x86_64.tar.$EXTENSION" "$EXTENSION"; then
+  error "Could not download SDK from any source"
+  exit 1
+fi
+
+mkdir -p "$TEMP_DIR/sdk"
 if [ "$EXTENSION" = "xz" ]; then
   tar -xf "$TEMP_DIR/sdk.tar.xz" --strip-components=1 -C "$TEMP_DIR/sdk"
 elif [ "$EXTENSION" = "zst" ]; then
