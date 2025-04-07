@@ -8,12 +8,11 @@ on:
   workflow_dispatch:
   push:
     branches: [ brauhaus-19.07 ]
-    #paths:
-    #  - 'assemble/**'
-    #  - 'build/**'
-    #  - 'net/**'
-    #  - 'utils/**'
-    #  - '.github/**'
+    paths:
+      - 'assemble/**'
+      - 'build/**'
+      - 'net/**'
+      - 'utils/**'
   pull_request:
     branches: [ brauhaus-19.07 ]
     paths:
@@ -94,7 +93,7 @@ jobs:
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
-    # needs: compile_packages
+    needs: compile_packages
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
