@@ -111,8 +111,18 @@ jobs:
         
       - name: Trigger firmware build
         run: |
-          curl -X POST \
-          -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/weimarnetz/imagebuilder/dispatches \
-          -d '{"event_type": "package_update", "client_payload": {"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}}'
+          HTTP_RESPONSE=$(curl -s -o response.txt -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/weimarnetz/imagebuilder/dispatches \
+            -d '{"event_type": "package_update", "client_payload": {"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}}')
+          
+          echo "HTTP status code: $HTTP_RESPONSE"
+          if [ "$HTTP_RESPONSE" != "204" ]; then
+            echo "Error response:"
+            cat response.txt
+            exit 1  # Fail the workflow if the HTTP status is not 204 (success)
+          else
+            echo "Successfully triggered imagebuilder repository"
+          fi
