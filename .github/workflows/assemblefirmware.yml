@@ -105,8 +105,6 @@ jobs:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           owner: weimarnetz
-          permission-contents: write
-          permission-actions: write
           repositories: |
             imagebuilder
             packages
@@ -118,29 +116,3 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/weimarnetz/imagebuilder/dispatches \
           -d '{"event_type": "package_update", "client_payload": {"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}}'
-
-      - name: Debug token
-        run: |
-          echo "Token exists: ${{ steps.app-token.outputs.token != '' }}"
-          echo "Token length: ${#TOKEN}"
-          echo "Token starts with: ${TOKEN:0:5}..."
-        env:
-          TOKEN: ${{ steps.app-token.outputs.token }}
-
-      - name: Test token permissions
-        run: |
-          curl -s -H "Authorization: Bearer ${{ secrets.TRIGGER_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/weimarnetz/imagebuilder
-
-      - name: Test admin permissions ib
-        run: |
-          curl -s -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/weimarnetz/imagebuilder | jq .permissions
-      - name: Test admin permissions packages
-        run: |
-          curl -s -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/weimarnetz/packages | jq .permissions
-    
