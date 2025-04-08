@@ -134,4 +134,4 @@ Each target directory also contains a `package_build.json` file with metadata ab
 }
 ```
 
-This information helps track the origin of package builds and provides context for firmware generation. 
+This information helps track the origin of package builds and provides context for firmware generation.
