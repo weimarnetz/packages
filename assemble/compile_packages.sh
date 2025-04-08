@@ -154,8 +154,36 @@ cp keys/key-build* "$TEMP_DIR/sdk"
 cd "$TEMP_DIR/sdk"
 cat << EOF >> feeds.conf
 src-link base ../../ib/packages
-src-link packages_weimar ../../../../
+src-link weimarnetz_packages ../../../../
 EOF
+
+# Add feeds from the configuration file
+feeds_conf="$(dirname "$0")/additional_feeds.conf"
+if [ -f "$feeds_conf" ]; then
+  info "Found feeds.conf at $feeds_conf"
+  
+  while IFS="|" read -r feed_name feed_type feed_url || [ -n "$feed_url" ]; do
+    # Ignore comments and empty lines
+    [[ "$feed_name" == \#* || -z "$feed_name" ]] && continue
+    
+    # Trim whitespace
+    feed_name=$(echo "$feed_name" | xargs)
+    feed_type=$(echo "$feed_type" | xargs)
+    feed_url=$(echo "$feed_url" | xargs)
+    
+    # Only add if all fields are present
+    if [ -n "$feed_name" ] && [ -n "$feed_type" ] && [ -n "$feed_url" ]; then
+      # Add to feeds.conf in OpenWrt format (TYPE NAME URL)
+      echo "$feed_type $feed_name $feed_url" >> feeds.conf
+      info "Added feed: $feed_type $feed_name $feed_url"
+    fi
+  done < "$feeds_conf"
+else
+  info "Feeds configuration file not found at $feeds_conf"
+  # Fallback to default feed if no configuration file exists
+  echo "src-git freifunk_packages https://github.com/freifunk/openwrt-packages.git^7e460f78f0461a6c692dd28fa86a6b0646fc938f" >> feeds.conf
+  info "Using default freifunk_packages feed (no feeds.conf found)"
+fi
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
@@ -165,9 +193,49 @@ if [[ ! -f "key-build" ]]; then
   ./staging_dir/host/bin/usign -G -s ./key-build -p ./key-build.pub -c "Local build key"
   cp key-build* ../../keys
 fi
-for package in $(cat feeds/packages_weimar.index|grep Source-Makefile:|cut -d '/' -f 4); do
+for package in $(cat feeds/weimarnetz_packages.index|grep Source-Makefile:|cut -d '/' -f 4); do
   make package/$package/compile;
 done
 make package/index
 
-cp -r bin/packages/*/packages_weimar ../../
+# Create a common packages directory
+mkdir -p ../../packages/
+
+# Copy all feed packages
+info "Copying built packages from all feeds"
+if [ -d "bin/packages/" ]; then
+  # Copy weimarnetz_packages feed - using find instead of wildcards
+  weimarnetz_path=$(find bin/packages/ -type d -name "weimarnetz_packages" | head -n 1)
+  if [ -n "$weimarnetz_path" ]; then
+    info "Copying weimarnetz_packages packages from $weimarnetz_path"
+    cp -r "$weimarnetz_path" ../../packages/
+  else
+    info "No weimarnetz_packages directory found"
+  fi
+  
+  # Copy freifunk_packages feed - using find instead of wildcards
+  freifunk_path=$(find bin/packages/ -type d -name "freifunk_packages" | head -n 1)
+  if [ -n "$freifunk_path" ]; then
+    info "Copying freifunk_packages packages from $freifunk_path"
+    cp -r "$freifunk_path" ../../packages/
+  else
+    info "No freifunk_packages directory found"
+  fi
+  
+  # Copy any other feeds that might be defined
+  for arch_dir in bin/packages/* ; do
+    if [ -d "$arch_dir" ]; then
+      for feed_dir in "$arch_dir"/* ; do
+        if [ -d "$feed_dir" ]; then
+          feed_name=$(basename "$feed_dir")
+          if [ "$feed_name" != "packages" ] && [ "$feed_name" != "base" ] && [ "$feed_name" != "weimarnetz_packages" ] && [ "$feed_name" != "freifunk_packages" ]; then
+            info "Copying additional feed packages: $feed_name"
+            cp -r "$feed_dir" ../../packages/
+          fi
+        fi
+      done
+    fi
+  done
+else
+  info "No packages directory found, skipping package copy"
+fi

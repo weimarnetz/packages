@@ -124,19 +124,26 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add - <<< "${SSH_KEY}"
         cd assemble
-        if [ -d "packages_weimar/" ]; then
-          target="$(echo ${{ matrix.target }}|tr '_' /)"
-          mkdir -p packages_weimar/packages/$target
-          
-          # Copy the build info JSON to the target directory
-          cp ../build_info/package_build.json packages_weimar/packages/$target/
-          
-          # Move package files into the target directory
-          find ./packages_weimar -maxdepth 1 -type f -exec mv {} packages_weimar/packages/$target \;
-          
-          # Upload the packages including build info
-          rsync -avz --delete --relative '-e ssh -o StrictHostKeyChecking=no -p22223' packages_weimar/packages/./$target/ buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
-        fi
+        target="$(echo ${{ matrix.target }}|tr '_' /)"
+        
+        # Process packages directory (unified feed structure)
+        # Create target subdirectories for each feed
+        for feed_dir in packages/* ; do
+          if [ -d "$feed_dir" ]; then
+            feed_name=$(basename "$feed_dir")
+            mkdir -p packages/$feed_name/packages/$target
+            
+            # Copy the build info JSON to the target directory
+            cp ../build_info/package_build.json packages/$feed_name/packages/$target/
+            
+            # Move package files into the target directory
+            find ./$feed_dir -maxdepth 1 -type f -exec mv {} packages/$feed_name/packages/$target \;
+            
+            # Upload the packages including build info
+            echo "Uploading $feed_name packages for $target"
+            rsync -avz --delete --relative '-e ssh -o StrictHostKeyChecking=no -p22223' packages/$feed_name/packages/./$target/ buildbot@buildbot.weimarnetz.de:/brauhaus/$feed_name/packages/
+          fi
+        done
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
