@@ -78,7 +78,6 @@ jobs:
     
     # Upload build info as an artifact for the trigger job
     - name: Upload build info artifact
-      if: matrix.target == 'ath79_generic'
       uses: actions/upload-artifact@v4
       with:
         name: build-info
