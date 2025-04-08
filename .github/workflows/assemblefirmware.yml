@@ -28,7 +28,57 @@ permissions:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # New job for collecting build information
+  collect_build_info:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      - run: |
+          git fetch --prune --unshallow
+      
+      # Collect build information
+      - name: Collect build information
+        id: buildinfo
+        run: |
+          # Get branch and version info
+          BRANCH_NAME=$(git branch --show-current)
+          if [ -z "$BRANCH_NAME" ]; then
+            BRANCH_NAME=$(echo ${{ github.ref }} | sed 's|refs/heads/||')
+          fi
+          GIT_VERSION=$(git describe --always --dirty --tags)
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          
+          # Create build info JSON
+          mkdir -p build_info
+          cat > build_info/package_build.json << EOF
+          {
+            "branch": "${BRANCH_NAME}",
+            "version": "${GIT_VERSION}",
+            "trigger_event": "${{ github.event_name }}",
+            "build_timestamp": "${TIMESTAMP}",
+            "builder": "${{ github.actor }}"
+          }
+          EOF
+          
+          # Store as outputs for other jobs
+          echo "branch=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          echo "version=${GIT_VERSION}" >> $GITHUB_OUTPUT
+          
+          # Display the created file
+          cat build_info/package_build.json
+      
+      # Upload build info as an artifact for other jobs
+      - name: Upload build info artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-info-base
+          path: build_info/package_build.json
+          retention-days: 1
+
+  # Main job for compiling packages
   compile_packages:
+    needs: collect_build_info
     strategy:
       matrix:
         target: [ath79_generic, mediatek_filogic, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic]
@@ -43,44 +93,35 @@ jobs:
     - run: |
         git fetch --prune --unshallow
     
-    # Collect build information
-    - name: Collect build information
-      id: buildinfo
+    # Download build info artifact from previous job
+    - name: Download build info base
+      uses: actions/download-artifact@v4
+      with:
+        name: build-info-base
+        path: build_info_base
+    
+    # Update build info with target-specific details
+    - name: Update build info with target details
+      id: updateinfo
       run: |
-        # Get branch and version info
-        BRANCH_NAME=$(git branch --show-current)
-        if [ -z "$BRANCH_NAME" ]; then
-          BRANCH_NAME=$(echo ${{ github.ref }} | sed 's|refs/heads/||')
-        fi
-        GIT_VERSION=$(git describe --always --dirty --tags)
-        TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        # Read the base build info
+        cp build_info_base/package_build.json build_info_base/base.json
         
-        # Create build info JSON
+        # Update with target-specific info
         mkdir -p build_info
-        cat > build_info/package_build.json << EOF
-        {
-          "branch": "${BRANCH_NAME}",
-          "version": "${GIT_VERSION}",
-          "target": "${{ matrix.target }}",
-          "openwrt": "${{ matrix.openwrt }}",
-          "trigger_event": "${{ github.event_name }}",
-          "build_timestamp": "${TIMESTAMP}",
-          "builder": "${{ github.actor }}"
-        }
-        EOF
+        jq --arg target "${{ matrix.target }}" \
+           --arg openwrt "${{ matrix.openwrt }}" \
+           '. + {target: $target, openwrt: $openwrt}' \
+           build_info_base/base.json > build_info/package_build.json
         
-        # Store as environment variables
-        echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
-        echo "GIT_VERSION=${GIT_VERSION}" >> $GITHUB_ENV
-        
-        # Display the created file
+        # Display the updated file
         cat build_info/package_build.json
     
-    # Upload build info as an artifact for the trigger job
-    - name: Upload build info artifact
+    # Upload the target-specific build info
+    - name: Upload target-specific build info
       uses: actions/upload-artifact@v4
       with:
-        name: build-info
+        name: build-info-${{ matrix.target }}
         path: build_info/package_build.json
         retention-days: 1
     
@@ -147,7 +188,7 @@ jobs:
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
-    needs: compile_packages
+    needs: [collect_build_info, compile_packages]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
@@ -157,9 +198,9 @@ jobs:
       - name: Download build info
         uses: actions/download-artifact@v4
         with:
-          name: build-info
+          name: build-info-base
           path: build_info
-
+      
       - name: Read build info
         id: info
         run: |
