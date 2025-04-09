@@ -165,7 +165,7 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add - <<< "${SSH_KEY}"
         cd assemble
-        target="$(echo ${{ matrix.target }}|tr '_' /)"
+        target="$(echo ${{ matrix.target }})"
         
         # Process packages directory (unified feed structure)
         for feed_dir in packages/* ; do
