@@ -196,6 +196,14 @@ fi
 for package in $(cat feeds/weimarnetz_packages.index|grep Source-Makefile:|cut -d '/' -f 4); do
   make package/$package/compile;
 done
+
+# Build additional freifunk packages
+info "Building additional freifunk packages"
+for freifunk_pkg in luci-mod-freifunk luci-theme-freifunk-generic luci-i18n-freifunk-de; do
+  info "Building $freifunk_pkg"
+  make package/$freifunk_pkg/compile || info "Failed to build $freifunk_pkg"
+done
+
 make package/index
 
 # Create a common packages directory
