@@ -185,7 +185,7 @@ jobs:
         
         # Upload all packages at once
         echo "Uploading packages to /brauhaus/packages/"
-        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' "upload_temp/brauhaus/" buildbot@buildbot.weimarnetz.de:"/brauhaus/"
+        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' upload_temp/brauhaus/packages/./$target buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
