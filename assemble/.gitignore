@@ -1,4 +1,4 @@
 EMBEDDED_FILES
 img*
 key-build
-packages
+/packages

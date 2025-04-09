@@ -193,6 +193,24 @@ if [[ ! -f "key-build" ]]; then
   ./staging_dir/host/bin/usign -G -s ./key-build -p ./key-build.pub -c "Local build key"
   cp key-build* ../../keys
 fi
+
+# Apply patches for freifunk packages before building
+info "Checking for patches to apply"
+PATCHES_DIR="../../patches"
+if [ -d "$PATCHES_DIR" ]; then
+  # Apply freifunk patches
+  if [ -d "$PATCHES_DIR/packages/freifunk" ]; then
+    info "Applying freifunk patches"
+    for patch_file in "$PATCHES_DIR/packages/freifunk"/*.patch; do
+      if [ -f "$patch_file" ]; then
+        patch_name=$(basename "$patch_file")
+        info "Applying patch: $patch_name"
+        patch -p1 -d "feeds/freifunk_packages" < "$patch_file" || info "Failed to apply patch $patch_name"
+      fi
+    done
+  fi
+fi
+
 for package in $(cat feeds/weimarnetz_packages.index|grep Source-Makefile:|cut -d '/' -f 4); do
   make package/$package/compile;
 done
