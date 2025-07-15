@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# This file replaces the wps button config coming with some routers
+# As we don't need that feature, we disabled it.
+
+return 0
