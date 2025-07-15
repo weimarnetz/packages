@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=weimarnetz-button-config
-PKG_RELEASE:=0.9.5
+PKG_RELEASE:=1.0.0
 
 define Package/weimarnetz-button-config
   SECTION:=luci
@@ -18,6 +18,7 @@ endef
 
 define Package/weimarnetz-button-config/postrm
 	#!/bin/sh
+	cp /rom/etc/rc.button/wps /etc/rc.button/wps
 	cp /rom/etc/rc.button/reset /etc/rc.button/reset
 endef
 
