@@ -18,6 +18,7 @@ const olsrhna = ubus.call("olsrinfo", "getjsondata", {otable: "hna" ,v4_port: 90
 const is_gateway = length(filter(json(olsrhna.jsonreq4).hna, x => x.destination == "0.0.0.0" && x.validityTime == 0)) != 0;
 
 const node = ctx.get_first("ffwizard", "node", "nodenumber") || "unknown";
+const hostname = ctx.get_first("ffwizard", "node", "hostname") || "unknown";
 const profile = ctx.get("freifunk", "community", "name") || "unknown";
 const community = ctx.get_first("profile_" + profile, "community", "name") || "unknown";
 
@@ -25,13 +26,14 @@ const lat = ctx.get_first("ffwizard", "node", "latitude") || 0;
 const lon = ctx.get_first("ffwizard", "node", "longitude") || 0;
 
 gauge("weimarnetz_info")({
+	hostname:	hostname,
         firmware:       firmware,
         node:           node,
         profile:        profile,
         community:      community,
 }, 1);
-gauge("weimarnetz_lat")({}, lat);
-gauge("weimarnetz_lon")({}, lon);
-gauge("weimarnetz_dhcp_clients")({}, client_count);
-gauge("weimarnetz_olsr_links")({}, olsr_link_number);
-gauge("weimarnetz_provides_internet")({}, is_gateway ?? 1 ?? 0);
+gauge("weimarnetz_lat")({hostname: hostname}, lat);
+gauge("weimarnetz_lon")({hostname: hostname}, lon);
+gauge("weimarnetz_dhcp_clients")({hostname: hostname}, client_count);
+gauge("weimarnetz_olsr_links")({hostname: hostname}, olsr_link_number);
+gauge("weimarnetz_provides_internet")({hostname: hostname}, is_gateway ?? 1 ?? 0);
