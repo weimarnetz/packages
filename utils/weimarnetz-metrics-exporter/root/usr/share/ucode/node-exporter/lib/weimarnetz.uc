@@ -28,12 +28,12 @@ const lon = ctx.get_first("ffwizard", "node", "longitude") || 0;
 gauge("weimarnetz_info")({
 	hostname:	hostname,
         firmware:       firmware,
+        lat:            lat,
+        lon:            lon,
         node:           node,
         profile:        profile,
         community:      community,
 }, 1);
-gauge("weimarnetz_lat")({hostname: hostname}, lat);
-gauge("weimarnetz_lon")({hostname: hostname}, lon);
 gauge("weimarnetz_dhcp_clients")({hostname: hostname}, client_count);
 gauge("weimarnetz_olsr_links")({hostname: hostname}, olsr_link_number);
 gauge("weimarnetz_provides_internet")({hostname: hostname}, is_gateway ?? 1 ?? 0);
