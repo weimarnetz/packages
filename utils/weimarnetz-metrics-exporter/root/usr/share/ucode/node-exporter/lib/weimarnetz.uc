@@ -18,7 +18,7 @@ const olsrhna = ubus.call("olsrinfo", "getjsondata", {otable: "hna" ,v4_port: 90
 const is_gateway = length(filter(json(olsrhna.jsonreq4).hna, x => x.destination == "0.0.0.0" && x.validityTime == 0)) != 0;
 
 const node = ctx.get_first("ffwizard", "node", "nodenumber") || "unknown";
-const hostname = ctx.get_first("ffwizard", "node", "hostname") || "unknown";
+const hostname = ctx.get_first("system", "system", "hostname") || "unknown";
 const profile = ctx.get("freifunk", "community", "name") || "unknown";
 const community = ctx.get_first("profile_" + profile, "community", "name") || "unknown";
 
