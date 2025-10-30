@@ -64,8 +64,8 @@ define Collector
   $$(eval $$(call BuildPackage,$(PKG_NAME)-$(1)))
 endef
 
-$(eval $(call Collector,dnsmasq,Dnsmasq collector,@dnsmasq))
-$(eval $(call Collector,ltq-dsl,Lantiq/Intel/MaxLinear DSL collector,@ltq-dsl-app))
+$(eval $(call Collector,dnsmasq,Dnsmasq collector,+dnsmasq))
+$(eval $(call Collector,ltq-dsl,Lantiq/Intel/MaxLinear DSL collector,+ltq-dsl-app))
 $(eval $(call Collector,netstat,netstat collector,))
 $(eval $(call Collector,openwrt,OpenWrt collector,))
 $(eval $(call Collector,snmp6,snmp6 collector,))
