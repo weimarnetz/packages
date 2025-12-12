@@ -70,7 +70,7 @@ jobs:
       
       # Upload build info as an artifact for other jobs
       - name: Upload build info artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: build-info-base
           path: build_info/package_build.json
@@ -95,7 +95,7 @@ jobs:
     
     # Download build info artifact from previous job
     - name: Download build info base
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: build-info-base
         path: build_info_base
@@ -189,7 +189,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
       
       - name: Download build info
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: build-info-base
           path: build_info
