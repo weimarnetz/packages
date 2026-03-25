@@ -82,8 +82,7 @@ jobs:
     strategy:
       matrix:
         target: [ath79_generic, mediatek_filogic, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic, ipq40xx_mikrotik]
-        include:
-        - openwrt: 24.10.5
+        openwrt: [24.10.5, 25.12.1]
       fail-fast: false
     runs-on: ubuntu-24.04
 
@@ -109,10 +108,19 @@ jobs:
         
         # Update with target-specific info
         mkdir -p build_info
-        jq --arg target "${{ matrix.target }}" \
-           --arg openwrt "${{ matrix.openwrt }}" \
-           '. + {target: $target, openwrt: $openwrt}' \
-           build_info_base/base.json > build_info/package_build.json
+        maintarget="$(echo "${{ matrix.target }}" | cut -d'_' -f 1)"
+        customtarget="$(echo "${{ matrix.target }}" | cut -d'_' -f 2)"
+        subtarget="$(echo "${customtarget}" | cut -d'-' -f 1)"
+        openwrt_release="$(echo "${{ matrix.openwrt }}" | cut -d'.' -f 1-2)"
+        
+        jq \
+          --arg target "${{ matrix.target }}" \
+          --arg openwrt_release "${openwrt_release}" \
+          --arg openwrt_sdk "${{ matrix.openwrt }}" \
+          --arg maintarget "${maintarget}" \
+          --arg subtarget "${subtarget}" \
+          '. + {target: $target, openwrt: $openwrt_release, openwrt_release: $openwrt_release, openwrt_sdk: $openwrt_sdk, maintarget: $maintarget, subtarget: $subtarget}' \
+          build_info_base/base.json > build_info/package_build.json
         
         # Display the updated file
         cat build_info/package_build.json
@@ -157,27 +165,30 @@ jobs:
         eval "$(ssh-agent -s)"
         ssh-add - <<< "${SSH_KEY}"
         cd assemble
-        target="$(echo ${{ matrix.target }})"
+        maintarget="$(echo "${{ matrix.target }}" | cut -d'_' -f 1)"
+        customtarget="$(echo "${{ matrix.target }}" | cut -d'_' -f 2)"
+        subtarget="$(echo "${customtarget}" | cut -d'-' -f 1)"
+        openwrt_release="$(echo "${{ matrix.openwrt }}" | cut -d'.' -f 1-2)"
         
         # Process packages directory (unified feed structure)
         for feed_dir in packages/* ; do
           if [ -d "$feed_dir" ]; then
             feed_name=$(basename "$feed_dir")
             
-            # Create local structure that mirrors the target structure
-            mkdir -p "upload_temp/brauhaus/packages/$target/$feed_name"
+            # Create local structure: <openwrt_release>/<maintarget>/<subtarget>/<feed_name>
+            mkdir -p "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name"
             
             # Copy the build info JSON
-            cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$target/$feed_name/"
+            cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/"
             
             # Copy package files
-            find "./$feed_dir" -maxdepth 1 -type f -exec cp {} "upload_temp/brauhaus/packages/$target/$feed_name/" \;
+            find "./$feed_dir" -maxdepth 1 -type f -exec cp {} "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/" \;
           fi
         done
         
         # Upload all packages at once
         echo "Uploading packages to /brauhaus/packages/"
-        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' upload_temp/brauhaus/packages/./$target buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
+        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' upload_temp/brauhaus/packages/./$openwrt_release/$maintarget/$subtarget buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
