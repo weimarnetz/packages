@@ -179,6 +179,7 @@ jobs:
             mkdir -p "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name"
             
             # Copy the build info JSON
+            echo "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/"
             cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/"
             
             # Copy package files
