@@ -186,9 +186,9 @@ jobs:
           fi
         done
         
-        # Upload all packages at once
+        # Upload all packages at once (--mkpath creates dest hierarchy via rsync, same remote path as the transfer)
         echo "Uploading packages to /brauhaus/packages/$openwrt_release/$maintarget/$subtarget/"
-        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' \
+        rsync -avz --delete --mkpath '-e ssh -o StrictHostKeyChecking=no -p22223' \
           "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/" \
           "buildbot@buildbot.weimarnetz.de:/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/"
 
