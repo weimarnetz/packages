@@ -179,7 +179,6 @@ jobs:
             mkdir -p "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name"
             
             # Copy the build info JSON
-            echo "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/"
             cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/"
             
             # Copy package files
@@ -188,8 +187,10 @@ jobs:
         done
         
         # Upload all packages at once
-        echo "Uploading packages to /brauhaus/packages/"
-        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' upload_temp/brauhaus/packages/./$openwrt_release/$maintarget/$subtarget buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
+        echo "Uploading packages to /brauhaus/packages/$openwrt_release/$maintarget/$subtarget/"
+        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' \
+          "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/" \
+          "buildbot@buildbot.weimarnetz.de:/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/"
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
