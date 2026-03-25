@@ -7,14 +7,14 @@ name: Weimarnetz Package Build
 on:
   workflow_dispatch:
   push:
-    branches: [ brauhaus-19.07 ]
+    branches: [ weimarnetz-tng ]
     paths:
       - 'assemble/**'
       - 'build/**'
       - 'net/**'
       - 'utils/**'
   pull_request:
-    branches: [ brauhaus-19.07 ]
+    branches: [ weimarnetz-tng ]
     paths:
       - 'assemble/**'
       - 'build/**'
@@ -193,7 +193,7 @@ jobs:
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
     needs: [collect_build_info, compile_packages]
-    if: github.event_name == 'push'
+    if: false # github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Install jq
