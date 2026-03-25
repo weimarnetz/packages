@@ -167,28 +167,28 @@ jobs:
         cd assemble
         maintarget="$(echo "${{ matrix.target }}" | cut -d'_' -f 1)"
         customtarget="$(echo "${{ matrix.target }}" | cut -d'_' -f 2)"
-        subtarget="$(echo "${customtarget}" | cut -d'-' -f 1)"
+        subtarget="$(echo "$${customtarget}" | cut -d'-' -f 1)"
         openwrt_release="$(echo "${{ matrix.openwrt }}" | cut -d'.' -f 1-2)"
         
         # Process packages directory (unified feed structure)
         for feed_dir in packages/* ; do
-          if [ -d "$feed_dir" ]; then
-            feed_name=$(basename "$feed_dir")
+          if [ -d "$$feed_dir" ]; then
+            feed_name=$$(basename "$$feed_dir")
             
             # Create local structure: <openwrt_release>/<maintarget>/<subtarget>/<feed_name>
-            mkdir -p "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name"
+            mkdir -p "upload_temp/brauhaus/packages/$$openwrt_release/$$maintarget/$$subtarget/$$feed_name"
             
             # Copy the build info JSON
-            cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/"
+            cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$$openwrt_release/$$maintarget/$$subtarget/$$feed_name/"
             
             # Copy package files
-            find "./$feed_dir" -maxdepth 1 -type f -exec cp {} "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/" \;
+            find "./$$feed_dir" -maxdepth 1 -type f -exec cp {} "upload_temp/brauhaus/packages/$$openwrt_release/$$maintarget/$$subtarget/$$feed_name/" \;
           fi
         done
         
         # Upload all packages at once
         echo "Uploading packages to /brauhaus/packages/"
-        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' upload_temp/brauhaus/packages/./$openwrt_release/$maintarget/$subtarget buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
+        rsync -avz --delete '-e ssh -o StrictHostKeyChecking=no -p22223' upload_temp/brauhaus/packages/./$$openwrt_release/$$maintarget/$$subtarget buildbot@buildbot.weimarnetz.de:/brauhaus/packages/
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
