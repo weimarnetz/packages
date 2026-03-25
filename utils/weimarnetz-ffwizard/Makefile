@@ -1,6 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=weimarnetz-ffwizard
+PKG_VERSION:=1.0.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_URL=https://github.com/weimarnetz/weimarnetz.git
@@ -9,7 +10,6 @@ PKG_SOURCE_VERSION:=28c0769794c3e417bfe30e5786b79d8741f000dc
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.xz
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
-PKG_VERSION:=$(PKG_SOURCE_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 

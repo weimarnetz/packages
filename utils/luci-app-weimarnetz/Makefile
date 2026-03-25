@@ -1,7 +1,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-weimarnetz
-PKG_RELEASE:=0.9.5
+PKG_VERSION:=1.0.0
+PKG_RELEASE:=1
 
 define Package/luci-app-weimarnetz
   SECTION:=luci
@@ -18,4 +19,4 @@ endef
 
 include ../../luci.mk
 
-# $(eval $(call BuildPackage,luci-app-weimarnetz))
+$(eval $(call BuildPackage,luci-app-weimarnetz))
