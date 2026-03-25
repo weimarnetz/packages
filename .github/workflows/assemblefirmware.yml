@@ -186,11 +186,11 @@ jobs:
           fi
         done
         
-        # Upload all packages at once (--mkpath creates dest hierarchy via rsync, same remote path as the transfer)
+        # Upload: -R/--relative + /./ in source builds $openwrt_release/... under dest without --mkpath (rrsync-friendly)
         echo "Uploading packages to /brauhaus/packages/$openwrt_release/$maintarget/$subtarget/"
-        rsync -avz --delete --mkpath '-e ssh -o StrictHostKeyChecking=no -p22223' \
-          "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/" \
-          "buildbot@buildbot.weimarnetz.de:/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/"
+        rsync -avz --delete -R '-e ssh -o StrictHostKeyChecking=no -p22223' \
+          "upload_temp/brauhaus/packages/./$openwrt_release/$maintarget/$subtarget/" \
+          "buildbot@buildbot.weimarnetz.de:/brauhaus/packages/"
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:
