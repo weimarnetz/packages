@@ -82,7 +82,7 @@ jobs:
     strategy:
       matrix:
         target: [ath79_generic, mediatek_filogic, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic, ipq40xx_mikrotik]
-        openwrt: [24.10.5, 25.12.1]
+        openwrt: [24.10.6, 25.12.1]
       fail-fast: false
     runs-on: ubuntu-24.04
 
