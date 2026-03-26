@@ -152,9 +152,11 @@ jobs:
     - name: compile packages for target ${{ matrix.target }} 
       env:
         PACKAGE_SIGNING_KEY: ${{ secrets.PACKAGE_SIGNING_PRIVATE_KEY }}
+        APK_SIGNING_KEY: ${{ secrets.APK_SIGNING_PRIVATE_KEY }}
       run: |
         cd assemble
         echo "$PACKAGE_SIGNING_KEY" > keys/key-build
+        echo "$APK_SIGNING_KEY" > keys/private-key.pem
         ./compile_packages.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
 
     - name: upload packages directory

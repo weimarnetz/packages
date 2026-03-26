@@ -150,6 +150,7 @@ elif [ "$EXTENSION" = "zst" ]; then
   tar --use-compress-program=unzstd -xf "$TEMP_DIR/sdk.tar.zst" --strip-components=1 -C "$TEMP_DIR/sdk"
 fi
 cp keys/key-build* "$TEMP_DIR/sdk"
+cp keys/*.pem "$TEMP_DIR/sdk"
 
 cd "$TEMP_DIR/sdk"
 cat << EOF >> feeds.conf
