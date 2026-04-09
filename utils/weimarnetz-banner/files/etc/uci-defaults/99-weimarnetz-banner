@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. /etc/openwrt_release 2>/dev/null
+. /etc/weimarnetz_release 2>/dev/null
+
+cat /usr/share/weimarnetz/banner.template > /etc/banner
+cat >> /etc/banner << EOF
+-------------------------------------------------------------------------------
+OpenWrt: ${DISTRIB_DESCRIPTION}
+Packages: ${WEIMARNETZ_PACKAGES_BRANCH}, ${WEIMARNETZ_PACKAGES_DESCRIPTION}
+-------------------------------------------------------------------------------
+EOF
+
+exit 0
