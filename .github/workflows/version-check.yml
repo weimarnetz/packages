@@ -1,0 +1,61 @@
+name: Version Check
+
+on:
+  pull_request:
+    branches: [weimarnetz-tng]
+    paths:
+      - 'utils/*/**'
+      - 'net/*/**'
+
+jobs:
+  check-version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check that changed packages have a version bump
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          FAILED=0
+
+          changed_dirs=$(git diff --name-only "$BASE"...HEAD -- 'utils/' 'net/' \
+            | grep -oP '^(utils|net)/[^/]+' | sort -u)
+
+          if [ -z "$changed_dirs" ]; then
+            echo "No package directories changed."
+            exit 0
+          fi
+
+          for pkg_dir in $changed_dirs; do
+            makefile="$pkg_dir/Makefile"
+
+            if [ ! -f "$makefile" ]; then
+              echo "::notice::$pkg_dir has no Makefile, skipping."
+              continue
+            fi
+
+            if ! git show "$BASE:$makefile" >/dev/null 2>&1; then
+              echo "::notice::$makefile is new in this PR, skipping version check."
+              continue
+            fi
+
+            old_version=$(git show "$BASE:$makefile" \
+              | grep -E '^PKG_(VERSION|RELEASE):=' | sort | tr '\n' '|')
+            new_version=$(grep -E '^PKG_(VERSION|RELEASE):=' "$makefile" \
+              | sort | tr '\n' '|')
+
+            if [ "$old_version" = "$new_version" ]; then
+              echo "::error file=$makefile::$pkg_dir was changed but PKG_VERSION or PKG_RELEASE was not bumped."
+              FAILED=1
+            else
+              echo "::notice file=$makefile::$pkg_dir version bump OK ($old_version -> $new_version)"
+            fi
+          done
+
+          if [ "$FAILED" -eq 1 ]; then
+            echo ""
+            echo "::error::At least one package was changed without a version bump. Please increment PKG_VERSION or PKG_RELEASE."
+            exit 1
+          fi

@@ -160,7 +160,7 @@ jobs:
         ./compile_packages.sh -t ${{ matrix.target }} -o ${{ matrix.openwrt }}
 
     - name: upload packages directory
-      if: github.event_name == 'push'
+      if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       env:
         SSH_KEY: ${{ secrets.BUILDBOT_PRIVATE_KEY }}
       run: |
@@ -172,27 +172,46 @@ jobs:
         subtarget="$(echo "${customtarget}" | cut -d'-' -f 1)"
         openwrt_release="$(echo "${{ matrix.openwrt }}" | cut -d'.' -f 1-2)"
         
+        if [ "${{ github.ref }}" = "refs/heads/weimarnetz-tng" ]; then
+          FEED_CHANNEL="stable"
+        else
+          FEED_CHANNEL="testing"
+        fi
+        
         # Process packages directory (unified feed structure)
         for feed_dir in packages/* ; do
           if [ -d "$feed_dir" ]; then
             feed_name=$(basename "$feed_dir")
             
-            # Create local structure: <openwrt_release>/<maintarget>/<subtarget>/<feed_name>
-            mkdir -p "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name"
+            # Create local structure: <channel>/<openwrt_release>/<maintarget>/<subtarget>/<feed_name>
+            mkdir -p "upload_temp/brauhaus/packages/$FEED_CHANNEL/$openwrt_release/$maintarget/$subtarget/$feed_name"
             
             # Copy the build info JSON
-            cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/"
+            cp ../build_info/package_build.json "upload_temp/brauhaus/packages/$FEED_CHANNEL/$openwrt_release/$maintarget/$subtarget/$feed_name/"
             
             # Copy package files
-            find "./$feed_dir" -maxdepth 1 -type f -exec cp {} "upload_temp/brauhaus/packages/$openwrt_release/$maintarget/$subtarget/$feed_name/" \;
+            find "./$feed_dir" -maxdepth 1 -type f -exec cp {} "upload_temp/brauhaus/packages/$FEED_CHANNEL/$openwrt_release/$maintarget/$subtarget/$feed_name/" \;
           fi
         done
         
-        # Upload: -R/--relative + /./ in source builds $openwrt_release/... under dest without --mkpath (rrsync-friendly)
-        echo "Uploading packages to /brauhaus/packages/$openwrt_release/$maintarget/$subtarget/"
+        # Upload: -R/--relative + /./ in source builds $FEED_CHANNEL/... under dest without --mkpath (rrsync-friendly)
+        echo "Uploading $FEED_CHANNEL packages to /brauhaus/packages/$FEED_CHANNEL/$openwrt_release/$maintarget/$subtarget/"
         rsync -avz --delete -R '-e ssh -o StrictHostKeyChecking=no -p22223' \
-          "upload_temp/brauhaus/packages/./$openwrt_release/$maintarget/$subtarget/" \
+          "upload_temp/brauhaus/packages/./$FEED_CHANNEL/$openwrt_release/$maintarget/$subtarget/" \
           "buildbot@buildbot.weimarnetz.de:/brauhaus/packages/"
+
+  # Summary job so branch protection only needs one required check instead of all matrix jobs
+  build_status:
+    needs: [compile_packages]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check matrix result
+        run: |
+          if [ "${{ needs.compile_packages.result }}" != "success" ]; then
+            echo "::error::At least one build in the matrix failed."
+            exit 1
+          fi
 
   # Separate job that runs after all matrix jobs are completed
   trigger_firmware_build:

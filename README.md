@@ -17,60 +17,35 @@ Device packages must be space separated, prepend a `-` if you don't want a packa
 
 In the `packagelist` repository you can configure packages that are globally installed. The suffixes after `_` correspond to the suffixes in the `profiles` directory. It is possible to define packages for every OpenWrt Build we support.
 
-Currently we build images for OpenWrt 21.02 and OpenWrt 22.03.
+Currently we build packages for OpenWrt 24.10 and OpenWrt 25.12.
 
-## Cross-Repository Builds
+## Package Versioning
 
-This repository is responsible for developing and building OpenWrt packages. After a successful package build, a firmware build is automatically triggered in the [imagebuilder](https://github.com/weimarnetz/imagebuilder) repository.
+Every package must define `PKG_VERSION` and `PKG_RELEASE` in its Makefile:
 
-### Workflow
+```makefile
+PKG_VERSION:=1.2.0
+PKG_RELEASE:=1
+```
 
-1. Changes to package sources in this repository are pushed
-2. GitHub Actions compiles the packages for various target architectures
-3. The compiled packages are uploaded to the build server
-4. After all package builds complete successfully, a repository dispatch event is sent to the imagebuilder repository
-5. The imagebuilder repository then automatically starts its firmware builds using the latest packages
+- `PKG_VERSION` is the semantic version of the package. Bump it when the package content changes.
+- `PKG_RELEASE` is the packaging release counter. Bump it for packaging-only changes (e.g. dependency adjustments) and reset it to `1` when `PKG_VERSION` is incremented.
 
-### Setting up Cross-Repository Communication
+A CI check on pull requests verifies that at least one of these values was incremented when package files are modified. The check must pass before the PR can be merged.
 
-Communication between repositories is handled via a GitHub App. Here's how to set it up:
+## Releases and Feeds
 
-1. **Create a GitHub App**:
-   - Go to GitHub Settings → Developer settings → GitHub Apps → New GitHub App
-   - Enter a name (e.g., "Weimarnetz Build Dispatcher")
-   - Homepage URL: Repository or organization URL
-   - Disable Webhook (not needed)
-   - Under "Repository permissions":
-     - **Metadata**: `Read-only`
-     - **Contents**: `Read and write` (required for repository_dispatch)
-   - Click "Create GitHub App"
+The `weimarnetz-tng` branch is the **stable** branch. All development happens in feature branches and is merged via pull requests.
 
-2. **Install the App in repositories**:
-   - After creation, select "Install App" in the left menu
-   - Choose the "weimarnetz" organization
-   - Select "Only select repositories" and mark both the packages and imagebuilder repositories
-   - Click "Install"
+- **Stable feed**: Packages are built and uploaded automatically when a PR is merged into `weimarnetz-tng`.
+- **Testing feed**: Any branch can be built into the testing feed by manually triggering the build workflow via *Actions → Weimarnetz Package Build → Run workflow*.
 
-3. **Generate App ID and Private Key**:
-   - Return to the App configuration page
-   - Note the "App ID" (a number)
-   - Scroll down to "Private keys" and click "Generate a private key"
-   - Save the downloaded file securely
+Devices can subscribe to either feed:
 
-4. **Add Secrets to the repository**:
-   - Go to repository settings → Secrets and variables → Actions
-   - Create two new secrets:
-     - `GH_APP_ID`: The App ID from step 3
-     - `GH_APP_PRIVATE_KEY`: The contents of the downloaded private key file
+```
+# Stable (default)
+src/gz weimarnetz_stable https://buildbot.weimarnetz.de/brauhaus/packages/stable/<openwrt_release>/<target>/<subtarget>/weimarnetz
 
-5. **Configure the workflow**:
-   - The workflow `.github/workflows/assemblefirmware.yml` already contains the necessary configuration to trigger the imagebuilder after successful package builds
-
-### Troubleshooting
-
-If the cross-repository trigger doesn't work:
-
-- Verify that the GitHub App has the correct permissions
-- Ensure the App is installed in both repositories
-- Check the secrets `GH_APP_ID` and `GH_APP_PRIVATE_KEY`
-- Review GitHub Actions logs for detailed error messages
+# Testing
+src/gz weimarnetz_testing https://buildbot.weimarnetz.de/brauhaus/packages/testing/<openwrt_release>/<target>/<subtarget>/weimarnetz
+```
