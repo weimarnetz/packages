@@ -17,7 +17,7 @@ define Package/weimarnetz-ffwizard
   SECTION:=utils
   CATEGORY:=Utilities
   DEPENDS:=+resolveip +freifunk-common
-  TITLE:=Weimarnetz Scripts
+  TITLE:=Weimarnetz Scripts for router configuration
   URL:=https://github.com/weimarnetz/weimarnetz
 endef
 
