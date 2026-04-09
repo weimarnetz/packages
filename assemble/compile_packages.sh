@@ -212,8 +212,11 @@ if [ -d "$PATCHES_DIR" ]; then
   fi
 fi
 
+OPENWRT_RELEASE=$(echo "$OPENWRT" | cut -d'.' -f 1-2)
+info "OpenWrt release version for feed URLs: $OPENWRT_RELEASE"
+
 for package in $(cat feeds/weimarnetz_packages.index|grep Source-Makefile:|cut -d '/' -f 4); do
-  make package/$package/compile;
+  make package/$package/compile WEIMARNETZ_OPENWRT_RELEASE=$OPENWRT_RELEASE;
 done
 
 # Build additional freifunk packages
