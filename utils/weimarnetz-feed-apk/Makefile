@@ -3,7 +3,7 @@ FEED_APK_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=weimarnetz-feed-apk
-PKG_VERSION:=1.0.0
+PKG_VERSION:=1.0.1
 PKG_RELEASE:=1
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -39,8 +39,8 @@ define Package/weimarnetz-feed-apk/install
 	$(INSTALL_DIR) $(1)/etc/apk/repositories.d
 	$(INSTALL_DIR) $(1)/etc/apk/keys
 	$(INSTALL_DATA) $(FEED_APK_DIR)/files/public-key.pem $(1)/etc/apk/keys/weimarnetz-public-key.pem
-	echo "$(FEED_URL)/weimarnetz_packages" > $(1)/etc/apk/repositories.d/weimarnetz.list
-	echo "$(FEED_URL)/freifunk_packages" >> $(1)/etc/apk/repositories.d/weimarnetz.list
+	echo "$(FEED_URL)/weimarnetz_packages/packages.adb" > $(1)/etc/apk/repositories.d/weimarnetz.list
+	echo "$(FEED_URL)/freifunk_packages/packages.adb" >> $(1)/etc/apk/repositories.d/weimarnetz.list
 endef
 
 $(eval $(call BuildPackage,weimarnetz-feed-apk))
