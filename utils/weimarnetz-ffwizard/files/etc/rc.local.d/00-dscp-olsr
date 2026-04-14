@@ -1,0 +1,6 @@
+#!/bin/sh 
+
+iptables -t mangle -A POSTROUTING -p udp --dport 698 -j DSCP --set-dscp-class "CS6" 
+iptables -t mangle -A POSTROUTING -p udp --sport 698 -j DSCP --set-dscp-class "CS6"
+iptables -t mangle -A POSTROUTING -p udp --dport 53 -j DSCP --set-dscp-class "CS6"
+iptables -t mangle -A POSTROUTING -p udp --sport 53 -j DSCP --set-dscp-class "CS6"

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+. /lib/functions.sh
+. /usr/share/libubox/jshn.sh
+. /usr/lib/weimarnetz/ipsystem.sh 
+
+log() {
+        logger -s -t vpnwatchdog "$@"
+}
+
+wan_status="$(ifstatus wan)"
+
+json_load "$wan_status"
+json_get_var wan_up up
+json_cleanup
+
+[ "$wan_up" -eq "1" ] || {
+	log "no wan connection"
+	return
+}
+
+[ $(uci -q get ffwizard.vpn.enabled) -eq 1 ] || {
+	log "vpn disabled"
+	return
+}
+
+nodenumber=$(uci_get ffwizard settings nodenumber "-1")                                                                                                                                       
+[ "$nodenumber" -gt 0 ] || {                                                                                                                                                                  
+  log "nodenumber not set yet"
+	return
+}                                                                                                                        
+
+if [ -f "/usr/bin/fastd" ]; then
+	gw="$(ip r s ta 50|grep 'default via'|cut -d ' ' -f3)"
+	if [ -z $gw ] || [ "$(traceroute -r -w1 $gw|wc -l)" -ne 2 ]; then
+		log "fastd seems not to work, restarting it"
+		/etc/init.d/fastd restart
+	fi
+fi
