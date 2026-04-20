@@ -37,6 +37,26 @@ is_ac_radio() {
 	return 1
 }
 
+# Nur ältere OpenWrt-Builds: ab 25.12 entfallen die manuellen Ratenlisten oft zugunsten der Treiber-Standards.
+need_legacy_wifi_rates() {
+	local board_json version vernum
+	board_json=$(ubus call system board 2>/dev/null) || return 0
+	json_init
+	json_load "$board_json" || {
+		json_cleanup
+		return 0
+	}
+	if ! json_select release 2>/dev/null; then
+		json_cleanup
+		return 0
+	fi
+	json_get_var version version
+	json_cleanup
+	[ -z "$version" ] && return 0
+	vernum=$(echo "$version" | awk -F. '{ printf "%d", $1 * 1000 + int($2) }')
+	[ "$vernum" -lt 25012 ]
+}
+
 
 setup_ip() {
 	local cfg="$1"
@@ -173,8 +193,10 @@ setup_wifi() {
 	uci_set wireless "$device" channel "$channel"
 	uci_set wireless "$device" disabled "0"
 	uci_set wireless "$device" country "DE"
-	uci_add_list wireless "$device" supported_rates '12000 18000 24000 36000 48000 54000'
-	uci_add_list wireless "$device" basic_rate '12000 18000 24000 36000 48000 54000'
+	if need_legacy_wifi_rates; then
+		uci_add_list wireless "$device" supported_rates '12000 18000 24000 36000 48000 54000'
+		uci_add_list wireless "$device" basic_rate '12000 18000 24000 36000 48000 54000'
+	fi
 	#uci_set wireless $device distance "1000"
 	#Reduce the Broadcast distance and save Airtime
 	#Not working on wdr4300 with AP and ad-hoc
