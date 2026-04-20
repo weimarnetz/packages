@@ -4,7 +4,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=weimarnetz-feed-opkg
 PKG_VERSION:=1.0.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
@@ -18,6 +18,7 @@ define Package/weimarnetz-feed-opkg
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Weimarnetz package feed configuration for opkg
+  DEPENDS:=+opkg
   PKGARCH:=all
 endef
 
@@ -39,8 +40,16 @@ define Package/weimarnetz-feed-opkg/install
 	$(INSTALL_DIR) $(1)/etc/opkg/keys
 	$(INSTALL_DATA) $(FEED_OPKG_DIR)/files/key-build.pub \
 		$(1)/etc/opkg/keys/$$($(STAGING_DIR_HOST)/bin/usign -F -p $(FEED_OPKG_DIR)/files/key-build.pub)
-	echo "src/gz weimarnetz_stable $(FEED_URL)/weimarnetz_packages" > $(1)/etc/opkg/customfeeds.conf
-	echo "src/gz freifunk_stable $(FEED_URL)/freifunk_packages" >> $(1)/etc/opkg/customfeeds.conf
+endef
+
+define Package/weimarnetz-feed-opkg/postinst
+CFG="$${IPKG_INSTROOT}/etc/opkg/customfeeds.conf"
+[ -f "$$CFG" ] || exit 0
+grep -qF "src/gz weimarnetz_stable $(FEED_URL)/weimarnetz_packages" "$$CFG" || \
+	echo "src/gz weimarnetz_stable $(FEED_URL)/weimarnetz_packages" >> "$$CFG"
+grep -qF "src/gz freifunk_stable $(FEED_URL)/freifunk_packages" "$$CFG" || \
+	echo "src/gz freifunk_stable $(FEED_URL)/freifunk_packages" >> "$$CFG"
+exit 0
 endef
 
 $(eval $(call BuildPackage,weimarnetz-feed-opkg))
