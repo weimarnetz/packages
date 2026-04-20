@@ -57,7 +57,6 @@ need_legacy_wifi_rates() {
 	[ "$vernum" -lt 25012 ]
 }
 
-
 setup_ip() {
 	local cfg="$1"
 	local ipaddr="$2"
