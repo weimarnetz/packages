@@ -1,0 +1,14 @@
+{
+	"weimarnetz-olsrinfo": {
+		"description": "Grant access to olsrinfo for OLSR metrics collection",
+		"read": {
+			"ubus": {
+				"olsrinfo": [
+					"getjsondata",
+					"hasipip",
+					"hosts"
+				]
+			}
+		}
+	}
+}
