@@ -215,15 +215,14 @@ fi
 OPENWRT_RELEASE=$(echo "$OPENWRT" | cut -d'.' -f 1-2)
 info "OpenWrt release version for feed URLs: $OPENWRT_RELEASE"
 
-for package in $(grep '^Package:' feeds/weimarnetz_packages.index | awk '{print $2}'); do
+for package in $(cat feeds/weimarnetz_packages.index|grep Source-Makefile:|cut -d '/' -f 4); do
   make package/$package/compile WEIMARNETZ_OPENWRT_RELEASE=$OPENWRT_RELEASE;
 done
 
-# Build additional freifunk packages
-info "Building additional freifunk packages"
-for freifunk_pkg in luci-mod-freifunk luci-theme-freifunk-generic luci-i18n-freifunk-de; do
-  info "Building $freifunk_pkg"
-  make package/$freifunk_pkg/compile || info "Failed to build $freifunk_pkg"
+info "Building additional packages"
+for extra_pkg in luci-mod-freifunk luci-theme-freifunk-generic luci-i18n-freifunk-de weimarnetz-olsrinfo; do
+  info "Building $extra_pkg"
+  make package/$extra_pkg/compile WEIMARNETZ_OPENWRT_RELEASE=$OPENWRT_RELEASE || info "Failed to build $extra_pkg"
 done
 
 make package/index
