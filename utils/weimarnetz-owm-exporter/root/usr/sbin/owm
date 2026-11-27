@@ -1,0 +1,358 @@
+#!/usr/bin/env ucode
+
+// owm - register Weimarnetz nodes at the community map (openwifimap API)
+//
+// Based on falter-berlin-owm-ucode by Freifunk Berlin
+// (https://github.com/freifunk-berlin/falter-packages), which itself is a
+// reimplementation of owm.sh by Patrick Grimm and Martin Hübner.
+// Adapted for Weimarnetz: keeps the JSON format of the former owm.sh.
+//
+// SPDX-License-Identifier: GPL-2.0-only
+
+'use strict';
+
+let fs = require('fs');
+let bus = require('ubus').connect();
+let uci = require('uci').cursor();
+let resolv = require('resolv');
+let socket = require('socket');
+let uloop = require('uloop');
+let uclient = require('uclient');
+
+const OWM_API_VER = 1.0;
+const HTTP_TIMEOUT_MS = 30000;
+const OLSR_TIMEOUT_MS = 5000;
+const CA_BUNDLE = '/etc/ssl/certs/ca-certificates.crt';
+
+function usage() {
+	print(`owm - Tool for registering routers at the community map
+
+Options:
+	--help|-h:	print this text
+
+	--dry-run:	check if owm is working (does not send any data).
+			With this option you can check for errors in your
+			configuration and see the data that would be sent.
+
+If invoked without any options, this tool will try to register
+your node at the community map and print the server's response.
+
+To override the server used by this script, set freifunk.community.owm_api.
+`);
+}
+
+function log(severity, msg) {
+	warn(msg, '\n');
+	// no shell: msg may contain data of other nodes
+	system(['logger', '-t', 'owm', '-p', 'daemon.' + severity, msg]);
+}
+
+// uci returns lists as arrays, owm.sh got them space-separated
+function uci_str(config, section, option) {
+	let v = uci.get(config, section, option);
+	if (type(v) == 'array')
+		return join(' ', v);
+	return v;
+}
+
+// equivalent of "uci_get system @system[-1] <option>"
+function last_system_section() {
+	let last = null;
+	uci.foreach('system', 'system', (s) => { last = s; });
+	return last ?? {};
+}
+
+// olsrd jsoninfo plugin on 127.0.0.1:9090: send the path, read until the
+// plugin closes the connection. Works with and without its HTTP headers.
+function olsr_query(path) {
+	let s = socket.connect('127.0.0.1', '9090', null, OLSR_TIMEOUT_MS);
+	if (!s)
+		return '';
+
+	let data = '';
+	s.send(path);
+	while (length(socket.poll(OLSR_TIMEOUT_MS, [s, socket.POLLIN]))) {
+		let chunk = s.recv(4096);
+		if (!length(chunk))
+			break;
+		data += chunk;
+	}
+	s.close();
+
+	// strip HTTP headers, if the plugin sends them
+	if (match(data, /^HTTP\//)) {
+		let sep = index(data, '\r\n\r\n');
+		data = sep >= 0 ? substr(data, sep + 4) : '';
+	}
+	return trim(data);
+}
+
+// Reverse lookup of an OLSR neighbour. olsrd nameservice publishes names
+// like "ffweimar-123.olsr" or "wlan0.ffweimar-123.olsr"; we use the label
+// in front of ".olsr", like owm.sh did. Falls back to the IP.
+function resolve_hostname(ip) {
+	let result = resolv.query(ip, { type: ['PTR'] });
+	for (let domain in result) {
+		for (let ptr in result[domain]?.PTR ?? []) {
+			let m = match(ptr, /([^.]+)\.olsr\.?$/);
+			if (m)
+				return m[1] + '.olsr';
+		}
+	}
+	return ip;
+}
+
+function olsr_links() {
+	let data = json(olsr_query('/links') || 'null');
+	let links = [];
+	for (let l in data?.links ?? []) {
+		if (l.olsrInterface && match(l.olsrInterface, /(wg|ts)_/))
+			continue;
+		push(links, {
+			sourceAddr4: l.localIP,
+			destAddr4: l.remoteIP,
+			id: resolve_hostname(l.remoteIP),
+			quality: +l.linkQuality
+		});
+	}
+	return links;
+}
+
+// KEY=value / KEY='value' / KEY="value" files like /etc/freifunk_release
+function read_release_file(path) {
+	let vars = {};
+	let content = fs.readfile(path);
+	for (let line in split(content ?? '', '\n')) {
+		let m = match(line, /^([A-Za-z0-9_]+)=['"]?([^'"]*)['"]?$/);
+		if (m)
+			vars[m[1]] = m[2];
+	}
+	return vars;
+}
+
+function contact_info() {
+	let contact = {};
+	let show_mail = uci.get('ffwizard', 'settings', 'email2owm') == '1';
+
+	let name = uci_str('freifunk', 'contact', 'name');
+	let nick = uci_str('freifunk', 'contact', 'nickname');
+	let mail = show_mail ? uci_str('freifunk', 'contact', 'mail') : 'Email hidden';
+	let phone = show_mail ? uci_str('freifunk', 'contact', 'phone') : null;
+	let homepage = uci_str('freifunk', 'contact', 'homepage');
+	let note = uci_str('freifunk', 'contact', 'note');
+
+	// the 'contact' list supersedes the 'mail' option
+	let contacts = uci.get('freifunk', 'contact', 'contact');
+	if (type(contacts) == 'array')
+		contacts = join('|', filter(contacts, length));
+
+	if (name) contact.name = name;
+	if (contacts) contact.mail = contacts;
+	else if (mail) contact.mail = mail;
+	if (nick) contact.nickname = nick;
+	if (phone) contact.phone = phone;
+	if (homepage) contact.homepage = homepage;
+	if (note) contact.note = note;
+
+	return contact;
+}
+
+function community_info() {
+	let c = {};
+	for (let k in ['ssid', 'mesh_network', 'owm_api', 'name', 'homepage',
+	               'longitude', 'latitude', 'ssid_scheme', 'splash_network'])
+		c[k] = uci_str('freifunk', 'community', k) ?? '';
+
+	// owm.sh always sent it, 0 when unset
+	let prefix = uci.get('freifunk', 'community', 'splash_prefix');
+	c.splash_prefix = (prefix != null && prefix != '') ? int(prefix) : 0;
+
+	return c;
+}
+
+function registrator_status() {
+	let reg = bus?.call('registrator', 'status') ?? {};
+	return {
+		message: reg.message ?? '',
+		nodenumber: int(reg.nodenumber ?? 0),
+		success: int(reg.success ?? 0) == 1,
+		code: int(reg.code ?? 0)
+	};
+}
+
+function build_json_data() {
+	let board = bus?.call('system', 'board') ?? {};
+	let info = bus?.call('system', 'info') ?? {};
+
+	let sys = last_system_section();
+	let latitude = sys.latitude, longitude = sys.longitude;
+	// NaN != NaN, so this rejects non-numeric values
+	let has_location = latitude && longitude &&
+		+latitude == +latitude && +longitude == +longitude;
+
+	if (!has_location)
+		log('warn', 'latitude/longitude is not set, sending node without location');
+
+	// firmware info, /etc/freifunk_release overrides the OpenWrt values
+	let distribution = board.release?.distribution;
+	let version = board.release?.version;
+	let revision = board.release?.revision;
+	let ff = read_release_file('/etc/freifunk_release');
+	if (fs.access('/etc/freifunk_release')) {
+		distribution = ff.FREIFUNK_DISTRIB_ID;
+		version = ff.FREIFUNK_RELEASE;
+		revision = ff.FREIFUNK_REVISION;
+	}
+	let wn = read_release_file('/etc/weimarnetz_release');
+
+	// "Linux version 6.6.73 (builder@host) (gcc ...) #0 SMP Mon Jan 20 ..."
+	let kernel_string = trim(fs.readfile('/proc/version') ?? '');
+	let kernel_version = split(kernel_string, ' ')[2] ?? '';
+	let kernel_build_date = substr(split(kernel_string, '#')[1] ?? '', 2);
+
+	let load5 = +(split(trim(fs.readfile('/proc/loadavg') ?? ''), ' ')[1] ?? 0);
+
+	let data = {
+		freifunk: {
+			contact: contact_info(),
+			community: community_info()
+		},
+		type: has_location ? 'node' : 'node_no_loc',
+		script: 'owm',
+		api_rev: OWM_API_VER,
+		system: {
+			sysinfo: ['system is deprecated', board.model],
+			uptime: [info.uptime],
+			loadavg: [load5]
+		},
+		olsr: {},
+		links: olsr_links()
+	};
+
+	if ((uci.get('ffwizard', 'owm', 'send_olsrd_config') ?? '1') == '1') {
+		let cfg = json(olsr_query('/config') || 'null');
+		if (cfg)
+			data.olsr.ipv4Config = cfg;
+	}
+
+	if (has_location) {
+		data.latitude = +latitude;
+		data.longitude = +longitude;
+	}
+
+	data.hostname = board.hostname ?? sys.hostname;
+	data.updateInterval = 1800;
+	data.hardware = board.system;
+	data.firmware = {
+		name: `${distribution} ${version}`,
+		distname: `${distribution} ${version}`,
+		distversion: version ?? '',
+		revision: revision ?? '',
+		description: board.release?.description ?? '',
+		kernelVersion: kernel_version,
+		kernelBuildDate: kernel_build_date,
+		packageDescription: wn.WEIMARNETZ_PACKAGES_DESCRIPTION ?? '',
+		packageBranch: wn.WEIMARNETZ_PACKAGES_BRANCH ?? '',
+		packageRevision: wn.WEIMARNETZ_PACKAGES_REV ?? ''
+	};
+	data.weimarnetz = {
+		nodenumber: uci.get('ffwizard', 'settings', 'nodenumber') ?? '',
+		registratorstatus: registrator_status()
+	};
+
+	return data;
+}
+
+// HTTP(S) PUT via libuclient (ucode-mod-uclient), no external tools.
+// Returns { status, body } or { error }.
+function http_put(url, body) {
+	let res = { status: 0, body: '' };
+	let uc;
+
+	uloop.init();
+	uc = uclient.new(url, null, {
+		header_done: () => { res.status = uc.status()?.status ?? 0; },
+		data_read: () => {
+			let d;
+			while (length(d = uc.read()) > 0)
+				res.body += d;
+		},
+		data_eof: () => uloop.end(),
+		error: (cb, code) => { res.error = `connection error ${code}`; uloop.end(); }
+	});
+	if (!uc)
+		return { error: 'invalid URL' };
+
+	if (match(url, /^https:/) &&
+	    !uc.ssl_init({ ca_files: [CA_BUNDLE], verify: true })) {
+		uc.free();
+		return { error: 'cannot initialize TLS (is libustream-* installed?)' };
+	}
+
+	let timer = uloop.timer(HTTP_TIMEOUT_MS, () => {
+		res.error = 'timeout';
+		uloop.end();
+	});
+
+	if (!uc.connect())
+		res.error = 'cannot connect';
+	else if (!uc.request('PUT', {
+			headers: { 'Content-Type': 'application/json', 'User-Agent': 'owm' },
+			post_data: body
+		}))
+		res.error = 'cannot send request';
+	else
+		uloop.run();
+
+	timer.cancel();
+	uc.free();
+	return res;
+}
+
+function send_to_server(json_str, hostname) {
+	let api = uci.get('freifunk', 'community', 'owm_api');
+	if (!api) {
+		log('err', 'OWM update failed: freifunk.community.owm_api is not set');
+		return false;
+	}
+	if (!match(api, /^https?:\/\//))
+		api = 'http://' + api;
+	api = replace(api, /\/+$/, '');
+
+	// hostname ends up in the URL, only accept plain hostnames
+	if (!match(hostname, /^[A-Za-z0-9._-]+$/)) {
+		log('err', 'OWM update failed: invalid hostname');
+		return false;
+	}
+
+	let url = `${api}/update_node/${hostname}.olsr`;
+	let res = http_put(url, json_str);
+
+	if (res.error || res.status < 200 || res.status > 299) {
+		log('err', `OWM update to ${url} failed: ${res.error ?? 'HTTP status ' + res.status}`);
+		if (length(res.body))
+			warn(trim(res.body), '\n');
+		return false;
+	}
+
+	print(trim(res.body), '\n');
+	return true;
+}
+
+let arg = ARGV[0];
+if (arg != null && arg != '--dry-run') {
+	if (arg != '-h' && arg != '--help')
+		printf('Unrecognized argument %s.\n\n', arg);
+	usage();
+	exit(1);
+}
+
+let data = build_json_data();
+let json_str = sprintf('%J', data);
+
+if (arg == '--dry-run') {
+	print(json_str, '\n');
+	exit(0);
+}
+
+exit(send_to_server(json_str, data.hostname) ? 0 : 1);
