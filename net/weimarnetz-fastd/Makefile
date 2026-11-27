@@ -12,7 +12,9 @@ define Package/weimarnetz-fastd-config
   SUBMENU:=VPN
   TITLE:=Weimarnetz Fastd Config
   PKGARCH:=all
-  DEPENDS:=+fastd +kmod-l2tp +kmod-l2tp-eth +weimarnetz-ffwizard
+  DEPENDS:=+weimarnetz-ffwizard
+  # runtime only: listed in the package, but not built along with it
+  EXTRA_DEPENDS:=fastd (>=0), kmod-l2tp (>=0), kmod-l2tp-eth (>=0)
 endef
 
 define Package/weimarnetz-fastd-config/description

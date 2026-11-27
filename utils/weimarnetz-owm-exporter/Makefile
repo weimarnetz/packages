@@ -12,9 +12,12 @@ define Package/weimarnetz-owm-exporter
   CATEGORY:=Utilities
   TITLE:=Weimarnetz owm json exporter
   PKGARCH:=all
-  DEPENDS:=+weimarnetz-ffwizard +olsrd-mod-jsoninfo \
-	+ucode +ucode-mod-fs +ucode-mod-ubus +ucode-mod-uci +ucode-mod-resolv \
-	+ucode-mod-socket +ucode-mod-uloop +ucode-mod-uclient +ca-bundle
+  DEPENDS:=+weimarnetz-ffwizard
+  # runtime only: listed in the package, but not built along with it
+  EXTRA_DEPENDS:=olsrd-mod-jsoninfo (>=0), ca-bundle (>=0), \
+	ucode (>=0), ucode-mod-fs (>=0), ucode-mod-ubus (>=0), ucode-mod-uci (>=0), \
+	ucode-mod-resolv (>=0), ucode-mod-socket (>=0), ucode-mod-uloop (>=0), \
+	ucode-mod-uclient (>=0)
 endef
 
 define Package/weimarnetz-owm-exporter/description

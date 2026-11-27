@@ -11,8 +11,9 @@ define Package/weimarnetz-metrics-exporter
   CATEGORY:=Utilities
   TITLE:=Weimarnetz metrics exporter
   PKGARCH:=all
-  DEPENDS:=+weimarnetz-ffwizard +olsrd-mod-jsoninfo +prometheus-node-exporter-ucode \
-	+!PACKAGE_luci-app-olsr:weimarnetz-olsrinfo
+  DEPENDS:=+weimarnetz-ffwizard +!PACKAGE_luci-app-olsr:weimarnetz-olsrinfo
+  # runtime only: listed in the package, but not built along with it
+  EXTRA_DEPENDS:=olsrd-mod-jsoninfo (>=0), prometheus-node-exporter-ucode (>=0)
 endef
 
 define Package/weimarnetz-metrics-exporter/description

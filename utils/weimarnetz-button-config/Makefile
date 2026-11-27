@@ -8,7 +8,9 @@ PKG_RELEASE:=1
 # luci.mk defines Package/$(PKG_NAME) itself: title and dependencies have
 # to be passed via the LUCI_* variables, an own define would be dropped.
 LUCI_TITLE:=Weimarnetz Button Config
-LUCI_DEPENDS:=+luci-base +weimarnetz-ffwizard
+LUCI_DEPENDS:=+weimarnetz-ffwizard
+# runtime only: listed in the package, but not built along with it
+LUCI_EXTRA_DEPENDS:=luci-base (>=0)
 LUCI_DESCRIPTION:=a package to configure behaviour of hardware buttons like the reset button
 
 define Package/weimarnetz-button-config/postrm
