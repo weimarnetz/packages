@@ -10,7 +10,7 @@ if [ "$community_name" = "Freifunk" ]; then
 fi
 
 uci_set freifunk community name "$community_name"
-uci_set freifunk community owm_api "http://mapapi.weimarnetz.de"
+uci_set freifunk community owm_api "https://mapapi.weimarnetz.de"
 uci_set freifunk community mapserver "http://hopglass.weimarnetz.de"
 uci_set freifunk community homepage "$website"
 uci_set freifunk community registrator "http://reg.weimarnetz.de"

@@ -1,26 +1,39 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=weimarnetz-owm-exporter
-PKG_VERSION:=1.2.0
+PKG_VERSION:=2.0.0
 PKG_RELEASE:=1
-
-PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)
+PKG_LICENSE:=GPL-2.0-only
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/weimarnetz-owm-exporter
-  SECTION:=luci
-  CATEGORY:=LuCI
-  SUBMENU:=3. Applications
-  TITLE:=Weimarnetz owm json exporter 
-  DEPENDS:=+weimarnetz-ffwizard +olsrd-mod-jsoninfo
+  SECTION:=utils
+  CATEGORY:=Utilities
+  TITLE:=Weimarnetz owm json exporter
+  PKGARCH:=all
+  DEPENDS:=+weimarnetz-ffwizard +olsrd-mod-jsoninfo \
+	+ucode +ucode-mod-fs +ucode-mod-ubus +ucode-mod-uci +ucode-mod-resolv \
+	+ucode-mod-socket +ucode-mod-uloop +ucode-mod-uclient +ca-bundle
 endef
 
 define Package/weimarnetz-owm-exporter/description
-  this is a reimplementation of the well-known 
-	owm.lua. It helps reducing lua dependencies.
+  ucode script that registers the node at the community map
+  (openwifimap API). Based on falter-berlin-owm-ucode by Freifunk Berlin.
 endef
 
-include ../../luci.mk
+define Build/Prepare
+endef
 
-# $(eval $(call BuildPackage,weimarnetz-owm-exporter))
+define Build/Configure
+endef
+
+define Build/Compile
+endef
+
+define Package/weimarnetz-owm-exporter/install
+	$(INSTALL_DIR) $(1)
+	$(CP) ./root/* $(1)/
+endef
+
+$(eval $(call BuildPackage,weimarnetz-owm-exporter))
