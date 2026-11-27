@@ -84,7 +84,7 @@ jobs:
         target: [ath79_generic, mediatek_filogic, mpc85xx_p1010, ramips_mt7620, ramips_mt7621, ramips_mt76x8, x86_generic, x86_64, ipq40xx_generic, ipq40xx_mikrotik]
         openwrt: [24.10.7, 25.12.4]
       fail-fast: false
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
